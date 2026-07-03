@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "apps/api": false,
+    "apps/web": false
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true
+  },
+  "git.ignoreLimitWarning": true
+}

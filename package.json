@@ -1,19 +1,32 @@
 {
   "name": "portfolio-v3",
   "private": true,
+  "type": "module",
   "scripts": {
+    "syncpack": "syncpack",
+    "checkout": "node scripts/workspace-checkout.js",
+    "dev": "node scripts/dev-server.js",
+    "dev:all": "turbo run dev",
     "build": "turbo run build",
-    "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.9.18",
-    "typescript": "5.9.2"
+    "dotenv": "^17.4.2",
+    "dotenv-cli": "^11.0.0",
+    "prettier": "^3.9.4",
+    "syncpack": "^15.3.2",
+    "turbo": "^2.10.2",
+    "typescript": "6.0.3"
   },
-  "packageManager": "pnpm@9.0.0",
+  "dependencies": {
+    "archiver": "^8.0.0",
+    "enquirer": "^2.4.1",
+    "glob": "^13.0.6",
+    "sharp": "^0.35.3"
+  },
+  "packageManager": "pnpm@11.9.0",
   "engines": {
     "node": ">=18"
   }
