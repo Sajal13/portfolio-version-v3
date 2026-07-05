@@ -4,9 +4,10 @@
  */
 const config = {
   singleQuote: true,
-  tabWidth: 80,
+  tabWidth: 2,
   trailingComma: 'none',
-  semi: false,
+  semi: true,
+  printWidth: 80,
 };
 
 export default config;
