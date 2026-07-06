@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
+import { Tool } from '../../tools/entities/tool.entity';
 
 @Entity('experiences')
 export class Experience {
@@ -34,6 +37,14 @@ export class Experience {
 
   @Column({ type: 'int', nullable: true })
   order: number;
+
+  @ManyToMany(() => Tool)
+  @JoinTable({
+    name: 'experience_tools',
+    joinColumn: { name: 'experience_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'tool_id', referencedColumnName: 'id' }
+  })
+  tool: Tool[];
 
   @CreateDateColumn()
   createdAt: Date;
