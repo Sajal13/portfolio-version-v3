@@ -2,7 +2,8 @@
   "editor.formatOnSave": true,
   "files.exclude": {
     "apps/api": false,
-    "apps/web": false
+    "apps/web": false,
+    "apps/admin": false
   },
   "search.exclude": {
     "**/node_modules": true,

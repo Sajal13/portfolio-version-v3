@@ -39,12 +39,11 @@ export class SkillsService {
     return this.skillRepository.save(updated);
   }
 
-  async deleteSkill(id: number) {
+  async deleteSkill(id: number): Promise<void> {
     const skill = await this.skillRepository.findOneBy({ id });
     if (!skill) {
       throw new NotFoundException(`Skill with id ${id} not found`);
     }
     await this.skillRepository.delete(id);
-    return { success: true, message: `Skill with id ${id} has been deleted` };
   }
 }

@@ -21,6 +21,7 @@ import { UpdateSkillDto } from './dto/update-skill.dto';
 import { SkillResponseDto } from './dto/skill-response.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { ResponseMessage } from '../common/decorators/response-message.decorator';
 
 @ApiTags('skills')
 @Controller('skills')
@@ -31,6 +32,7 @@ export class SkillsController {
   @Get()
   @ApiOperation({ summary: 'Get all skills' })
   @ApiResponse({ status: 200, type: SkillResponseDto, isArray: true })
+  @ResponseMessage('Skills get successful.')
   async getAllSkills() {
     const skills = await this.skillsService.getAllSkills();
 
@@ -41,10 +43,10 @@ export class SkillsController {
   }
 
   @Public()
-  @Get('/get/:id')
+  @Get('/:id')
   @ApiOperation({ summary: 'Get a skill by id' })
   @ApiResponse({ status: 200, type: SkillResponseDto })
-  @ApiResponse({ status: 404, description: 'Skill not found' })
+  @ResponseMessage('Skill get successful.')
   async getSkillById(@Param('id', ParseIntPipe) id: number) {
     const skill = await this.skillsService.getSkillById(id);
     return plainToInstance(SkillResponseDto, skill);
@@ -55,6 +57,7 @@ export class SkillsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new skill' })
   @ApiResponse({ status: 201, type: SkillResponseDto })
+  @ResponseMessage('Skill created successfully.')
   async createSkill(@Body() dto: CreateSkillDto) {
     const skill = await this.skillsService.createSkill(dto);
     return plainToInstance(SkillResponseDto, skill);
@@ -65,7 +68,7 @@ export class SkillsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a skill' })
   @ApiResponse({ status: 200, type: SkillResponseDto })
-  @ApiResponse({ status: 404, description: 'Skill not found' })
+  @ResponseMessage('Skill updated successfully.')
   async updateSkill(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateSkillDto
@@ -78,8 +81,8 @@ export class SkillsController {
   @Roles('admin')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete a skill' })
-  @ApiResponse({ status: 200, description: 'Skill deleted successfully' })
-  @ApiResponse({ status: 404, description: 'Skill not found' })
+  @ApiResponse({ status: 200, description: 'Skill deleted successfully.' })
+  @ResponseMessage('Skill deleted successfully')
   async deleteSkill(@Param('id', ParseIntPipe) id: number) {
     return this.skillsService.deleteSkill(id);
   }

@@ -21,5 +21,17 @@ export default () => ({
     secret: process.env.COOKIE_SECRET
   },
 
-  frontendUrl: process.env.FRONTEND_URL
+  frontendUrl: process.env.FRONTEND_URL,
+
+  cloudinary: {
+    name: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET
+  },
+
+  gmail: {
+    sender: process.env.GMAIL_USER,
+    appPassword: process.env.GMAIL_APP_PASSWORD,
+    receiver: process.env.CONTACT_NOTIFY_EMAIL
+  }
 });

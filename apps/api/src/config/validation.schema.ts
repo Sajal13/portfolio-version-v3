@@ -18,5 +18,13 @@ export const validationSchema = Joi.object({
   JWT_REFRESH_EXPIRES_IN: Joi.string().default('7d'),
 
   COOKIE_SECRET: Joi.string().required(),
-  FRONTEND_URL: Joi.string().uri().required()
+  FRONTEND_URL: Joi.string().uri().required(),
+
+  CLOUDINARY_CLOUD_NAME: Joi.string().required(),
+  CLOUDINARY_API_KEY: Joi.string().required(),
+  CLOUDINARY_API_SECRET: Joi.string().required(),
+
+  GMAIL_USER: Joi.string().required(),
+  GMAIL_APP_PASSWORD: Joi.string().required(),
+  CONTACT_NOTIFY_EMAIL: Joi.string().required()
 });

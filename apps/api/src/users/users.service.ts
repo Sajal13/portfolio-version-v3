@@ -31,16 +31,11 @@ export class UsersService {
     await this.userRepo.update(userId, { hashedRefreshToken: hashedToken });
   }
 
-  async deleteUser(userId: number) {
+  async deleteUser(userId: number): Promise<void> {
     const user = await this.userRepo.findOne({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException('User not found');
     }
     await this.userRepo.remove(user);
-
-    return {
-      success: true,
-      message: 'User deleted successfully'
-    };
   }
 }

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import configuration from './config/configuration';
 import { validationSchema } from './config/validation.schema';
@@ -14,9 +14,21 @@ import { ProfileModule } from './profile/profile.module';
 import { SkillsModule } from './skills/skills.module';
 import { ExperiencesModule } from './experiences/experiences.module';
 import { ToolsModule } from './tools/tools.module';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { UploadModule } from './upload/upload.module';
+import { PortfolioModule } from './portfolio/portfolio.module';
+import { BlogsModule } from './blogs/blogs.module';
+import { TestimonialsModule } from './testimonials/testimonials.module';
+import { ContactModule } from './contact/contact.module';
+import { MailModule } from './mail/mail.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
   providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor
+    },
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard
@@ -52,7 +64,14 @@ import { ToolsModule } from './tools/tools.module';
     ProfileModule,
     SkillsModule,
     ExperiencesModule,
-    ToolsModule
+    ToolsModule,
+    UploadModule,
+    PortfolioModule,
+    BlogsModule,
+    TestimonialsModule,
+    ContactModule,
+    MailModule,
+    AnalyticsModule
   ]
 })
 export class AppModule {}

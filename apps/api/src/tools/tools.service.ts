@@ -18,24 +18,32 @@ export class ToolsService {
   async getToolById(id: number): Promise<Tool> {
     const tool = await this.toolsRepository.findOne({ where: { id } });
 
-    if (!tool) throw new NotFoundException(`Tool not found by the ${id} id.`);
+    if (!tool) throw new NotFoundException(`Tool with id ${id} not found`);
 
     return tool;
   }
 
   async createTool(dto: CreateToolDto): Promise<Tool> {
-    const tool = this.toolsRepository.save(dto);
-    return tool;
+    return await this.toolsRepository.save(dto);
   }
 
   async updateTool(id: number, dto: UpdateToolDto): Promise<Tool> {
     const tool = await this.toolsRepository.findOne({ where: { id } });
 
     if (!tool) {
-      throw new NotFoundException(`Tool not found by this ${id} id`);
+      throw new NotFoundException(`Tool with id ${id} not found`);
     }
 
     const updatedTool = this.toolsRepository.merge(tool, dto);
     return this.toolsRepository.save(updatedTool);
+  }
+
+  async deleteTool(id: number): Promise<void> {
+    const tool = await this.toolsRepository.findOne({ where: { id } });
+
+    if (!tool) {
+      throw new NotFoundException(`Tool with id ${id} not found`);
+    }
+    await this.toolsRepository.delete(id);
   }
 }

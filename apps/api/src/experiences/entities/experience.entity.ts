@@ -8,11 +8,19 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 import { Tool } from '../../tools/entities/tool.entity';
+import { ExperienceType } from '../types/experienceType';
 
 @Entity('experiences')
 export class Experience {
   @PrimaryGeneratedColumn('increment')
   id: number;
+
+  @Column({
+    type: 'enum',
+    enum: ExperienceType,
+    default: ExperienceType.fullTime
+  })
+  experienceType: ExperienceType;
 
   @Column({ type: 'text' })
   title: string;
@@ -44,7 +52,7 @@ export class Experience {
     joinColumn: { name: 'experience_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'tool_id', referencedColumnName: 'id' }
   })
-  tool: Tool[];
+  tools: Tool[];
 
   @CreateDateColumn()
   createdAt: Date;
