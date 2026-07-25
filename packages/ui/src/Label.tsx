@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { cn } from 'utils/cn';
 
 // No JS needed for the "clicking the label focuses the input" behavior —

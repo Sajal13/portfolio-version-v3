@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import { Slot } from './Slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'utils/cn';
@@ -11,10 +11,6 @@ import { cn } from 'utils/cn';
  * so you can keep importing Size/Color/Shape/Variant anywhere
  * else in the app without duplicating the definitions.
  */
-// export type Size = "sm" | "base" | "md" | "lg";
-// export type Color = "primary" | "secondary" | "tertiary" | "success" | "error" | "info" | "warning" | "orange" | "neutral" | "white";
-// export type Shape = "rounded" | "circle";
-// export type Variant = "filled" | "outline" | "link";
 
 const buttonVariants = cva(
   `inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium

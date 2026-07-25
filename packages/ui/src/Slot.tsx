@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 
 /**
  * A minimal, dependency-free version of Radix's Slot.

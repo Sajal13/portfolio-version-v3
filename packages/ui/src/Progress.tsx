@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import type { Color } from 'types/base';
 import { cn } from 'utils/cn';
 

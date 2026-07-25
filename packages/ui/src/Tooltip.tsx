@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import { Portal } from 'utils/Portal';
 import { cn } from 'utils/cn';
 import { TooltipProps } from 'types/tooltip';

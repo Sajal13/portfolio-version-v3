@@ -1,9 +1,9 @@
 'use client';
 
+import React from 'react';
 import RadioGroupProvider, {
   useRadioGroupContext
 } from 'providers/RadioGroupContext';
-import * as React from 'react';
 import { RadioGroupItemProps, RadioGroupProps } from 'types/radioGroup';
 import { cn } from 'utils/cn';
 

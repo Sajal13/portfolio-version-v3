@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import { cn } from 'utils/cn';
 import { Sheet, SheetContent } from './Sheet';
 import { useSidebar } from 'providers/SidebarContext';

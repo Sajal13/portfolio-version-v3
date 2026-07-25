@@ -1,7 +1,7 @@
 'use client';
 
+import React from 'react';
 import TabsProvider, { useTabsContext } from 'providers/TabsContext';
-import * as React from 'react';
 import { TabsContentProps, TabsProps } from 'types/tabs';
 import { cn } from 'utils/cn';
 
