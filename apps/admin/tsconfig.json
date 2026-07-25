@@ -1,11 +1,14 @@
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "paths": {
+      "api/*": ["./api/*"],
+      "components/*": ["./components/*"],
+      "context/*": ["./context/*"],
+      "hooks/*": ["./hooks/*"],
+      "types/*": ["./types/*"],
+      "utils": ["./utils/*"]
+    },
     "strictNullChecks": true
   },
   "include": [

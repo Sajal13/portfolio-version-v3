@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "./css/theme.css";
+@import "./css/extra.css";
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: var(--color-body);
+  color: var(--text-color-primary);
+  margin: 0;
+  padding: 0;
+}

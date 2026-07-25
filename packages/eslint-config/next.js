@@ -4,6 +4,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import tseslint from "typescript-eslint";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReact from "eslint-plugin-react";
+import pluginImport from "eslint-plugin-import";
 import globals from "globals";
 import pluginNext from "@next/eslint-plugin-next";
 import { config as baseConfig } from "./base.js";
@@ -52,6 +53,69 @@ export const nextJsConfig = [
       ...pluginReactHooks.configs.recommended.rules,
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+    },
+  },
+  {
+    plugins: {
+      import: pluginImport,
+    },
+    settings: {
+      "import/resolver": {
+        typescript: {
+          alwaysTryTypes: true,
+        },
+      },
+    },
+    rules: {
+      "import/order": [
+        "error",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "object",
+            "type",
+          ],
+          pathGroups: [
+            {
+              pattern: "react",
+              group: "builtin",
+              position: "before",
+            },
+            {
+              pattern: "react-dom",
+              group: "builtin",
+              position: "before",
+            },
+            {
+              pattern: "next",
+              group: "builtin",
+              position: "before",
+            },
+            {
+              pattern: "next/**",
+              group: "builtin",
+              position: "before",
+            },
+            {
+              pattern: "@/**",
+              group: "internal",
+              position: "before",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["react", "next"],
+          "newlines-between": "never",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
   },
 ];

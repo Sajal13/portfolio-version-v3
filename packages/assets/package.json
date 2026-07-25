@@ -1,0 +1,13 @@
+{
+  "name": "@repo/assets",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "exports": {
+    "./globals.css": "./src/globals.css"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "tailwindcss": "^4.3.2"
+  }
+}
