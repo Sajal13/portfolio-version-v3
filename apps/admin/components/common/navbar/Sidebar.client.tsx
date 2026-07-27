@@ -12,9 +12,9 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
-  useSidebar
-} from "@repo/ui/Sidebar";
-import { Button } from "@repo/ui/Button";
+  useSidebar,
+  Button
+} from "@repo/ui/components";
 import { SidebarTooltip } from "components/layout/SidebarTooltip";
 import { adminRoutes } from "data/navbar";
 
@@ -24,7 +24,7 @@ const SidebarClient = () => {
   const collapsedDesktop = !open && !isMobile;
 
   return (
-    <Sidebar>
+    <Sidebar className="bg-neutral-800">
       <SidebarHeader>
         <Link
           href="/admin/dashboard"

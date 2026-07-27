@@ -4,13 +4,13 @@ import React from 'react';
 import {
   DropdownMenuContextValue,
   DropdownMenuProps
-} from '@/types/dropdownMenu';
+} from '../types/dropdownMenu';
 import { useFloatingPosition } from '../utils/useOverlay';
 
 const DropdownMenuContext =
   React.createContext<DropdownMenuContextValue | null>(null);
 
-const DropdownMenuProvider = ({
+export const DropdownMenuProvider = ({
   open: openProp,
   defaultOpen = false,
   onOpenChange,
@@ -51,5 +51,3 @@ export const useDropdownMenuContext = (component: string) => {
     throw new Error(`${component} must be used within a <DropdownMenu>`);
   return ctx;
 };
-
-export default DropdownMenuProvider;

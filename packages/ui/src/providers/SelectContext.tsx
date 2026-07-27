@@ -6,7 +6,7 @@ import { useFloatingPosition } from '../utils/useOverlay';
 
 const SelectContext = React.createContext<SelectContextValue | null>(null);
 
-const SelectProvider = ({
+export const SelectProvider = ({
   value: valueProp,
   defaultValue,
   onValueChange,
@@ -74,5 +74,3 @@ export const useSelectContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <Select>`);
   return ctx;
 };
-
-export default SelectProvider;

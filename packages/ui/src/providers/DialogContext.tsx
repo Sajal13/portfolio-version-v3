@@ -5,7 +5,7 @@ import { DialogContextValue, DialogProps } from '../types/dialog';
 
 const DialogContext = React.createContext<DialogContextValue | null>(null);
 
-const DialogProvider = ({
+export const DialogProvider = ({
   open: openProp,
   defaultOpen = false,
   onOpenChange,
@@ -34,5 +34,3 @@ export const useDialogContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <Dialog>`);
   return ctx;
 };
-
-export default DialogProvider;

@@ -10,7 +10,7 @@ const CollapsibleContext = React.createContext<CollapsibleContextValue | null>(
   null
 );
 
-const CollapsibleProvider = ({
+export const CollapsibleProvider = ({
   open: openProp,
   defaultOpen = false,
   onOpenChange,
@@ -40,4 +40,3 @@ export const useCollapsibleContext = (component: string) => {
   return ctx;
 };
 
-export default CollapsibleProvider;

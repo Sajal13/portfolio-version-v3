@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@repo/ui/utils/cn.js";
+import { cn } from "@repo/ui/utils";
 
 export function SidebarTooltip({
   label,

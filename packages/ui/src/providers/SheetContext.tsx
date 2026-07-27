@@ -5,7 +5,7 @@ import { SheetContextValue, SheetProps } from '../types/sheet';
 
 const SheetContext = React.createContext<SheetContextValue | null>(null);
 
-const SheetProvider = ({
+export const SheetProvider = ({
   defaultOpen = false,
   open: openProp,
   onOpenChange,
@@ -34,5 +34,3 @@ export const useSheetContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <Sheet>`);
   return ctx;
 };
-
-export default SheetProvider;

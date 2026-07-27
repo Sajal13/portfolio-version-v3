@@ -14,7 +14,7 @@ const ContextMenuContext = React.createContext<ContextMenuContextValue | null>(
   null
 );
 
-const ContextMenuProvider = ({ children }: { children: React.ReactNode }) => {
+export const ContextMenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = React.useState(false);
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
   const floatingRef = React.useRef<HTMLElement | null>(null);
@@ -33,5 +33,3 @@ export const useContextMenuContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <ContextMenu>`);
   return ctx;
 };
-
-export default ContextMenuProvider;

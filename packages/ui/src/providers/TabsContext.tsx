@@ -1,13 +1,13 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { TabsContextValue, TabsProps } from '@/types/tabs';
+import { TabsContextValue, TabsProps } from '../types/tabs';
 
 const TabsContext = React.createContext<TabsContextValue | null>(null);
 
 let tabsIdCounter = 0;
 
-const TabsProvider = ({
+export const TabsProvider = ({
   value: valueProp,
   defaultValue,
   onValueChange,
@@ -37,5 +37,3 @@ export const useTabsContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within <Tabs>`);
   return ctx;
 };
-
-export default TabsProvider;

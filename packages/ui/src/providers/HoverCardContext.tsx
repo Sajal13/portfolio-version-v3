@@ -8,7 +8,7 @@ const HoverCardContext = React.createContext<HoverCardContextValue | null>(
   null
 );
 
-const HoverCardProvider = ({
+export const HoverCardProvider = ({
   children,
   openDelay = 300,
   closeDelay = 150,
@@ -50,5 +50,3 @@ export const useHoverCardContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <HoverCard>`);
   return ctx;
 };
-
-export default HoverCardProvider;

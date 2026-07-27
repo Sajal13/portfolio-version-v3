@@ -7,7 +7,7 @@ const AlertDialogContext = React.createContext<AlertDialogContextValue | null>(
   null
 );
 
-const AlertDialogProvider = ({
+export const AlertDialogProvider = ({
   defaultOpen = false,
   open: openProp,
   onOpenChange,
@@ -38,5 +38,3 @@ export const useAlertDialogContext = (component: string) => {
     throw new Error(`${component} must be used within an <AlertDialog>`);
   return ctx;
 };
-
-export default AlertDialogProvider;

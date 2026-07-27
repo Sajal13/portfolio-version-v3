@@ -1,12 +1,12 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { PopoverContextValue, PopoverProps } from '@/types/popover';
+import { PopoverContextValue, PopoverProps } from '../types/popover';
 import { useFloatingPosition } from '../utils/useOverlay';
 
 const PopoverContext = React.createContext<PopoverContextValue | null>(null);
 
-const PopoverProvider = ({
+export const PopoverProvider = ({
   open: openProp,
   defaultOpen = false,
   onOpenChange,
@@ -47,5 +47,3 @@ export const usePopoverContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <Popover>`);
   return ctx;
 };
-
-export default PopoverProvider;

@@ -1,12 +1,12 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { TooltipContextValue, TooltipProps } from '@/types/tooltip';
-import { useFloatingPosition } from '@/utils/useOverlay';
+import { TooltipContextValue, TooltipProps } from '../types/tooltip';
+import { useFloatingPosition } from '../utils/useOverlay';
 
 const TooltipContext = React.createContext<TooltipContextValue | null>(null);
 
-const TooltipProvider = ({
+export const TooltipProvider = ({
   delayDuration,
   side,
   align,
@@ -45,5 +45,3 @@ export const useTooltipContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <Tooltip>`);
   return ctx;
 };
-
-export default TooltipProvider;

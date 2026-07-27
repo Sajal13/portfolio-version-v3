@@ -4,7 +4,7 @@ import React from 'react';
 import { SidebarContextValue, SidebarProviderProps } from '../types/sidebar';
 import { cn } from '../utils/cn';
 
-const SIDEBAR_WIDTH = '16rem';
+const SIDEBAR_WIDTH = '17.5rem';
 const SIDEBAR_WIDTH_COLLAPSED = '3.5rem';
 const SIDEBAR_STORAGE_KEY = 'sidebar:open';
 const SIDEBAR_MOBILE_BREAKPOINT = 768;
@@ -18,7 +18,7 @@ export function useSidebar() {
   return ctx;
 }
 
-function SidebarProvider({
+export function SidebarProvider({
   defaultOpen = true,
   className,
   style,
@@ -92,5 +92,3 @@ function SidebarProvider({
     </SidebarContext.Provider>
   );
 }
-
-export default SidebarProvider;

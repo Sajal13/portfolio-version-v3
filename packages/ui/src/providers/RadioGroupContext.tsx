@@ -9,7 +9,7 @@ const RadioGroupContext = React.createContext<RadioGroupContextValue | null>(
   null
 );
 
-const RadioGroupProvider = ({
+export const RadioGroupProvider = ({
   value: valueProp,
   defaultValue,
   onValueChange,
@@ -43,5 +43,3 @@ export const useRadioGroupContext = (component: string) => {
   if (!ctx) throw new Error(`${component} must be used within a <RadioGroup>`);
   return ctx;
 };
-
-export default RadioGroupProvider;
