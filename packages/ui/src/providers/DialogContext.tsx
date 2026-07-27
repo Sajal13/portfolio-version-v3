@@ -1,7 +1,7 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { DialogContextValue, DialogProps } from 'types/dialog';
+import { DialogContextValue, DialogProps } from '../types/dialog';
 
 const DialogContext = React.createContext<DialogContextValue | null>(null);
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { TabsContextValue, TabsProps } from 'types/tabs';
+import { TabsContextValue, TabsProps } from '@/types/tabs';
 
 const TabsContext = React.createContext<TabsContextValue | null>(null);
 

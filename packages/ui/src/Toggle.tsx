@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 const toggleVariants = cva(
   `inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium

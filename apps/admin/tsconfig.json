@@ -5,6 +5,7 @@
       "api/*": ["./api/*"],
       "components/*": ["./components/*"],
       "context/*": ["./context/*"],
+      "data/*": ["./data/*"],
       "hooks/*": ["./hooks/*"],
       "types/*": ["./types/*"],
       "utils": ["./utils/*"]

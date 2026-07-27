@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import type { Color } from 'types/base';
-import { cn } from 'utils/cn';
+import type { Color } from '@/types/base';
+import { cn } from '@/utils/cn';
 
 const sliderVariants = cva(
   `h-1.5 w-full cursor-pointer appearance-none rounded-full outline-none

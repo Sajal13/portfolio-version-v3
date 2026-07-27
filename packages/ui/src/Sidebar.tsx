@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { cn } from 'utils/cn';
+import { cn } from './utils/cn';
 import { Sheet, SheetContent } from './Sheet';
-import { useSidebar } from 'providers/SidebarContext';
+import { useSidebar } from './providers/SidebarContext';
 
 type SidebarProps = React.ComponentProps<'div'> & { side?: 'left' | 'right' };
 

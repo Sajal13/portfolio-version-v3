@@ -1,7 +1,7 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { RadioGroupContextValue, RadioGroupProps } from 'types/radioGroup';
+import { RadioGroupContextValue, RadioGroupProps } from '../types/radioGroup';
 
 let radioGroupIdCounter = 0;
 

@@ -5,8 +5,8 @@ import {
   AccordionContextValue,
   AccordionItemProps,
   AccordionProps
-} from 'types/accordion';
-import { cn } from 'utils/cn';
+} from '@/types/accordion';
+import { cn } from '@/utils/cn';
 
 const AccordionContext = React.createContext<AccordionContextValue | null>(
   null

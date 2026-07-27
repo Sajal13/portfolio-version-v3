@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useFocusTrap, useScrollLock } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
+import { Portal } from '@/utils/Portal';
+import { useEscapeKey, useFocusTrap, useScrollLock } from '@/utils/useOverlay';
+import { cn } from '@/utils/cn';
 
 type DrawerContextValue = {
   open: boolean;

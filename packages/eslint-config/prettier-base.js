@@ -8,6 +8,8 @@ const config = {
   trailingComma: 'none',
   semi: true,
   printWidth: 80,
+  plugins: ['@trivago/prettier-plugin-sort-imports'],
+  importOrder: ['^react$', '^next', '<THIRD_PARTY_MODULES>', '^@/', '^[./]']
 };
 
 export default config;

@@ -5,7 +5,7 @@ import {
   FloatingSide,
   OPPOSITE_SIDE,
   UseFloatingPositionOptions
-} from 'types/overlay';
+} from '@/types/overlay';
 
 /**
  * Computes fixed-position coordinates for a floating element relative to

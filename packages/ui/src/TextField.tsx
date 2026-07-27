@@ -1,6 +1,6 @@
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 const inputVariants = cva(
   `flex w-full min-w-0 rounded-md border border-main bg-secondary-700 text-white

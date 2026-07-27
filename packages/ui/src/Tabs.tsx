@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import TabsProvider, { useTabsContext } from 'providers/TabsContext';
-import { TabsContentProps, TabsProps } from 'types/tabs';
-import { cn } from 'utils/cn';
+import TabsProvider, { useTabsContext } from '@/providers/TabsContext';
+import { TabsContentProps, TabsProps } from '@/types/tabs';
+import { cn } from '@/utils/cn';
 
 function Tabs(props: TabsProps) {
   return (

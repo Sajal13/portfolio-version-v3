@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useFocusTrap, useScrollLock } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
-import { DialogContentProps, DialogProps } from 'types/dialog';
-import DialogProvider, { useDialogContext } from 'providers/DialogContext';
+import { Portal } from '@/utils/Portal';
+import { useEscapeKey, useFocusTrap, useScrollLock } from '@/utils/useOverlay';
+import { cn } from '@/utils/cn';
+import { DialogContentProps, DialogProps } from '@/types/dialog';
+import DialogProvider, { useDialogContext } from '@/providers/DialogContext';
 
 function Dialog({ children, ...props }: React.PropsWithChildren<DialogProps>) {
   return <DialogProvider {...props}>{children}</DialogProvider>;

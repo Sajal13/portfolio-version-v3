@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { cn } from 'utils/cn';
-import { TooltipProps } from 'types/tooltip';
-import TooltipProvider, { useTooltipContext } from 'providers/TooltipContext';
+import { Portal } from '@/utils/Portal';
+import { cn } from '@/utils/cn';
+import { TooltipProps } from '@/types/tooltip';
+import TooltipProvider, { useTooltipContext } from '@/providers/TooltipContext';
 
 function Tooltip({
   delayDuration = 200,

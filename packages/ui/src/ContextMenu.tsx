@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useOutsideClick } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
+import { Portal } from '@/utils/Portal';
+import { useEscapeKey, useOutsideClick } from '@/utils/useOverlay';
+import { cn } from '@/utils/cn';
 import ContextMenuProvider, {
   useContextMenuContext
-} from 'providers/ContextMenuContext';
+} from '@/providers/ContextMenuContext';
 
 function ContextMenu({ children }: { children: React.ReactNode }) {
   return <ContextMenuProvider>{children}</ContextMenuProvider>;

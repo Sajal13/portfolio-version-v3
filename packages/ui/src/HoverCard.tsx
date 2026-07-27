@@ -3,10 +3,10 @@
 import React from 'react';
 import HoverCardProvider, {
   useHoverCardContext
-} from 'providers/HoverCardContext';
-import { HoverCardProps } from 'types/hoverCard';
-import { Portal } from 'utils/Portal';
-import { cn } from 'utils/cn';
+} from '@/providers/HoverCardContext';
+import { HoverCardProps } from '@/types/hoverCard';
+import { Portal } from '@/utils/Portal';
+import { cn } from '@/utils/cn';
 
 function HoverCard({
   openDelay,

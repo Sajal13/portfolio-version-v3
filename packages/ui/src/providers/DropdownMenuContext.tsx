@@ -4,8 +4,8 @@ import React from 'react';
 import {
   DropdownMenuContextValue,
   DropdownMenuProps
-} from 'types/dropdownMenu';
-import { useFloatingPosition } from 'utils/useOverlay';
+} from '@/types/dropdownMenu';
+import { useFloatingPosition } from '../utils/useOverlay';
 
 const DropdownMenuContext =
   React.createContext<DropdownMenuContextValue | null>(null);

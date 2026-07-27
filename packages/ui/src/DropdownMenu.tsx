@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useOutsideClick } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
-import { DropdownMenuItemProps, DropdownMenuProps } from 'types/dropdownMenu';
+import { Portal } from '@/utils/Portal';
+import { useEscapeKey, useOutsideClick } from '@/utils/useOverlay';
+import { cn } from '@/utils/cn';
+import { DropdownMenuItemProps, DropdownMenuProps } from '@/types/dropdownMenu';
 import DropdownMenuProvider, {
   useDropdownMenuContext
-} from 'providers/DropdownMenuContext';
+} from '@/providers/DropdownMenuContext';
 
 function DropdownMenu({
   open: openProp,

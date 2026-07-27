@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { HoverCardContextValue, HoverCardProps } from 'types/hoverCard';
-import { useFloatingPosition } from 'utils/useOverlay';
+import { HoverCardContextValue, HoverCardProps } from '../types/hoverCard';
+import { useFloatingPosition } from '../utils/useOverlay';
 
 const HoverCardContext = React.createContext<HoverCardContextValue | null>(
   null

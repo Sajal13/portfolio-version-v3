@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Color } from 'types/base';
-import { cn } from 'utils/cn';
+import type { Color } from '@/types/base';
+import { cn } from '@/utils/cn';
 
 type ProgressProps = Omit<React.ComponentProps<'div'>, 'color'> & {
   value?: number;

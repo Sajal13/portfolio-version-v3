@@ -10,8 +10,8 @@ import React, {
   createContext,
   useContext
 } from 'react';
-import { Portal } from 'utils/Portal';
-import { cn } from 'utils/cn';
+import { Portal } from '@/utils/Portal';
+import { cn } from '@/utils/cn';
 
 /**
  * Two ways to use this now:

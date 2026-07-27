@@ -1,8 +1,8 @@
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
-const checkboxVariants = cva(
+const IndeterminateCheckboxVariants = cva(
   [
     'appearance-none rounded cursor-pointer transition-colors',
     'border border-white bg-neutral-700',
@@ -29,14 +29,14 @@ const checkboxVariants = cva(
   }
 );
 
-type CheckboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> &
-  VariantProps<typeof checkboxVariants> & {
+type IndeterminateCheckboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> &
+  VariantProps<typeof IndeterminateCheckboxVariants> & {
     indeterminate?: boolean;
     label?: React.ReactNode;
     labelClassName?: string;
   };
 
-export function Checkbox({
+export function IndeterminateCheckbox({
   className,
   size,
   indeterminate = false,
@@ -44,7 +44,7 @@ export function Checkbox({
   label,
   labelClassName,
   ...props
-}: CheckboxProps) {
+}: IndeterminateCheckboxProps) {
   const ref = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
@@ -59,7 +59,7 @@ export function Checkbox({
         ref={ref}
         type="checkbox"
         checked={checked}
-        className={cn(checkboxVariants({ size }), className)}
+        className={cn(IndeterminateCheckboxVariants({ size }), className)}
         {...props}
       />
 
@@ -68,5 +68,5 @@ export function Checkbox({
   );
 }
 
-export { checkboxVariants };
-export type { CheckboxProps };
+export { IndeterminateCheckboxVariants };
+export type { IndeterminateCheckboxProps };

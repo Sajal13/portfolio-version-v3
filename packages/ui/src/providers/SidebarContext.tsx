@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { SidebarContextValue, SidebarProviderProps } from 'types/sidebar';
-import { cn } from 'utils/cn';
+import { SidebarContextValue, SidebarProviderProps } from '../types/sidebar';
+import { cn } from '../utils/cn';
 
 const SIDEBAR_WIDTH = '16rem';
 const SIDEBAR_WIDTH_COLLAPSED = '3.5rem';

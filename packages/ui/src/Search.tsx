@@ -2,7 +2,7 @@ import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { Slot } from './Slot';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 type SearchInputProps = Omit<React.ComponentProps<'input'>, 'size'> &
   VariantProps<typeof searchInputVariants> & {
@@ -37,20 +37,6 @@ const searchInputVariants = cva(
     }
   }
 );
-
-const iconSpacing = {
-  sm: 'pl-9 pr-3',
-  base: 'pl-10 pr-4',
-  md: 'pl-11 pr-5',
-  lg: 'pl-12 pr-6'
-};
-
-const iconSpacingEnd = {
-  sm: 'pr-9 pl-3',
-  base: 'pr-10 pl-4',
-  md: 'pr-11 pl-5',
-  lg: 'pr-12 pl-6'
-};
 
 export function SearchInput({
   className,

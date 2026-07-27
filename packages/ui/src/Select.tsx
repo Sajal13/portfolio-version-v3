@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useOutsideClick } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
-import { SelectItemProps, SelectProps } from 'types/select';
-import SelectProvider, { useSelectContext } from 'providers/SelectContext';
+import { Portal } from '@/utils/Portal';
+import { useEscapeKey, useOutsideClick } from '@/utils/useOverlay';
+import { cn } from '@/utils/cn';
+import { SelectItemProps, SelectProps } from '@/types/select';
+import SelectProvider, { useSelectContext } from '@/providers/SelectContext';
 
 function Select({
   value: valueProp,

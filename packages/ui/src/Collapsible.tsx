@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { CollapsibleProps } from 'types/collapsible';
-import { cn } from 'utils/cn';
+import { CollapsibleProps } from '@/types/collapsible';
+import { cn } from '@/utils/cn';
 
 import CollapsibleProvider, {
   useCollapsibleContext
-} from 'providers/CollapsibleContext';
+} from '@/providers/CollapsibleContext';
 
 function CollapsibleRoot({ className, children, ...props }: CollapsibleProps) {
   const { open } = useCollapsibleContext('Collapsible');

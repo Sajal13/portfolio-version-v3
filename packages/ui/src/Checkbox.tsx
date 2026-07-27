@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 type CheckboxProps = Omit<React.ComponentProps<'input'>, 'type' | 'size'> & {
   onCheckedChange?: (checked: boolean) => void;

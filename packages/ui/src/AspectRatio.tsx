@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 // Modern browsers support the CSS `aspect-ratio` property natively —
 // no padding-top hack, no ResizeObserver, no library needed.

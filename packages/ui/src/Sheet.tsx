@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useFocusTrap, useScrollLock } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
-import { SheetProps } from 'types/sheet';
-import SheetProvider, { useSheetContext } from 'providers/SheetContext';
+import { Portal } from './utils/Portal';
+import { useEscapeKey, useFocusTrap, useScrollLock } from './utils/useOverlay';
+import { cn } from './utils/cn';
+import { SheetProps } from '@/types/sheet';
+import SheetProvider, { useSheetContext } from './providers/SheetContext';
 
 function Sheet({
   open: openProp,

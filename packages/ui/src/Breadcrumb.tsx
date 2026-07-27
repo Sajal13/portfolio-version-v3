@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 function Breadcrumb(props: React.ComponentProps<'nav'>) {
   return <nav aria-label="breadcrumb" {...props} />;

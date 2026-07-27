@@ -3,9 +3,9 @@
 import React from 'react';
 import RadioGroupProvider, {
   useRadioGroupContext
-} from 'providers/RadioGroupContext';
-import { RadioGroupItemProps, RadioGroupProps } from 'types/radioGroup';
-import { cn } from 'utils/cn';
+} from '@/providers/RadioGroupContext';
+import { RadioGroupItemProps, RadioGroupProps } from '@/types/radioGroup';
+import { cn } from '@/utils/cn';
 
 function RadioGroup(props: RadioGroupProps) {
   return (

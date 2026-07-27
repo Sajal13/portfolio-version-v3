@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { AlertDialogContextValue, AlertDialogProps } from 'types/alertDialog';
+import { AlertDialogContextValue, AlertDialogProps } from '../types/alertDialog';
 
 const AlertDialogContext = React.createContext<AlertDialogContextValue | null>(
   null

@@ -1,8 +1,8 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { PopoverContextValue, PopoverProps } from 'types/popover';
-import { useFloatingPosition } from 'utils/useOverlay';
+import { PopoverContextValue, PopoverProps } from '@/types/popover';
+import { useFloatingPosition } from '../utils/useOverlay';
 
 const PopoverContext = React.createContext<PopoverContextValue | null>(null);
 

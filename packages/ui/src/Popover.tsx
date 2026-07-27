@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useOutsideClick } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
-import { PopoverProps } from 'types/popover';
-import PopoverProvider, { usePopoverContext } from 'providers/PopoverContext';
+import { Portal } from '@/utils/Portal';
+import { useEscapeKey, useOutsideClick } from '@/utils/useOverlay';
+import { cn } from '@/utils/cn';
+import { PopoverProps } from '@/types/popover';
+import PopoverProvider, { usePopoverContext } from '@/providers/PopoverContext';
 
 function Popover({
   open: openProp,

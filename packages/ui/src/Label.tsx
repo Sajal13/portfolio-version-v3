@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 // No JS needed for the "clicking the label focuses the input" behavior —
 // that's native <label htmlFor="..."> behavior in every browser.

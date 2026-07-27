@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Portal } from 'utils/Portal';
-import { useEscapeKey, useFocusTrap, useScrollLock } from 'utils/useOverlay';
-import { cn } from 'utils/cn';
+import { Portal } from '@/utils/Portal';
+import { useEscapeKey, useFocusTrap, useScrollLock } from '@/utils/useOverlay';
+import { cn } from '@/utils/cn';
 import { buttonVariants } from './Button';
 import AlertDialogProvider, {
   useAlertDialogContext
-} from 'providers/AlertDialogContext';
-import { AlertDialogProps } from 'types/alertDialog';
+} from '@/providers/AlertDialogContext';
+import { AlertDialogProps } from '@/types/alertDialog';
 
 function AlertDialog({
   open: openProp,

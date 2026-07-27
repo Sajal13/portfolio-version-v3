@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { SheetContextValue, SheetProps } from 'types/sheet';
+import { SheetContextValue, SheetProps } from '../types/sheet';
 
 const SheetContext = React.createContext<SheetContextValue | null>(null);
 

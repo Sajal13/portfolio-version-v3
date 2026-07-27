@@ -1,8 +1,8 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { TooltipContextValue, TooltipProps } from 'types/tooltip';
-import { useFloatingPosition } from 'utils/useOverlay';
+import { TooltipContextValue, TooltipProps } from '@/types/tooltip';
+import { useFloatingPosition } from '@/utils/useOverlay';
 
 const TooltipContext = React.createContext<TooltipContextValue | null>(null);
 

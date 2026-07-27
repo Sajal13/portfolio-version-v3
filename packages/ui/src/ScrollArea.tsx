@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 /**
  * Native overflow scrolling styled via the browser's own scrollbar

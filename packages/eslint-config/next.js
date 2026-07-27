@@ -66,56 +66,6 @@ export const nextJsConfig = [
           alwaysTryTypes: true,
         },
       },
-    },
-    rules: {
-      "import/order": [
-        "error",
-        {
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index",
-            "object",
-            "type",
-          ],
-          pathGroups: [
-            {
-              pattern: "react",
-              group: "builtin",
-              position: "before",
-            },
-            {
-              pattern: "react-dom",
-              group: "builtin",
-              position: "before",
-            },
-            {
-              pattern: "next",
-              group: "builtin",
-              position: "before",
-            },
-            {
-              pattern: "next/**",
-              group: "builtin",
-              position: "before",
-            },
-            {
-              pattern: "@/**",
-              group: "internal",
-              position: "before",
-            },
-          ],
-          pathGroupsExcludedImportTypes: ["react", "next"],
-          "newlines-between": "never",
-          alphabetize: {
-            order: "asc",
-            caseInsensitive: true,
-          },
-        },
-      ],
-    },
+    }
   },
 ];

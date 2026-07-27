@@ -10,5 +10,9 @@
     "**/.next": true,
     "**/dist": true
   },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
 }

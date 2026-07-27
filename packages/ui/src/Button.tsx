@@ -3,7 +3,7 @@
 import React from 'react';
 import { Slot } from './Slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from 'utils/cn';
+import { cn } from '@/utils/cn';
 
 /**
  * These stay exactly as you had them in types/base.ts —

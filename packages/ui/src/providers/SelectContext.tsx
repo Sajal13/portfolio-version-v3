@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { SelectContextValue, SelectProps } from 'types/select';
-import { useFloatingPosition } from 'utils/useOverlay';
+import { SelectContextValue, SelectProps } from '../types/select';
+import { useFloatingPosition } from '../utils/useOverlay';
 
 const SelectContext = React.createContext<SelectContextValue | null>(null);
 
