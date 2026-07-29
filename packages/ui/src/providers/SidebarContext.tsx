@@ -5,7 +5,7 @@ import { SidebarContextValue, SidebarProviderProps } from '../types/sidebar';
 import { cn } from '../utils/cn';
 
 const SIDEBAR_WIDTH = '17.5rem';
-const SIDEBAR_WIDTH_COLLAPSED = '3.5rem';
+const SIDEBAR_WIDTH_COLLAPSED = '3rem';
 const SIDEBAR_STORAGE_KEY = 'sidebar:open';
 const SIDEBAR_MOBILE_BREAKPOINT = 768;
 

@@ -250,3 +250,8 @@
   --radius-xl: 12px;
   --radius-3xl: 24px;
 }
+
+:root {
+  --sidebar-width: 17.5rem;
+  --sidebar-width-collapsed: 3rem;
+}

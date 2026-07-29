@@ -1,9 +1,12 @@
+import { Card, CardContent } from '@repo/ui/components'
 import React from 'react'
 
 const Dashboard = () => {
   return (
     <div>
-      hello
+      <Card>
+        <CardContent>hello there</CardContent>
+      </Card>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {inter} from './fonts';
+import "@repo/ui/globals.css"
 import "./index.css";
 
 
