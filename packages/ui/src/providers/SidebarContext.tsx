@@ -4,8 +4,8 @@ import React from 'react';
 import { SidebarContextValue, SidebarProviderProps } from '../types/sidebar';
 import { cn } from '../utils/cn';
 
-const SIDEBAR_WIDTH = '17.5rem';
-const SIDEBAR_WIDTH_COLLAPSED = '3rem';
+// const SIDEBAR_WIDTH = '17.5rem';
+// const SIDEBAR_WIDTH_COLLAPSED = '4rem';
 const SIDEBAR_STORAGE_KEY = 'sidebar:open';
 const SIDEBAR_MOBILE_BREAKPOINT = 768;
 
@@ -79,8 +79,6 @@ export function SidebarProvider({
         data-slot="sidebar-wrapper"
         style={
           {
-            '--sidebar-width': SIDEBAR_WIDTH,
-            '--sidebar-width-collapsed': SIDEBAR_WIDTH_COLLAPSED,
             ...style
           } as React.CSSProperties
         }

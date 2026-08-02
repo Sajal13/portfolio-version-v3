@@ -1,5 +1,5 @@
-import React from "react";
-import SidebarClient from "./Sidebar.client";
+import React from 'react';
+import SidebarClient from './Sidebar.client';
 
 const SidebarServer = () => {
   return (

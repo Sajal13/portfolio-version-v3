@@ -1,14 +1,14 @@
-import { Card, CardContent } from '@repo/ui/components'
-import React from 'react'
+import React from 'react';
+import { Card, CardContent } from '@repo/ui/components';
 
 const Dashboard = () => {
   return (
-    <div>
+    <div className="min-h-[200vh]">
       <Card>
         <CardContent>hello there</CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

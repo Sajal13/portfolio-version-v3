@@ -75,7 +75,7 @@ interface ModalComponent extends React.FC<ModalProps> {
   Close: React.FC<ButtonHTMLAttributes<HTMLButtonElement>>;
 }
 
-const Modal: ModalComponent = ({
+export const Modal: ModalComponent = ({
   isOpen: isOpenProp,
   onClose,
   defaultOpen = false,
@@ -305,5 +305,3 @@ const ModalClose: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
 
 ModalClose.displayName = 'Modal.Close';
 Modal.Close = ModalClose;
-
-export default Modal;

@@ -16,6 +16,7 @@ export const validationSchema = Joi.object({
   JWT_ACCESS_EXPIRES_IN: Joi.string().default('15m'),
   JWT_REFRESH_SECRET: Joi.string().required(),
   JWT_REFRESH_EXPIRES_IN: Joi.string().default('7d'),
+  JWT_OTP_SECRET: Joi.string().required(),
 
   COOKIE_SECRET: Joi.string().required(),
   FRONTEND_URL: Joi.string().uri().required(),

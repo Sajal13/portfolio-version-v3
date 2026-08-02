@@ -1,62 +1,59 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const rootAssets = path.resolve(__dirname, "../assets");
 const appsDir = path.resolve(__dirname, "../apps");
 
-const apps = [
-  "next-ts",
-  "next-js",
-  "next-ts-starter",
-  "next-js-starter",
-  "vite-ts",
-  "vite-js",
-  "vite-ts-starter",
-  "vite-js-starter",
-];
-
-const nextApps = new Set([
-  "next-ts",
-  "next-js",
-  "next-ts-starter",
-  "next-js-starter",
-]);
+// Map each app to where its assets should be linked
+const appTargets = {
+  admin: "public",
+  web: "public"
+  // add non-Next apps here, e.g. mobile: "src"
+};
 
 if (!fs.existsSync(rootAssets)) {
   console.error("❌ Root assets folder does not exist:", rootAssets);
   process.exit(1);
 }
 
-apps.forEach((app) => {
-  const target = path.join(
-    appsDir,
-    app,
-    nextApps.has(app) ? "public" : "src",
-    "assets"
-  );
+let hadError = false;
+
+for (const [app, subdir] of Object.entries(appTargets)) {
+  const target = path.join(appsDir, app, subdir, "assets");
 
   try {
-    if (fs.existsSync(target)) {
+    // Remove existing symlink/folder if present
+    if (
+      fs.existsSync(target) ||
+      fs.lstatSync(target, { throwIfNoEntry: false })
+    ) {
       fs.rmSync(target, { recursive: true, force: true });
     }
 
     fs.mkdirSync(path.dirname(target), { recursive: true });
 
-    const relativePath = path.relative(path.dirname(target), rootAssets);
+    // On macOS/Linux, symlink type is ignored but "dir" is the correct semantic value.
+    // Junctions (Windows-only) require an ABSOLUTE target, so branch if you ever need Windows support.
+    const isWindows = process.platform === "win32";
+    const linkTarget = isWindows
+      ? rootAssets
+      : path.relative(path.dirname(target), rootAssets);
+    const symlinkType = isWindows ? "junction" : "dir";
 
-    fs.symlinkSync(relativePath, target, "junction");
+    fs.symlinkSync(linkTarget, target, symlinkType);
 
-    if (app === "next-ts" || app === "next-js") {
-      try {
-        const stats = fs.lstatSync(target);
-        console.log("Symlink created?:", stats.isSymbolicLink() ? "Yes" : "No");
-      } catch (err) {
-        console.log("Symlink verification failed:", err.message);
-      }
-    }
-
-    console.log(`✅ Linked assets to ${target}`);
+    const stats = fs.lstatSync(target);
+    console.log(
+      `✅ Linked assets to ${target} (symlink: ${stats.isSymbolicLink() ? "yes" : "no"})`
+    );
   } catch (err) {
-    console.error(`❌ Failed to link for ${app}:`, err);
+    hadError = true;
+    console.error(`❌ Failed to link for ${app}:`, err.message);
   }
-});
+}
+
+if (hadError) process.exit(1);

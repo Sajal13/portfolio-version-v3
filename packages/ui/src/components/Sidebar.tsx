@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
+import { useSidebar } from '../providers/SidebarContext';
 import { cn } from '../utils/cn';
 import { Sheet, SheetContent } from './Sheet';
-import { useSidebar } from '../providers/SidebarContext';
 
 type SidebarProps = React.ComponentProps<'div'> & { side?: 'left' | 'right' };
 
@@ -18,7 +18,11 @@ function Sidebar({
   if (isMobile) {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile}>
-        <SheetContent side={side}  style={{ position: 'fixed', minWidth: open ? 'var(--sidebar-width)' : '0px' }} showClose={false}>
+        <SheetContent
+          side={side}
+          showClose={true}
+          className="ease-in-out transition-all duration-300"
+        >
           <div className="flex h-full flex-col">{children}</div>
         </SheetContent>
       </Sheet>
@@ -30,11 +34,11 @@ function Sidebar({
       data-slot="sidebar"
       data-state={open ? 'expanded' : 'collapsed'}
       className={cn(
-        'fixed top-0 left-0 flex h-svh shrink-0 flex-col overflow-hidden border-main bg-neutral-500 text-white transition-all duration-400 ease-linear',
+        'sticky top-0 left-0 flex h-svh shrink-0 flex-col overflow-hidden border-main bg-neutral-500 text-white transition-all duration-300 ease-linear',
         side === 'left' ? 'border-r' : 'border-l',
+        open ? 'w-(--sidebar-width)' : 'w-(--sidebar-width-collapsed)',
         className
       )}
-      style={{ minWidth: open ? 'var(--sidebar-width)' : 'var(--sidebar-width-collapsed)' }}
       {...props}
     >
       {children}
@@ -171,7 +175,7 @@ function SidebarMenuButton({
   children,
   ...props
 }: SidebarMenuButtonProps) {
-  const { open } = useSidebar();
+  const { open, isMobile } = useSidebar();
   return (
     <button
       type="button"
@@ -181,13 +185,16 @@ function SidebarMenuButton({
         `flex w-full cursor-pointer items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-sm text-neutral-300
          outline-none transition-colors hover:bg-secondary-500/30 hover:text-white
          data-active:bg-primary-500 data-active:text-white`,
-        className
+        className,
+        !open ? 'justify-center' : 'justify-start'
       )}
       {...props}
     >
       {icon}
       {/* label stays in the DOM (sr-only) when collapsed, so screen readers still get it */}
-      <span className={cn('truncate', !open && 'sr-only')}>{children}</span>
+      <span className={cn('truncate', !open && !isMobile && 'sr-only')}>
+        {children}
+      </span>
     </button>
   );
 }

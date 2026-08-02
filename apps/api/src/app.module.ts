@@ -22,6 +22,7 @@ import { TestimonialsModule } from './testimonials/testimonials.module';
 import { ContactModule } from './contact/contact.module';
 import { MailModule } from './mail/mail.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { CsrfGuard } from './auth/guards/csrf.guard';
 
 @Module({
   providers: [
@@ -37,7 +38,8 @@ import { AnalyticsModule } from './analytics/analytics.module';
       provide: APP_GUARD,
       useClass: RolesGuard
     },
-    { provide: APP_GUARD, useClass: ThrottlerGuard }
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_GUARD, useClass: CsrfGuard}
   ],
   imports: [
     ConfigModule.forRoot({

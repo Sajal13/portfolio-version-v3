@@ -9,8 +9,11 @@ import { createPortal } from 'react-dom';
  * dropdowns, tooltips) isn't clipped by a parent's `overflow: hidden` or
  * stacking context.
  *
- * The `mounted` check exists because createPortal needs a real DOM node,
- * which doesn't exist during server-side rendering.
+ * `mounted` is initialized lazily so it's already `true` on the client's
+ * first render (no extra effect-driven tick before the portal target
+ * exists) — this matters because consumers like DropdownMenu measure
+ * `floatingRef.current` synchronously in a `useLayoutEffect` on open,
+ * and need the portaled node to already be in the DOM by then.
  */
 function Portal({
   children,
@@ -19,11 +22,13 @@ function Portal({
   children: React.ReactNode;
   container?: Element | null;
 }) {
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = React.useState(
+    () => typeof document !== 'undefined'
+  );
 
   React.useEffect(() => {
-    setMounted(true);
-  }, []);
+    if (!mounted) setMounted(true);
+  }, [mounted]);
 
   if (!mounted) return null;
 

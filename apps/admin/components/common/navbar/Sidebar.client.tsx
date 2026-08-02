@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   Sidebar,
   SidebarHeader,
@@ -14,9 +15,11 @@ import {
   SidebarFooter,
   useSidebar,
   Button
-} from "@repo/ui/components";
-import { SidebarTooltip } from "components/layout/SidebarTooltip";
-import { adminRoutes } from "data/navbar";
+} from '@repo/ui/components';
+import { cn } from '@repo/ui/utils';
+import { SidebarTooltip } from 'components/layout/SidebarTooltip';
+import { adminRoutes } from 'data/navbar';
+import { FiLogOut } from 'react-icons/fi';
 
 const SidebarClient = () => {
   const pathname = usePathname();
@@ -24,19 +27,25 @@ const SidebarClient = () => {
   const collapsedDesktop = !open && !isMobile;
 
   return (
-    <Sidebar className="bg-neutral-800">
+    <Sidebar className="bg-body">
       <SidebarHeader>
         <Link
           href="/admin/dashboard"
           className="flex items-center gap-2 overflow-hidden px-1"
         >
-          <div className="size-8 shrink-0 rounded-md bg-primary-500" />
+          <Image
+            src="/assets/image/logo.webp"
+            alt="logo"
+            width={36}
+            height={36}
+            className="rounded-md"
+          />
           <span
             className={
-              collapsedDesktop ? "sr-only" : "truncate text-base font-semibold"
+              collapsedDesktop ? 'sr-only' : 'truncate text-base font-semibold'
             }
           >
-            YourLogo
+            Portfolio Admin
           </span>
         </Link>
       </SidebarHeader>
@@ -56,7 +65,7 @@ const SidebarClient = () => {
                       <SidebarMenuButton
                         isActive={active}
                         disabled={!route.active}
-                        className={("disabled:text-secondary/50")}
+                        className={'disabled:text-secondary/50'}
                         icon={<Icon className="size-4.5 shrink-0" />}
                       >
                         {route.label}
@@ -71,8 +80,9 @@ const SidebarClient = () => {
       </SidebarContent>
 
       <SidebarFooter>
-        <Button variant="filled" color="error">
-          Log out
+        <Button variant="filled" color="error" className="w-full">
+          <FiLogOut className="size-4.5 shrink-0" />
+          <span className={cn(open ? 'truncate' : 'sr-only')}>Log out</span>
         </Button>
       </SidebarFooter>
     </Sidebar>

@@ -32,6 +32,24 @@ export class User {
   @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })
   role: 'user' | 'admin';
 
+  @Column({
+    type: 'text',
+    nullable: true
+  })
+  @Exclude()
+  otpCode!: string | null;
+
+  @Column({
+    type: 'timestamptz',
+    nullable: true
+  })
+  @Exclude()
+  otpExpiresAt!: Date | null;
+
+  @Column({ type: 'int', default: 0 })
+  @Exclude()
+  otpAttempts: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

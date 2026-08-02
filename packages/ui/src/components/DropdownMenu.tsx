@@ -1,14 +1,18 @@
 'use client';
 
 import React from 'react';
-import { Portal } from '../utils/Portal';
-import { useEscapeKey, useOutsideClick } from '../utils/useOverlay';
-import { cn } from '../utils/cn';
-import { DropdownMenuItemProps, DropdownMenuProps } from '../types/dropdownMenu';
-import  {
+import {
   DropdownMenuProvider,
   useDropdownMenuContext
 } from '../providers/DropdownMenuContext';
+import {
+  DropdownMenuItemProps,
+  DropdownMenuProps
+} from '../types/dropdownMenu';
+import { Portal } from '../utils/Portal';
+import { cn } from '../utils/cn';
+import { useEscapeKey, useOutsideClick } from '../utils/useOverlay';
+import { Slot } from './Slot';
 
 function DropdownMenu({
   open: openProp,
@@ -32,22 +36,24 @@ function DropdownMenu({
 }
 
 function DropdownMenuTrigger({
+  asChild,
   onClick,
   ...props
-}: React.ComponentProps<'button'>) {
+}: React.ComponentProps<'button'> & { asChild?: boolean }) {
   const { open, setOpen, triggerRef } = useDropdownMenuContext(
     'DropdownMenuTrigger'
   );
+  const Comp = asChild ? Slot : 'button';
 
   return (
-    <button
-      type="button"
-      ref={triggerRef as React.RefObject<HTMLButtonElement>}
+    <Comp
+      type={asChild ? undefined : 'button'}
+      ref={triggerRef as React.Ref<HTMLButtonElement>}
       data-slot="dropdown-menu-trigger"
       aria-haspopup="menu"
       aria-expanded={open}
-      onClick={(e) => {
-        onClick?.(e);
+      onClick={(e: React.MouseEvent) => {
+        onClick?.(e as React.MouseEvent<HTMLButtonElement>);
         setOpen(!open);
       }}
       {...props}

@@ -14,19 +14,22 @@
 
   /* ===============================
       PRIMARY (Blue)
-  =============================== */
+    =============================== */
+    /* =========================
+    PRIMARY - Purple (#6138A8)
+    ========================= */
 
-  --color-primary-50: #eef5ff;
-  --color-primary-100: #d9e8ff;
-  --color-primary-200: #bdd6ff;
-  --color-primary-300: #94bbff;
-  --color-primary-400: #6d9fff;
-  --color-primary-500: #5b8cff;
-  --color-primary-600: #4f7df4;
-  --color-primary-700: #4066d8;
-  --color-primary-800: #344fad;
-  --color-primary-900: #263a80;
-  --color-primary-950: #18264f;
+    --color-primary-50:  #f5f1fc;
+    --color-primary-100: #ebe3f8;
+    --color-primary-200: #d8c6f1;
+    --color-primary-300: #bea0e8;
+    --color-primary-400: #a176dc;
+    --color-primary-500: #8452cb;
+    --color-primary-600: #6138a8; /* Base Color */
+    --color-primary-700: #522f8e;
+    --color-primary-800: #432673;
+    --color-primary-900: #351d59;
+    --color-primary-950: #221139;
 
   /* ===============================
       SECONDARY
@@ -48,17 +51,17 @@
       TERTIARY
   =============================== */
 
-  --color-tertiary-50: #f6f2ff;
-  --color-tertiary-100: #ede5ff;
-  --color-tertiary-200: #dccbff;
-  --color-tertiary-300: #c5a6ff;
-  --color-tertiary-400: #a97cff;
-  --color-tertiary-500: #8b5cf6;
-  --color-tertiary-600: #7c3aed;
-  --color-tertiary-700: #6d28d9;
-  --color-tertiary-800: #5222aa;
-  --color-tertiary-900: #3f1b80;
-  --color-tertiary-950: #221042;
+  --color-tertiary-50: #eef5ff;
+  --color-tertiary-100: #d9e8ff;
+  --color-tertiary-200: #bdd6ff;
+  --color-tertiary-300: #94bbff;
+  --color-tertiary-400: #6d9fff;
+  --color-tertiary-500: #5b8cff;
+  --color-tertiary-600: #4f7df4;
+  --color-tertiary-700: #4066d8;
+  --color-tertiary-800: #344fad;
+  --color-tertiary-900: #263a80;
+  --color-tertiary-950: #18264f;
 
   /* ===============================
       SUCCESS
@@ -252,6 +255,6 @@
 }
 
 :root {
-  --sidebar-width: 17.5rem;
-  --sidebar-width-collapsed: 3rem;
+  --sidebar-width: 17rem;
+  --sidebar-width-collapsed: 4rem;
 }

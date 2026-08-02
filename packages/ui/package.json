@@ -32,7 +32,8 @@
     "check-types": "tsc --noEmit",
     "dev:styles": "tailwindcss -i ./src/styles/globals.css -o ./dist/index.css --watch",
     "dev:components": "tsc --watch",
-    "lint": "eslint src --max-warnings 0"
+    "lint": "eslint src --max-warnings 0",
+    "dev": "echo ui:dev ready"
   },
   "peerDependencies": {
     "next": "16.2.10",

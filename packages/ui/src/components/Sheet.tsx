@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Portal } from '../utils/Portal';
-import { useEscapeKey, useFocusTrap, useScrollLock } from '../utils/useOverlay';
-import { cn } from '../utils/cn';
+import { SheetProvider, useSheetContext } from '../providers/SheetContext';
 import { SheetProps } from '../types/sheet';
-import  { SheetProvider, useSheetContext } from '../providers/SheetContext';
+import { Portal } from '../utils/Portal';
+import { cn } from '../utils/cn';
+import { useEscapeKey, useFocusTrap, useScrollLock } from '../utils/useOverlay';
 
 function Sheet({
   open: openProp,
@@ -59,18 +59,45 @@ function SheetContent({
 }: SheetContentProps) {
   const { open, setOpen } = useSheetContext('SheetContent');
   const contentRef = React.useRef<HTMLDivElement>(null);
+  const [shouldRender, setShouldRender] = React.useState(open);
+  const [state, setState] = React.useState<'open' | 'closed'>(
+    open ? 'open' : 'closed'
+  );
 
   useScrollLock(open);
   useEscapeKey(open, () => setOpen(false));
   useFocusTrap(contentRef, open);
 
-  if (!open) return null;
+  React.useEffect(() => {
+    if (open) {
+      setShouldRender(true);
+      setState('open'); // triggers the "in" keyframes immediately on mount
+    } else {
+      setState('closed'); // triggers the "out" keyframes; unmount happens in onAnimationEnd
+    }
+  }, [open]);
+
+  if (!shouldRender) return null;
+
+  const animIn: Record<string, string> = {
+    left: 'animate-[sheet-in-left_300ms_ease-out_forwards]',
+    right: 'animate-[sheet-in-right_300ms_ease-out_forwards]'
+  };
+  const animOut: Record<string, string> = {
+    left: 'animate-[sheet-out-left_300ms_ease-in_forwards]',
+    right: 'animate-[sheet-out-right_300ms_ease-in_forwards]'
+  };
 
   return (
     <Portal>
       <div
         data-slot="sheet-overlay"
-        className="fixed inset-0 z-50 bg-black/60"
+        className={cn(
+          'fixed inset-0 z-50 bg-black/60',
+          state === 'open'
+            ? 'animate-[overlay-in_300ms_ease-out_forwards]'
+            : 'animate-[overlay-out_300ms_ease-in_forwards]'
+        )}
         onClick={() => setOpen(false)}
       />
       <div
@@ -78,12 +105,17 @@ function SheetContent({
         role="dialog"
         aria-modal="true"
         data-slot="sheet-content"
+        data-state={state}
         className={cn(
           'fixed z-50 flex flex-col gap-4 border-main bg-secondary-700 p-6 text-white shadow-lg',
           sideClass[side],
+          state === 'open' ? animIn[side] : animOut[side],
           className
         )}
         onClick={(e) => e.stopPropagation()}
+        onAnimationEnd={() => {
+          if (state === 'closed') setShouldRender(false);
+        }}
         {...props}
       >
         {children}
@@ -94,7 +126,7 @@ function SheetContent({
             className="absolute right-4 top-4 cursor-pointer rounded-md text-neutral-400 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-primary-500"
             onClick={() => setOpen(false)}
           >
-            <CloseIcon className="size-4" />
+            <CloseIcon className="size-5" />
           </button>
         )}
       </div>
