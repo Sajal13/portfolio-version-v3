@@ -8,8 +8,7 @@ import { Response } from 'express';
 // silently drop 'none' cookies sent without it, and both Render and
 // Vercel/Netlify serve over HTTPS by default, so this is always safe.
 
-const ACCESS_TOKEN_MAX_AGE = 15 * 60 * 1000; // keep in sync with jwt.accessExpiresIn
-const REFRESH_TOKEN_MAX_AGE_DEFAULT = 7 * 24 * 60 * 60 * 1000; // 7d, matches jwt.refreshExpiresIn
+const ACCESS_TOKEN_MAX_AGE = 24 * 60 * 60 * 1000; // keep in sync with jwt.accessExpiresIn
 const REFRESH_TOKEN_MAX_AGE_REMEMBER = 30 * 24 * 60 * 60 * 1000; // 30d for "remember me"
 
 const baseCookieOptions = {

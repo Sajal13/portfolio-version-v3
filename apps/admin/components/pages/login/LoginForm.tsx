@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Checkbox, Input } from '@repo/ui/components';
 import { useToast } from '@repo/ui/components';
+import { api } from 'api/base';
+import { ApiEnvelope } from 'lib/api-types';
+import { getErrorMessage } from 'lib/error';
 import { useForm } from 'react-hook-form';
 import { FaEnvelope, FaLock, FaArrowRight } from 'react-icons/fa';
 import {
@@ -13,6 +16,11 @@ import {
   type LoginFormSchemaType
 } from 'utils/schemas/LoginSchema';
 import { OtpModal } from './OtpModal';
+
+type LoginResponse = {
+  otpRequired: boolean;
+  preAuthToken: string;
+};
 
 export default function LoginPage() {
   const [remember, setRemember] = useState(false);
@@ -33,32 +41,22 @@ export default function LoginPage() {
   const onSubmit = async (values: LoginFormSchemaType) => {
     setSubmitting(true);
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ ...values, remember })
-      });
-
-      const body = await res.json().catch(() => null);
-
-      if (!res.ok) {
-        toast({
-          title: 'Login failed',
-          description: body?.message ?? 'Invalid credentials.',
-          variant: 'error'
-        });
-        return;
-      }
-
-      if (body?.otpRequired && body?.preAuthToken) {
-        setPreAuthToken(body.preAuthToken);
+      const res = await api.post<ApiEnvelope<LoginResponse>>(
+        '/api/auth/login',
+        {
+          email: values.email,
+          password: values.password,
+          rememberMe: remember // backend field is rememberMe, not remember
+        }
+      );
+      if (res.data.otpRequired && res.data.preAuthToken) {
+        setPreAuthToken(res.data.preAuthToken);
         setOtpModalOpen(true);
       }
-    } catch {
+    } catch (err) {
       toast({
         title: 'Login failed',
-        description: 'Something went wrong. Please try again.',
+        description: getErrorMessage(err),
         variant: 'error'
       });
     } finally {
@@ -143,17 +141,11 @@ export default function LoginPage() {
               )}
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center">
               <label className="flex cursor-pointer items-center gap-2 text-sm text-neutral-300">
                 <Checkbox checked={remember} onCheckedChange={setRemember} />
                 Remember me
               </label>
-              <Link
-                href="/forgot-password"
-                className="text-sm text-primary-500 hover:text-primary-hover"
-              >
-                Forgot password?
-              </Link>
             </div>
 
             <Button

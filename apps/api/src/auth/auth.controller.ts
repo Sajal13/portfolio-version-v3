@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Patch, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -14,8 +14,11 @@ import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { Public } from './decorators/public.decorator';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh.guard';
-import { setAuthCookies, clearAuthCookies } from './utils/cookie.util';
+import { setAuthCookies, clearAuthCookies, setAccessTokenCookie } from './utils/cookie.util';
 import { Throttle } from '@nestjs/throttler/dist/throttler.decorator';
+import { SkipCsrf } from './decorators/skip-csrf.decorator';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -27,6 +30,7 @@ export class AuthController {
 
   @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Public()
+  @SkipCsrf()
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({ status: 201 })
@@ -43,6 +47,7 @@ export class AuthController {
   @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Public()
   @UseGuards(AuthGuard('local'))
+  @SkipCsrf()
   @Post('login')
   @ApiOperation({
     summary: 'Step 1: verify admin credentials and email a one-time code'
@@ -60,6 +65,7 @@ export class AuthController {
 
   @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Public()
+  @SkipCsrf()
   @Post('verify-otp')
   @ApiOperation({ summary: 'Step 2: verify the emailed OTP and get tokens' })
   @ApiResponse({ status: 200 })
@@ -85,14 +91,10 @@ export class AuthController {
     user: { sub: number; refreshToken: string; rememberMe: boolean },
     @Res({ passthrough: true }) res: Response
   ) {
-    const { accessToken, refreshToken, rememberMe } =
-      await this.authService.refreshTokens(
-        user.sub,
-        user.refreshToken,
-        user.rememberMe
-      );
-
-    setAuthCookies(res, { accessToken, refreshToken }, this.config, rememberMe);
+    const { accessToken } = await this.authService.refreshTokens(
+      user.sub, user.refreshToken, user.rememberMe
+    );
+    setAccessTokenCookie(res, accessToken, this.config);
     return { success: true };
   }
 
@@ -106,5 +108,26 @@ export class AuthController {
     await this.authService.logout(user.userId);
     clearAuthCookies(res);
     return { message: 'Logged out successfully' };
+  }
+
+  @Patch('change-password')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Change the logged-in admin\'s password' })
+  @ApiResponse({ status: 200 })
+  async changePassword(
+    @CurrentUser() user: { userId: number },
+    @Body() dto: ChangePasswordDto,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const { accessToken, refreshToken, rememberMe } =
+      await this.authService.changePassword(
+        user.userId,
+        dto.currentPassword,
+        dto.newPassword
+      );
+
+    setAuthCookies(res, { accessToken, refreshToken }, this.config, rememberMe);
+    return { success: true };
   }
 }

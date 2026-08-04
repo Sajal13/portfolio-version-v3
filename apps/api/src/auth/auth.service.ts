@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -94,10 +95,7 @@ export class AuthService {
     // code otherwise), so let that rejection propagate. The login
     // notification email is best-effort and swallows its own errors
     // inside MailService.
-    await Promise.all([
-      this.mailService.sendOtpCode(user.email, otp),
-      this.mailService.sendLoginNotification(user.email)
-    ]);
+    await this.mailService.sendOtpCode(user.email, otp);
 
     return { otpRequired: true, preAuthToken };
   }
@@ -151,6 +149,40 @@ export class AuthService {
     return this.issueTokens(user.id, user.email, user.role, !!payload.rememberMe);
   }
 
+  async changePassword(
+    userId: number,
+    currentPassword: string,
+    newPassword: string
+  ) {
+    const user = await this.usersService.findById(userId);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const matches = await bcrypt.compare(currentPassword, user.password);
+    if (!matches) {
+      throw new BadRequestException('Current password is incorrect');
+    }
+
+    const sameAsOld = await bcrypt.compare(newPassword, user.password);
+    if (sameAsOld) {
+      throw new BadRequestException(
+        'New password must be different from the current password'
+      );
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+    await this.usersService.updatePassword(userId, hashed);
+
+    // Invalidate the current refresh token so every other logged-in session
+    // (other tabs, other devices) gets forced to log in again with the new
+    // password. The session making this request gets fresh tokens issued
+    // right after, so it isn't kicked out itself.
+    await this.usersService.setRefreshToken(userId, null);
+
+    return this.issueTokens(user.id, user.email, user.role, false);
+  }
+  
   async logout(userId: number) {
     await this.usersService.setRefreshToken(userId, null);
     return { message: 'Logged out successfully' };
@@ -164,15 +196,21 @@ export class AuthService {
 
     const matches = await bcrypt.compare(refreshToken, user.hashedRefreshToken);
     if (!matches) {
-      // Possible token theft — nuke the stored token to force re-login
       await this.usersService.setRefreshToken(userId, null);
       throw new ForbiddenException('Access denied');
     }
 
-    // Re-issue with the same rememberMe lifetime the session started with,
-    // so a "remembered" session keeps rolling forward at 30d rather than
-    // silently dropping back to the short default on first refresh.
-    return this.issueTokens(user.id, user.email, user.role, rememberMe);
+    // Only issue a new access token — reuse the same refresh token/cookie.
+    // Removes the rotation race entirely: concurrent refresh calls all
+    // validate against the same unchanged hash instead of invalidating
+    // each other.
+    const payload = { sub: user.id, email: user.email, role: user.role, rememberMe };
+    const accessToken = await this.jwtService.signAsync(payload, {
+      secret: this.config.get('jwt.accessSecret'),
+      expiresIn: this.config.get('jwt.accessExpiresIn')
+    });
+
+    return { accessToken, refreshToken, rememberMe };
   }
 
   private async issueTokens(

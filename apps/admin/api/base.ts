@@ -1,30 +1,28 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+// No API_URL needed on the client at all anymore — every call is relative,
+// hitting Next.js Route Handlers under /api/*, which proxy server-side.
 
 type Primitive = string | number | boolean;
-
 type QueryParams = Record<string, Primitive | Primitive[] | null | undefined>;
 
 interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
   body?: unknown;
-  token?: string;
   query?: QueryParams;
 }
 
 function buildUrl(path: string, query?: QueryParams) {
-  const url = new URL(`${API_URL}${path}`);
-
+  const url = new URL(
+    path,
+    typeof window === 'undefined' ? 'http://localhost' : window.location.origin
+  );
   if (!query) return url.toString();
-
   Object.entries(query).forEach(([key, value]) => {
     if (value === undefined || value === null) return;
-
     if (Array.isArray(value)) {
       value.forEach((v) => url.searchParams.append(key, String(v)));
     } else {
       url.searchParams.append(key, String(value));
     }
   });
-
   return url.toString();
 }
 
@@ -33,23 +31,15 @@ async function request<T>(
   path: string,
   options: RequestOptions = {}
 ): Promise<T> {
-  const { body, token, query, headers, ...rest } = options;
-
+  const { body, query, headers, ...rest } = options;
   const isFormData = body instanceof FormData;
 
   const response = await fetch(buildUrl(path, query), {
     method,
-    credentials: 'include',
+    credentials: 'include', // still same-origin now, but harmless to keep
     ...rest,
     headers: {
-      ...(isFormData
-        ? {}
-        : {
-            'Content-Type': 'application/json'
-          }),
-      ...(token && {
-        Authorization: `Bearer ${token}`
-      }),
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...headers
     },
     body: body == null ? undefined : isFormData ? body : JSON.stringify(body)
@@ -67,25 +57,12 @@ async function request<T>(
 export const api = {
   get: <T>(path: string, options?: Omit<RequestOptions, 'body'>) =>
     request<T>('GET', path, options),
-
   post: <T>(path: string, body?: unknown, options?: RequestOptions) =>
-    request<T>('POST', path, {
-      ...options,
-      body
-    }),
-
+    request<T>('POST', path, { ...options, body }),
   put: <T>(path: string, body?: unknown, options?: RequestOptions) =>
-    request<T>('PUT', path, {
-      ...options,
-      body
-    }),
-
+    request<T>('PUT', path, { ...options, body }),
   patch: <T>(path: string, body?: unknown, options?: RequestOptions) =>
-    request<T>('PATCH', path, {
-      ...options,
-      body
-    }),
-
+    request<T>('PATCH', path, { ...options, body }),
   delete: <T>(path: string, options?: Omit<RequestOptions, 'body'>) =>
     request<T>('DELETE', path, options)
 };

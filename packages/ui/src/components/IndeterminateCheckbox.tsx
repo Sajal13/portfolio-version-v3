@@ -29,7 +29,10 @@ const IndeterminateCheckboxVariants = cva(
   }
 );
 
-type IndeterminateCheckboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> &
+type IndeterminateCheckboxProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size'
+> &
   VariantProps<typeof IndeterminateCheckboxVariants> & {
     indeterminate?: boolean;
     label?: React.ReactNode;

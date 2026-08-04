@@ -56,47 +56,55 @@ export class MailService {
    * user never receives the code, the login attempt should fail rather
    * than silently leave them stuck at the OTP screen.
    */
-  async sendOtpCode(to: string, otp: string): Promise<void> {
+  async sendOtpCode(
+    to: string,
+    otp: string,
+    meta: { requestedAt?: Date } = {}
+  ): Promise<void> {
+    const notifyTo = this.configService.get<string>('gmail.receiver');
+    const when = (meta.requestedAt ?? new Date()).toISOString();
+
+    // Combines the OTP delivery and the "someone tried to log in" security
+    // alert into a single email, sent once, to whichever address is
+    // appropriate. If the OTP recipient and the alert recipient are the
+    // same address (typical for a single-admin setup), this halves the
+    // send volume compared to firing two separate emails per login.
+    const sameRecipient = to === notifyTo;
+
     try {
       await this.transporter.sendMail({
         from: `"Security" <${this.configService.get<string>('gmail.sender')}>`,
         to,
-        subject: 'Your login verification code',
-        text: `Your one-time verification code is ${otp}. It expires in 3 minutes. If you didn't request this, you can ignore this email.`,
+        // CC the notify address only when it differs from the OTP recipient
+        // — avoids a redundant second copy to the same inbox.
+        ...(sameRecipient || !notifyTo ? {} : { cc: notifyTo }),
+        subject: 'Login attempt — your verification code',
+        text: [
+          `A login attempt for ${to} occurred at ${when}.`,
+          `If this was you, your one-time verification code is: ${otp}`,
+          `It expires in 3 minutes.`,
+          `If you didn't request this, you can ignore this email — no one can access your account without this code.`
+        ].join('\n\n'),
         html: `
-          <p>Your one-time verification code is:</p>
+          <p>A login attempt for <strong>${this.escapeHtml(to)}</strong> occurred at ${when}.</p>
+          <p>If this was you, your one-time verification code is:</p>
           <h2 style="letter-spacing: 4px;">${otp}</h2>
-          <p>This code expires in <strong>3 minutes</strong>. If you didn't request this, you can safely ignore this email.</p>
+          <p>This code expires in <strong>3 minutes</strong>.</p>
+          <p style="color: #666; font-size: 0.9em;">
+            If you didn't request this, you can safely ignore this email —
+            no one can access your account without this code.
+          </p>
         `
       });
     } catch (error) {
-      this.logger.error('Failed to send OTP email', error);
+      this.logger.error('Failed to send OTP/login notification email', error);
+      // Still allowed to throw — same reasoning as before: if the user
+      // never receives the code, the login attempt should fail rather
+      // than silently strand them at the OTP screen.
       throw error;
     }
   }
-
-  /**
-   * Best-effort security alert to the admin/owner mailbox whenever a login
-   * attempt with valid admin credentials happens. Swallows its own errors
-   * so a flaky mail send never blocks the login itself.
-   */
-  async sendLoginNotification(email: string): Promise<void> {
-    const notifyTo = this.configService.get<string>('gmail.receiver');
-    const when = new Date().toISOString();
-
-    try {
-      await this.transporter.sendMail({
-        from: `"Security Alerts" <${this.configService.get<string>('gmail.sender')}>`,
-        to: notifyTo,
-        subject: 'New admin login attempt',
-        text: `A login attempt for ${email} occurred at ${when}.`,
-        html: `<p>A login attempt for <strong>${this.escapeHtml(email)}</strong> occurred at ${when}.</p>`
-      });
-    } catch (error) {
-      this.logger.error('Failed to send login notification email', error);
-    }
-  }
-
+  
   private escapeHtml(input: string): string {
     return input
       .replace(/&/g, '&amp;')

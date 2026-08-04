@@ -21,7 +21,7 @@ function Sidebar({
         <SheetContent
           side={side}
           showClose={true}
-          className="ease-in-out transition-all duration-300"
+          className="max-w-64 sm:max-w-71"
         >
           <div className="flex h-full flex-col">{children}</div>
         </SheetContent>

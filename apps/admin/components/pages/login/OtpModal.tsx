@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast, InputOTP, Modal } from '@repo/ui/components';
+import { api } from 'api/base';
+import { getErrorMessage } from 'lib/error';
 
 const OTP_DURATION_SECONDS = 180; // 3 minutes — keep in sync with the backend's preAuthToken/otp expiry
 
@@ -49,30 +51,13 @@ export function OtpModal({ isOpen, preAuthToken, onClose }: OtpModalProps) {
   const handleComplete = async (otp: string) => {
     setVerifying(true);
     try {
-      const res = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ preAuthToken, otp })
-      });
-
-      if (!res.ok) {
-        const body = await res.json().catch(() => null);
-        toast({
-          title: 'Login verification failed',
-          description: body?.message ?? 'The code you entered is incorrect.',
-          variant: 'error'
-        });
-        setOtpKey((k) => k + 1);
-        return;
-      }
-
+      await api.post('/api/auth/verify-otp', { preAuthToken, otp });
       onClose();
-      router.push('/dashboard');
-    } catch {
+      router.push('/admin/dashboard');
+    } catch (err) {
       toast({
         title: 'Login verification failed',
-        description: 'Something went wrong. Please try again.',
+        description: getErrorMessage(err),
         variant: 'error'
       });
       setOtpKey((k) => k + 1);
@@ -88,7 +73,7 @@ export function OtpModal({ isOpen, preAuthToken, onClose }: OtpModalProps) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <Modal.Content className="max-w-md">
         <Modal.Header>
-          Verify it's you
+          Verify it&apos;s you
           <Modal.Close aria-label="Close">×</Modal.Close>
         </Modal.Header>
         <Modal.Body className="flex flex-col items-center gap-4">

@@ -87,4 +87,7 @@ export class UsersService {
     });
     return user?.otpAttempts ?? UsersService.MAX_OTP_ATTEMPTS;
   }
+  async updatePassword(userId: number, hashedPassword: string) {
+    await this.userRepo.update(userId, { password: hashedPassword });
+  }
 }
