@@ -2,11 +2,10 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { api } from '@repo/api-client';
 import { Button, Checkbox, Input } from '@repo/ui/components';
 import { useToast } from '@repo/ui/components';
-import { api } from 'api/base';
 import { ApiEnvelope } from 'lib/api-types';
 import { getErrorMessage } from 'lib/error';
 import { useForm } from 'react-hook-form';

@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SidebarProvider } from '@repo/ui/providers';
 import SidebarServer from 'components/common/navbar/Sidebar.server';
 import Topbar from 'components/common/navbar/Topbar';
 import { AuthProvider } from 'context/AuthContext';
+import { QueryProvider } from 'context/QueryProviders';
 import { verifySession, decodeSessionUnsafe } from 'lib/session';
 
 const API_URL = process.env.API_URL!;
@@ -53,13 +55,19 @@ export default async function AdminLayout({
 
   return (
     <AuthProvider initialSession={session}>
-      <SidebarProvider>
-        <SidebarServer />
-        <div className="flex min-h-svh flex-1 flex-col">
-          <Topbar />
-          <main className="flex-1 p-4 lg:p-6">{children}</main>
-        </div>
-      </SidebarProvider>
+      <QueryProvider>
+        <SidebarProvider>
+          <SidebarServer />
+          <Suspense>
+            <div className="flex min-h-svh flex-1 flex-col overflow-hidden">
+              <Topbar />
+              <main className="flex-1 overflow-auto p-4 lg:p-6">
+                {children}
+              </main>
+            </div>
+          </Suspense>
+        </SidebarProvider>
+      </QueryProvider>
     </AuthProvider>
   );
 }

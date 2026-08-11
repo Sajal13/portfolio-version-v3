@@ -14,4 +14,8 @@ export class ToolsResponseDto {
   @Expose()
   @ApiProperty({ example: 'https://example.com/icon.png', required: false })
   icon?: string;
+
+  @Expose()
+  @ApiProperty({ example: 'https://react.dev' })
+  docUrl: string;
 }

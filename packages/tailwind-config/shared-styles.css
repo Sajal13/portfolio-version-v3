@@ -163,9 +163,9 @@
         HOVER
   =================================== */
 
-  --color-primary-hover: #6d9fff;
+  --color-primary-hover: #a97cff;
   --color-secondary-hover: #334155;
-  --color-tertiary-hover: #a97cff;
+  --color-tertiary-hover: #6d9fff;
   --color-success-hover: #34d399;
   --color-error-hover: #f87171;
   --color-warning-hover: #fb923c;
@@ -177,9 +177,9 @@
         ACTIVE
   =================================== */
 
-  --color-primary-active: #4066d8;
+  --color-primary-active: #6d28d9;
   --color-secondary-active: #172033;
-  --color-tertiary-active: #6d28d9;
+  --color-tertiary-active: #4066d8;
   --color-success-active: #15803d;
   --color-error-active: #b91c1c;
   --color-warning-active: #b45309;
@@ -191,9 +191,9 @@
         SUBTLE
   =================================== */
 
-  --color-primary-subtle: #18264f;
+  --color-primary-subtle: #221042;
   --color-secondary-subtle: #111827;
-  --color-tertiary-subtle: #221042;
+  --color-tertiary-subtle: #18264f;
   --color-success-subtle: #052e16;
   --color-error-subtle: #450a0a;
   --color-warning-subtle: #451a03;

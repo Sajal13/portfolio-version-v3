@@ -1,0 +1,28 @@
+@layer base {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #6138a8 transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(97, 56, 168, 0.75);
+    border-radius: 999px;
+    transition: background 300ms ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6138a8;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}

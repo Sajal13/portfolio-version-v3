@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Slot } from './Slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/cn';
+import { Slot } from './Slot';
 
 /**
  * These stay exactly as you had them in types/base.ts —
@@ -142,7 +142,7 @@ const buttonVariants = cva(
         variant: 'outline',
         color: 'secondary',
         className:
-          'text-secondary-500 hover:bg-secondary-hover hover:text-white active:bg-secondary-active active:text-white'
+          'text-secondary-300 hover:bg-secondary-hover hover:text-white active:bg-secondary-active active:text-white'
       },
       {
         variant: 'outline',

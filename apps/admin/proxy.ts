@@ -18,14 +18,13 @@ export async function proxy(req: NextRequest) {
   const accessToken = req.cookies.get('accessToken')?.value;
   const refreshToken = req.cookies.get('refreshToken')?.value;
 
-  // Valid access token -> authenticated for either page type.
   if (accessToken) {
     try {
       await verifySession(accessToken);
       if (isLoginPage || isRoot) {
         return NextResponse.redirect(new URL(DEFAULT_AUTHED_PATH, req.url));
       }
-      return NextResponse.next(); // already on a protected page, fine as-is
+      return NextResponse.next();
     } catch {
       // expired or invalid signature — fall through
     }

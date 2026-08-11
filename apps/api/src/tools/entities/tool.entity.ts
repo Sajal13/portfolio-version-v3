@@ -17,6 +17,9 @@ export class Tool {
   @Column({ nullable: true })
   icon: string;
 
+  @Column({ type: 'text' })
+  docUrl: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

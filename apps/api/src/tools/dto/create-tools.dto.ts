@@ -11,4 +11,9 @@ export class CreateToolDto {
   @IsString()
   @IsOptional()
   icon?: string;
+
+  @ApiProperty({ example: 'https://react.dev' })
+  @IsString()
+  @IsOptional()
+  docUrl: string;
 }

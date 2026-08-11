@@ -23,6 +23,7 @@ import { UploadFileDto } from './dto/upload-file.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { ResponseMessage } from '../common/decorators/response-message.decorator';
 import { Public } from '../auth/decorators/public.decorator';
+import { UploadResponseDTO } from './dto/upload-response.dto';
 
 @Controller('upload')
 export class UploadController {
@@ -46,12 +47,12 @@ export class UploadController {
     summary:
       'Upload an image (Cloudinary), markdown file (DB), or resume PDF (DB)'
   })
-  @ApiResponse({ status: 201, type: String })
+  @ApiResponse({ status: 201, type: UploadResponseDTO })
   @ResponseMessage('File uploaded successfully.')
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @Body() dto: UploadFileDto
-  ) {
+  ): Promise<UploadResponseDTO> {
     return this.uploadService.uploadFile(file, dto.folder);
   }
 

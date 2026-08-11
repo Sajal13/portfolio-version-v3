@@ -107,7 +107,7 @@ export function AdvanceTablePagination({
     >
       {/* Summary */}
       {showSummary && (
-        <p className="text-secondary-900 shrink-0 font-semibold">
+        <p className="text-primary-500 shrink-0 font-semibold">
           Showing{' '}
           <span>
             {from}–{to}

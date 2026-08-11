@@ -2,10 +2,12 @@ import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/cn';
 
-const IndeterminateCheckboxVariants = cva(
+const boxVariants = cva(
   [
     'appearance-none rounded cursor-pointer transition-colors',
     'border border-white bg-neutral-700',
+    'checked:bg-purple-600 checked:border-purple-600',
+    'indeterminate:bg-purple-600 indeterminate:border-purple-600',
     'focus:outline-none',
     'focus-visible:ring-2',
     'focus-visible:ring-white/40',
@@ -33,7 +35,7 @@ type IndeterminateCheckboxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'size'
 > &
-  VariantProps<typeof IndeterminateCheckboxVariants> & {
+  VariantProps<typeof boxVariants> & {
     indeterminate?: boolean;
     label?: React.ReactNode;
     labelClassName?: string;
@@ -56,20 +58,37 @@ export function IndeterminateCheckbox({
     }
   }, [checked, indeterminate]);
 
+  const showIcon = checked || indeterminate;
+
   return (
     <label className="inline-flex cursor-pointer items-center gap-2">
-      <input
-        ref={ref}
-        type="checkbox"
-        checked={checked}
-        className={cn(IndeterminateCheckboxVariants({ size }), className)}
-        {...props}
-      />
+      <span className="relative inline-flex items-center justify-center">
+        <input
+          ref={ref}
+          type="checkbox"
+          checked={checked}
+          className={cn(boxVariants({ size }), className)}
+          {...props}
+        />
+
+        {showIcon && (
+          <svg
+            className="pointer-events-none absolute inset-0 m-auto size-[65%] text-white"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+          >
+            {checked ? <path d="M3 8l3.5 3.5L13 5" /> : <path d="M3 8h10" />}
+          </svg>
+        )}
+      </span>
 
       {label && <span className={cn('text-xs', labelClassName)}>{label}</span>}
     </label>
   );
 }
 
-export { IndeterminateCheckboxVariants };
+export { boxVariants as IndeterminateCheckboxVariants };
 export type { IndeterminateCheckboxProps };

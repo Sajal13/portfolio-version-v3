@@ -1,5 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
 import { UploadApiResponse, v2 as CloudinaryType } from 'cloudinary';
 import * as streamifier from 'streamifier';
@@ -7,6 +8,7 @@ import { MarkdownFile } from './entities/markdown-file.entity';
 import { CLOUDINARY } from '../common/cloudinary/cloudinary.provider';
 import { UploadFolder } from './dto/upload-file.dto';
 import { ResumeFile } from './entities/resume-file.entity';
+import { UploadResponseDTO } from './dto/upload-response.dto';
 
 const IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 const MARKDOWN_MIME_TYPES = ['text/markdown', 'text/x-markdown', 'text/plain'];
@@ -20,19 +22,18 @@ export class UploadService {
     @InjectRepository(MarkdownFile)
     private readonly markdownFileRepository: Repository<MarkdownFile>,
     @InjectRepository(ResumeFile)
-    private readonly resumeFileRepository: Repository<ResumeFile>
+    private readonly resumeFileRepository: Repository<ResumeFile>,
+    private readonly configService: ConfigService
   ) {}
 
   async uploadFile(
     file: Express.Multer.File,
     folder: UploadFolder
-  ): Promise<string> {
+  ): Promise<UploadResponseDTO> {
     if (!file) {
       throw new BadRequestException('No file provided.');
     }
 
-    // Resume goes to DB regardless of mimetype sniffing quirks,
-    // as long as it's actually a PDF and the folder says "resume".
     if (folder === 'resume') {
       if (
         !PDF_MIME_TYPES.includes(file.mimetype) &&
@@ -62,7 +63,7 @@ export class UploadService {
   private uploadImageToCloudinary(
     file: Express.Multer.File,
     folder: UploadFolder
-  ): Promise<string> {
+  ): Promise<UploadResponseDTO> {
     return new Promise((resolve, reject) => {
       const uploadStream = this.cloudinary.uploader.upload_stream(
         {
@@ -75,7 +76,11 @@ export class UploadService {
               new BadRequestException('Failed to upload image to Cloudinary.')
             );
           }
-          resolve(result.secure_url);
+          resolve({
+            id: result.public_id,
+            originalName: file.originalname,
+            url: result.secure_url
+          });
         }
       );
 
@@ -85,7 +90,7 @@ export class UploadService {
 
   private async saveMarkdownToDatabase(
     file: Express.Multer.File
-  ): Promise<string> {
+  ): Promise<UploadResponseDTO> {
     const markdownFile = this.markdownFileRepository.create({
       content: file.buffer.toString('utf-8'),
       originalName: file.originalname
@@ -93,12 +98,16 @@ export class UploadService {
 
     const saved = await this.markdownFileRepository.save(markdownFile);
 
-    return `/api/v1/upload/markdown/${saved.id}`;
+    return {
+      id: saved.id,
+      originalName: saved.originalName,
+      url: this.buildUrl(`/api/v1/upload/markdown/${saved.id}`)
+    };
   }
 
   private async saveResumeToDatabase(
     file: Express.Multer.File
-  ): Promise<string> {
+  ): Promise<UploadResponseDTO> {
     await this.resumeFileRepository.clear();
 
     const resumeFile = this.resumeFileRepository.create({
@@ -107,9 +116,19 @@ export class UploadService {
       mimeType: file.mimetype
     });
 
-    await this.resumeFileRepository.save(resumeFile);
+    const saved = await this.resumeFileRepository.save(resumeFile);
 
-    return `/api/v1/upload/resume/download`;
+    return {
+      id: saved.id,
+      originalName: saved.originalName,
+      url: this.buildUrl(`/api/v1/upload/resume/download`)
+    };
+  }
+
+  private buildUrl(path: string): string {
+    const baseUrl =
+      this.configService.get<string>('APP_URL')?.replace(/\/$/, '') ?? '';
+    return `${baseUrl}${path}`;
   }
 
   async getResumeFile(): Promise<ResumeFile> {

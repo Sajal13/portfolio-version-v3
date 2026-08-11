@@ -1,7 +1,9 @@
-@import "tailwindcss";
-@import "@repo/tailwind-config";
-@import "./css/extra.css";
-@import "./css/animation.css";
+@import 'tailwindcss';
+@import '@repo/tailwind-config';
+@import './css/extra.css';
+@import './css/animation.css';
+@import './css/typography.css';
+@import './css/scrollbar.css';
 
 * {
   box-sizing: border-box;

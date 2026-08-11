@@ -80,10 +80,12 @@ const SidebarClient = () => {
       </SidebarContent>
 
       <SidebarFooter>
-        <Button variant="filled" color="error" className="w-full">
-          <FiLogOut className="size-4.5 shrink-0" />
-          <span className={cn(open ? 'truncate' : 'sr-only')}>Log out</span>
-        </Button>
+        <SidebarTooltip label="Log out" active={collapsedDesktop}>
+          <Button variant="filled" color="error" className="w-full">
+            <FiLogOut className="size-4.5 shrink-0" />
+            <span className={cn(open ? 'truncate' : 'sr-only')}>Log out</span>
+          </Button>
+        </SidebarTooltip>
       </SidebarFooter>
     </Sidebar>
   );

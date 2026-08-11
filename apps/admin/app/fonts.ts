@@ -1,16 +1,13 @@
-import localFont from "next/font/local";
+import localFont from 'next/font/local';
 
 export const inter = localFont({
   src: [
     {
-      path: "./fonts/Inter-VariableFont_opsz,wght.ttf",
-      style: "normal"
-    },
-    {
-      path: "./fonts/Inter-Italic-VariableFont_opsz,wght.ttf",
-      style: "italic"
+      path: './fonts/Inter-VariableFont_opsz,wght.ttf',
+      style: 'normal',
+      weight: '100 900'
     }
   ],
-  variable: "--font-inter",
-  display: "swap"
+  variable: '--font-inter',
+  display: 'swap'
 });

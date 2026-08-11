@@ -1,6 +1,9 @@
 packages:
   - "apps/*"
   - "packages/*"
+overrides:
+  test-exclude>glob: '^10.0.0'
+  
 allowBuilds:
   "@parcel/watcher": false
   '@scarf/scarf': false

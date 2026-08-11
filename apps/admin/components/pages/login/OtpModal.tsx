@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { api } from '@repo/api-client';
 import { useToast, InputOTP, Modal } from '@repo/ui/components';
-import { api } from 'api/base';
 import { getErrorMessage } from 'lib/error';
 
 const OTP_DURATION_SECONDS = 180; // 3 minutes — keep in sync with the backend's preAuthToken/otp expiry

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { api } from 'api/base';
+import { api } from '@repo/api-client';
 
 type Session = { email: string; role: 'user' | 'admin' } | null;
 

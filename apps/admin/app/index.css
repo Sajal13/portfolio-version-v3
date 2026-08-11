@@ -1,3 +1,11 @@
-@import "tailwindcss";
-@import "@repo/tailwind-config";
-@import "@repo/ui/globals.css";
+@import 'tailwindcss';
+@import '@repo/tailwind-config';
+@import '@repo/ui/globals.css';
+
+@theme inline {
+  --font-sans: var(--font-inter);
+}
+
+body {
+  font-family: var(--font-sans);
+}

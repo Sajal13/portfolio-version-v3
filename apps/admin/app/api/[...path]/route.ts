@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { proxyToBackend } from 'api/server-fetch';
+import { proxyToBackend } from '@repo/api-client';
 
 // Routes that should NOT go through this generic proxy — auth has its
 // own dedicated handlers (login/verify-otp/refresh/logout) because those

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { proxyToBackend } from 'api/server-fetch';
+import { proxyToBackend } from '@repo/api-client';
 
 // Only reachable from the admin layout's redirect above — re-runs the
 // refresh (cheap, single call) so this Route Handler can actually set

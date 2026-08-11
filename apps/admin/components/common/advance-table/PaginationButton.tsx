@@ -18,9 +18,9 @@ const PaginationButton = ({
         'border p-2 rounded-lg min-w-8 min-h-8 leading-none cursor-pointer',
         ' transition-all duration-300 ease-linear',
         {
-          'bg-primary-500 border-primary-500 hover:bg-primary-hover hover:text-secondary-700 hover:border-primary-hover':
+          'bg-primary-500 border-primary-500 hover:bg-primary-hover hover:border-primary-hover':
             active,
-          'bg-secondary-700 border-pagination hover:bg-neutral-200 hover:text-secondary-700':
+          'bg-secondary-700 border-pagination hover:bg-neutral-200 text-white hover:text-neutral-900':
             !active
         },
         className

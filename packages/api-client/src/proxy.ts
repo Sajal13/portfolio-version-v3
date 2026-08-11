@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const API_URL = process.env.API_URL!;
+import { backendFetch } from './core';
 
 const MUTATING_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
@@ -8,32 +7,25 @@ const MUTATING_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 // (e.g. 'content-length') only if something downstream actually needs them.
 const FORWARDED_RESPONSE_HEADERS = ['content-disposition'];
 
-export async function proxyToBackend(
-  req: NextRequest,
-  path: string,
-  method: string
-): Promise<NextResponse> {
+export async function proxyToBackend(req: NextRequest, path: string, method: string): Promise<NextResponse> {
   const cookieHeader = req.headers.get('cookie') ?? '';
   const contentType = req.headers.get('content-type');
   const hasBody = !['GET', 'HEAD'].includes(method);
 
   // Double-submit CSRF: read the non-HttpOnly csrfToken cookie server-side
-  // and echo it as the header Nest's CsrfGuard expects. Client JS never
-  // needs to know about this — it only ever talks to our own domain.
+  // and echo it as the header Nest's CsrfGuard expects.
   const csrfToken = req.cookies.get('csrfToken')?.value;
 
-  const backendRes = await fetch(`${API_URL}${path}`, {
+  const backendRes = await backendFetch(path, {
     method,
+    contentType,
     headers: {
       cookie: cookieHeader,
-      ...(contentType ? { 'content-type': contentType } : {}),
-      ...(MUTATING_METHODS.has(method) && csrfToken
-        ? { 'x-csrf-token': csrfToken }
-        : {})
+      ...(MUTATING_METHODS.has(method) && csrfToken ? { 'x-csrf-token': csrfToken } : {})
     },
-    body: hasBody ? req.body : undefined,
-    duplex: hasBody ? 'half' : undefined
-  } as RequestInit & { duplex?: 'half' });
+    body: hasBody ? req.body : undefined
+    // no `cache` → no-store, correct: this is a live auth exchange, never cached
+  });
 
   const setCookieHeaders = backendRes.headers.getSetCookie?.() ?? [];
   const resContentType = backendRes.headers.get('content-type') ?? '';
@@ -53,8 +45,7 @@ export async function proxyToBackend(
     return nextRes;
   }
 
-  // Binary passthrough: PDFs (resume download), any Cloudinary-proxied
-  // bytes, etc.
+  // Binary passthrough: PDFs, any Cloudinary-proxied bytes, etc.
   const buffer = await backendRes.arrayBuffer();
   const nextRes = new NextResponse(buffer, {
     status: backendRes.status,
