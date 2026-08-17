@@ -1,7 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
 
 export class CreateProfileDto {
+  @ApiProperty({
+    example: 'I am a software engineer with 5 years of experience.'
+  })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
   @ApiProperty({ example: 5 })
   @IsInt()
   @Min(0)

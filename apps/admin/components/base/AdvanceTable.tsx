@@ -252,6 +252,7 @@ function AdvanceTable<T extends WithId = WithId>({
                   duration: 180,
                   easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)'
                 }}
+                zIndex={1}
               >
                 {activeItem && (
                   <OverlayRow

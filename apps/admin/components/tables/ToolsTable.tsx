@@ -21,8 +21,8 @@ export const toolsTableColumns = (
             <Image
               src={original.icon}
               alt={original.name}
-              width={300}
-              height={250}
+              width={36}
+              height={36}
               className="w-full h-auto"
             />
           ) : (
@@ -42,7 +42,7 @@ export const toolsTableColumns = (
     header: 'Name',
     meta: {
       headerProps: {
-        className: 'whitespace-nowrap flex-1 min-w-60'
+        className: 'whitespace-nowrap flex-1 md:min-w-30 text-start'
       },
       cellProps: {
         className: 'whitespace-nowrap align-middle'
@@ -55,7 +55,7 @@ export const toolsTableColumns = (
     header: 'Doc Url',
     meta: {
       headerProps: {
-        className: 'whitespace-nowrap'
+        className: 'whitespace-nowrap md:min-w-60'
       },
       cellProps: {
         className: 'whitespace-nowrap text-center'

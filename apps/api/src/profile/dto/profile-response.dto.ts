@@ -8,6 +8,12 @@ export class ProfileResponseDto {
   id: number;
 
   @Expose()
+  @ApiProperty({
+    example: 'I am a software engineer with 5 years of experience.'
+  })
+  description: string;
+
+  @Expose()
   @ApiProperty({ example: 5 })
   totalYearsOfExperience: number;
 

@@ -27,7 +27,8 @@ export function SortableRow<TData extends { id: number }>({
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0 : 1
+    opacity: isDragging ? 0 : 1,
+    zIndex: isDragging ? 1 : 0
   };
 
   return (
@@ -53,7 +54,7 @@ export function SortableRow<TData extends { id: number }>({
       <td className="px-4 py-3.25 align-middle">
         <Button
           variant="link"
-          className="mx-auto cursor-grab touch-none text-secondary-800 active:cursor-grabbing"
+          className="mx-auto cursor-grab touch-none text-secondary active:cursor-grabbing"
           {...attributes}
           {...listeners}
         >

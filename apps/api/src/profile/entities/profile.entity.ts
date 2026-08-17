@@ -5,6 +5,9 @@ export class Profile {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
+  @Column({ type: 'text' })
+  description: string;
+
   @Column({ type: 'int' })
   totalYearsOfExperience: number;
 

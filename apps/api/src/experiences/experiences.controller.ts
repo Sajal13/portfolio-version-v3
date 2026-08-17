@@ -37,6 +37,15 @@ export class ExperiencesController {
     return this.experiencesService.getExperiences();
   }
 
+  @Get('/:id')
+  @Public()
+  @ApiOperation({ summary: 'Get all experiences' })
+  @ApiResponse({ status: 200, type: ExperienceResponseDto, isArray: true })
+  @ResponseMessage('Experience get successful.')
+  async getExperienceById(@Param('id', ParseIntPipe) id: number) {
+    return await this.experiencesService.getExperienceById(id);
+  }
+
   @Post('/create')
   @Roles('admin')
   @ApiBearerAuth()

@@ -8,7 +8,7 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 import { Tool } from '../../tools/entities/tool.entity';
-import { ExperienceType } from '../types/experienceType';
+import { ExperienceStatus, ExperienceType } from '../types/experienceType';
 
 @Entity('experiences')
 export class Experience {
@@ -40,8 +40,12 @@ export class Experience {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'boolean', default: true })
-  isActive: boolean;
+  @Column({
+    type: 'enum',
+    enum: ExperienceStatus,
+    default: ExperienceStatus.active
+  })
+  status: ExperienceStatus;
 
   @Column({ type: 'int', nullable: true })
   order: number;

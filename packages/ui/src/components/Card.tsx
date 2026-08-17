@@ -1,14 +1,59 @@
 import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/cn';
 
-function Card({ className, ...props }: React.ComponentProps<'div'>) {
+const cardVariants = cva(
+  'flex flex-col gap-6 rounded-lg border border-main bg-secondary-700 py-6 text-white',
+  {
+    variants: {
+      variant: {
+        default: '',
+        // Only the *static* part lives here — size/repeat/position. The
+        // actual image differs per usage, so it's supplied via the
+        // `illustrationSrc` prop and applied as an inline `backgroundImage`
+        // rather than baked into a Tailwind arbitrary-value class per card.
+        illustration: 'bg-cover bg-no-repeat bg-right'
+      }
+    },
+    defaultVariants: {
+      variant: 'default'
+    }
+  }
+);
+
+interface CardProps
+  extends React.ComponentProps<'div'>, VariantProps<typeof cardVariants> {
+  /**
+   * Public-folder path to the illustration, e.g.
+   * "/assets/image/illustrations/card_illustration.webp".
+   * Only applies when variant="illustration". Resolves at runtime against
+   * whichever app renders this component — @repo/ui never needs its own
+   * copy of the asset.
+   */
+  illustrationSrc?: string;
+}
+
+function Card({
+  className,
+  variant,
+  illustrationSrc,
+  style,
+  ...props
+}: CardProps) {
   return (
     <div
       data-slot="card"
-      className={cn(
-        'flex flex-col gap-6 rounded-lg border border-main bg-secondary-700 py-6 text-white',
-        className
-      )}
+      className={cn(cardVariants({ variant }), className)}
+      style={
+        variant === 'illustration'
+          ? {
+              backgroundImage: illustrationSrc
+                ? `url('${illustrationSrc}')`
+                : `url('/assets/image/illustrations/card_illustration.webp')`,
+              ...style
+            }
+          : style
+      }
       {...props}
     />
   );

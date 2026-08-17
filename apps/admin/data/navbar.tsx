@@ -25,7 +25,7 @@ export const adminRoutes: AdminRoute[] = [
     label: 'Experience',
     path: '/admin/experience',
     icon: LuBriefcase,
-    active: false
+    active: true
   },
   {
     label: 'Portfolio',
@@ -33,8 +33,8 @@ export const adminRoutes: AdminRoute[] = [
     icon: LuFolderKanban,
     active: false
   },
-  { label: 'Profile', path: '/admin/profile', icon: LuCircle, active: false },
-  { label: 'Skills', path: '/admin/skills', icon: LuSparkles, active: false },
+  { label: 'Profile', path: '/admin/profile', icon: LuCircle, active: true },
+  { label: 'Skills', path: '/admin/skills', icon: LuSparkles, active: true },
   {
     label: 'Testimonial',
     path: '/admin/testimonial',

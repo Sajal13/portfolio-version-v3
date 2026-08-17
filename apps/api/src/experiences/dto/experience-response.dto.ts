@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
-import { ExperienceType } from '../types/experienceType';
+import { ExperienceStatus, ExperienceType } from '../types/experienceType';
 
 class ToolResponseDto {
   @ApiProperty({ example: 1 })
@@ -48,9 +48,12 @@ export class ExperienceResponseDto {
   @Expose()
   description: string;
 
-  @ApiProperty({ example: true })
-  @Expose()
-  isActive: boolean;
+  @ApiProperty({
+    enum: ExperienceStatus,
+    example: ExperienceStatus.active,
+    default: ExperienceStatus.active
+  })
+  status?: ExperienceStatus;
 
   @ApiProperty({ example: 1, nullable: true })
   @Expose()

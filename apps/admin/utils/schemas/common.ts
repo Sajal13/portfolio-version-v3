@@ -18,3 +18,18 @@ export const emailSchema = z
 export const optionalEmailSchema = z
   .union([emailSchema, z.literal('')])
   .optional();
+
+export const urlSchema = z
+  .string({ message: 'Link is required' })
+  .min(1, 'Link is required')
+  .regex(
+    /^https:\/\/([\w-]+\.)+[\w-]+(\/[\w\-./?%&=]*)?$/,
+    'Must be a valid HTTPS URL (e.g. https://example.com/something)'
+  )
+  .max(2048, 'URL must not exceed 2048 characters')
+  .refine((url) => !url.includes('localhost') && !url.includes('127.0.0.1'), {
+    message: 'Localhost URLs are not allowed'
+  })
+  .refine((url) => !url.includes('..'), {
+    message: 'URL contains invalid path segments'
+  });

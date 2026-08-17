@@ -144,6 +144,20 @@ export class UploadService {
     return resume;
   }
 
+  // Separate from getResumeFile() (used by the raw PDF download endpoint) —
+  // this returns JSON metadata so the admin UI can show "a resume exists"
+  // without pulling the binary. Throws the same BadRequestException as
+  // getResumeFile() when nothing's been uploaded yet; the frontend treats
+  // that as "no resume", same pattern as the profile-not-created case.
+  async getResumeMetadata(): Promise<UploadResponseDTO> {
+    const resume = await this.getResumeFile();
+    return {
+      id: resume.id,
+      originalName: resume.originalName,
+      url: this.buildUrl('/api/v1/upload/resume/download')
+    };
+  }
+
   async getMarkdownContent(id: string): Promise<string> {
     const markdownFile = await this.markdownFileRepository.findOneBy({ id });
 

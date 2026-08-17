@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react';
 import { Button, useToast } from '@repo/ui/components';
+import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
 import { useToolMutations } from 'hooks/mutations/useToolMutations';
+import ToolsModal from './ToolsModal';
 import ToolsTableContainer from './ToolsTableContainer';
 
 const ToolsPageContainer = () => {
@@ -51,14 +53,32 @@ const ToolsPageContainer = () => {
   };
 
   return (
-    <section>
-      <PageHeader title="Tools">
-        <Button variant="filled" color="primary">
-          Add Tools
-        </Button>
-      </PageHeader>
-      <ToolsTableContainer onEdit={openEditModal} onDelete={openDeleteModal} />
-    </section>
+    <>
+      <section>
+        <PageHeader title="Tools">
+          <Button variant="filled" color="primary" onClick={openAddModal}>
+            Add Tools
+          </Button>
+        </PageHeader>
+        <ToolsTableContainer
+          onEdit={openEditModal}
+          onDelete={openDeleteModal}
+        />
+      </section>
+      <ToolsModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        editId={editId}
+      />
+      <DeleteConfirmationModal
+        open={deleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={handleConfirmDelete}
+        isDeleting={deleteTool.isPending}
+        title="Delete blog"
+        description="Are you sure you want to delete this tool? This action cannot be undone."
+      />
+    </>
   );
 };
 

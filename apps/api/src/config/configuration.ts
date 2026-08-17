@@ -16,7 +16,8 @@ export default () => ({
     accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
     refreshSecret: process.env.JWT_REFRESH_SECRET,
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
-    otpSecret: process.env.JWT_OTP_SECRET
+    otpSecret: process.env.JWT_OTP_SECRET,
+    accessExpiresInRemember: process.env.JWT_EXPIRE_REMEMBER_ME_IN
   },
 
   cookie: {

@@ -20,6 +20,19 @@ export class ExperiencesService {
     return await this.experienceRepository.find({ relations: { tools: true } });
   }
 
+  async getExperienceById(id: number): Promise<Experience> {
+    const experience = await this.experienceRepository.findOne({
+      where: { id },
+      relations: { tools: true }
+    });
+
+    if (!experience) {
+      throw new NotFoundException(`Experience with id ${id} not found.`);
+    }
+
+    return experience;
+  }
+
   async createExperience(createDto: CreateExperienceDto): Promise<Experience> {
     const { tools, ...rest } = createDto;
 

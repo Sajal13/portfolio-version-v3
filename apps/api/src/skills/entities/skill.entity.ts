@@ -11,7 +11,7 @@ export class Skill {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', unique: true })
   title: string;
 
   @Column({ type: 'int' })

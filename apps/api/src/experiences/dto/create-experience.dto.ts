@@ -9,7 +9,7 @@ import {
   ArrayNotEmpty,
   IsEnum
 } from 'class-validator';
-import { ExperienceType } from '../types/experienceType';
+import { ExperienceStatus, ExperienceType } from '../types/experienceType';
 
 export class CreateExperienceDto {
   @ApiProperty({ enum: ExperienceType, example: ExperienceType.fullTime })
@@ -49,10 +49,15 @@ export class CreateExperienceDto {
   @IsNotEmpty()
   description: string;
 
-  @ApiProperty({ example: true, required: false })
-  @IsBoolean()
+  @ApiProperty({
+    enum: ExperienceStatus,
+    example: ExperienceStatus.active,
+    required: false,
+    default: ExperienceStatus.active
+  })
+  @IsEnum(ExperienceStatus)
   @IsOptional()
-  isActive?: boolean;
+  status?: ExperienceStatus;
 
   @ApiProperty({ example: [1, 2, 3] })
   @IsArray()

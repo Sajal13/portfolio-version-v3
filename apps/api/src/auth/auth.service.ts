@@ -108,12 +108,16 @@ export class AuthService {
         secret: this.config.get('jwt.otpSecret')
       });
     } catch {
-      throw new UnauthorizedException('OTP session expired, please log in again');
+      throw new UnauthorizedException(
+        'OTP session expired, please log in again'
+      );
     }
 
     const user = await this.usersService.findById(payload.sub);
     if (!user || !user.otpCode || !user.otpExpiresAt) {
-      throw new UnauthorizedException('OTP session expired, please log in again');
+      throw new UnauthorizedException(
+        'OTP session expired, please log in again'
+      );
     }
 
     if (user.otpExpiresAt.getTime() < Date.now()) {
@@ -146,7 +150,12 @@ export class AuthService {
       throw new UnauthorizedException('OTP already used, please log in again');
     }
 
-    return this.issueTokens(user.id, user.email, user.role, !!payload.rememberMe);
+    return this.issueTokens(
+      user.id,
+      user.email,
+      user.role,
+      !!payload.rememberMe
+    );
   }
 
   async changePassword(
@@ -182,13 +191,17 @@ export class AuthService {
 
     return this.issueTokens(user.id, user.email, user.role, false);
   }
-  
+
   async logout(userId: number) {
     await this.usersService.setRefreshToken(userId, null);
     return { message: 'Logged out successfully' };
   }
 
-  async refreshTokens(userId: number, refreshToken: string, rememberMe: boolean) {
+  async refreshTokens(
+    userId: number,
+    refreshToken: string,
+    rememberMe: boolean
+  ) {
     const user = await this.usersService.findById(userId);
     if (!user || !user.hashedRefreshToken) {
       throw new ForbiddenException('Access denied');
@@ -204,10 +217,17 @@ export class AuthService {
     // Removes the rotation race entirely: concurrent refresh calls all
     // validate against the same unchanged hash instead of invalidating
     // each other.
-    const payload = { sub: user.id, email: user.email, role: user.role, rememberMe };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      rememberMe
+    };
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.config.get('jwt.accessSecret'),
-      expiresIn: this.config.get('jwt.accessExpiresIn')
+      expiresIn: rememberMe
+        ? this.config.get('jwt.accessExpiresInRemember')
+        : this.config.get('jwt.accessExpiresIn')
     });
 
     return { accessToken, refreshToken, rememberMe };
@@ -221,10 +241,14 @@ export class AuthService {
   ) {
     const payload = { sub: userId, email, role, rememberMe };
 
+    const accessExpiresIn = rememberMe
+      ? this.config.get('jwt.accessExpiresInRemember') // e.g. '7d'
+      : this.config.get('jwt.accessExpiresIn'); // e.g. '1d'
+
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
         secret: this.config.get('jwt.accessSecret'),
-        expiresIn: this.config.get('jwt.accessExpiresIn')
+        expiresIn: accessExpiresIn
       }),
       this.jwtService.signAsync(payload, {
         secret: this.config.get('jwt.refreshSecret'),

@@ -231,7 +231,7 @@ const FileUploader = ({
                         e.stopPropagation();
                         onRemove(item.index, item.source);
                       }}
-                      className="absolute -top-2 -right-2 bg-black/70 rounded-full p-1 hover:bg-black opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute cursor-pointer -top-2 -right-2 bg-black/70 rounded-full p-1 hover:bg-black opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       <FiX className="text-white w-4 h-4" />
                     </button>

@@ -65,6 +65,17 @@ export class UploadController {
     return this.uploadService.getMarkdownContent(id);
   }
 
+  @Get('resume')
+  @Public()
+  @ApiOperation({
+    summary: 'Get metadata for the current resume (id, name, download url)'
+  })
+  @ApiResponse({ status: 200, type: UploadResponseDTO })
+  @ResponseMessage('Resume fetched successfully.')
+  async getResume(): Promise<UploadResponseDTO> {
+    return this.uploadService.getResumeMetadata();
+  }
+
   @Get('resume/download')
   @Public()
   @ApiOperation({ summary: 'Download the current resume PDF' })

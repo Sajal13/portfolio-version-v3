@@ -34,7 +34,7 @@ function Sidebar({
       data-slot="sidebar"
       data-state={open ? 'expanded' : 'collapsed'}
       className={cn(
-        'sticky top-0 left-0 flex h-svh shrink-0 flex-col overflow-hidden border-main bg-neutral-500 text-white transition-all duration-300 ease-linear',
+        'sticky top-0 left-0 z-50 flex h-svh shrink-0 flex-col overflow-hidden border-main bg-neutral-500 text-white transition-all duration-300 ease-linear',
         side === 'left' ? 'border-r' : 'border-l',
         open ? 'w-(--sidebar-width)' : 'w-(--sidebar-width-collapsed)',
         className
