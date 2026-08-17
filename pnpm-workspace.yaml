@@ -3,10 +3,11 @@ packages:
   - "packages/*"
 overrides:
   test-exclude>glob: '^10.0.0'
-  
+
 allowBuilds:
   "@parcel/watcher": false
   '@scarf/scarf': false
   bcrypt: true
+  esbuild: set this to true or false
   sharp: false
   unrs-resolver: false

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
+import type { IconType } from '@repo/icons';
+import { BsFileEarmarkPdf, BsMarkdown, BsFileEarmark } from '@repo/icons/bs';
+import { FiUploadCloud, FiX, FiImage } from '@repo/icons/fi';
 import { Button } from '@repo/ui/components';
 import classNames from 'classnames';
 import useFilePreviewUrls from 'hooks/useFilePreviewUrls';
 import { useDropzone } from 'react-dropzone';
-import type { IconType } from 'react-icons';
-import { BsFileEarmarkPdf, BsMarkdown, BsFileEarmark } from 'react-icons/bs';
-import { FiUploadCloud, FiX, FiImage } from 'react-icons/fi';
 
 type FileKind = 'image' | 'pdf' | 'markdown' | 'other';
 

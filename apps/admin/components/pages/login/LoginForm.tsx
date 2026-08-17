@@ -4,12 +4,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@repo/api-client';
+import { FaEnvelope, FaLock, FaArrowRight } from '@repo/icons/fa';
 import { Button, Checkbox, Input } from '@repo/ui/components';
 import { useToast } from '@repo/ui/components';
 import { ApiEnvelope } from 'lib/api-types';
 import { getErrorMessage } from 'lib/error';
 import { useForm } from 'react-hook-form';
-import { FaEnvelope, FaLock, FaArrowRight } from 'react-icons/fa';
 import {
   LoginFormSchema,
   type LoginFormSchemaType

@@ -1,12 +1,12 @@
+import { LuEye } from '@repo/icons/lu';
+import { MdDelete } from '@repo/icons/md';
+import { VscEdit } from '@repo/icons/vsc';
 import { Experience, ExperienceStatus } from '@repo/types';
 import { Badge, Button } from '@repo/ui/components';
 import { ColumnDef } from '@tanstack/react-table';
 import AdvanceTable from 'components/base/AdvanceTable';
 import { AdvanceTablePagination } from 'components/base/AdvanceTablePagination';
 import dayjs from 'dayjs';
-import { LuEye } from 'react-icons/lu';
-import { MdDelete } from 'react-icons/md';
-import { VscEdit } from 'react-icons/vsc';
 
 const experienceTypeLabel: Record<string, string> = {
   Education: 'Education',

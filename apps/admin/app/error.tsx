@@ -6,7 +6,7 @@ import {
   LuLayoutDashboard,
   LuChevronDown,
   LuTriangleAlert
-} from 'react-icons/lu';
+} from '@repo/icons/lu';
 
 export default function GlobalError({
   error,

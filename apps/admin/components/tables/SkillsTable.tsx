@@ -1,11 +1,11 @@
+import { MdDelete } from '@repo/icons/md';
+import { VscEdit } from '@repo/icons/vsc';
 import { Skill } from '@repo/types';
 import { Badge, Button } from '@repo/ui/components';
 import { textFormatter } from '@repo/ui/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import AdvanceTable from 'components/base/AdvanceTable';
 import { AdvanceTablePagination } from 'components/base/AdvanceTablePagination';
-import { MdDelete } from 'react-icons/md';
-import { VscEdit } from 'react-icons/vsc';
 
 export const skillsTableColumn = (
   onEdit: (row: number) => void,

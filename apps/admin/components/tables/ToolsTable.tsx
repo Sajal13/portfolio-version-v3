@@ -1,11 +1,11 @@
 import Image from 'next/image';
+import { MdDelete } from '@repo/icons/md';
+import { VscEdit } from '@repo/icons/vsc';
 import { Tool } from '@repo/types';
 import { Button } from '@repo/ui/components';
 import { ColumnDef } from '@tanstack/react-table';
 import AdvanceTable from 'components/base/AdvanceTable';
 import { AdvanceTablePagination } from 'components/base/AdvanceTablePagination';
-import { MdDelete } from 'react-icons/md';
-import { VscEdit } from 'react-icons/vsc';
 
 export const toolsTableColumns = (
   onEdit: (row: number) => void,

@@ -1,13 +1,13 @@
 'use client';
 
-import classNames from 'classnames';
-import { useAdvanceTableContext } from 'context/AdvanceTableProvider';
 import {
   LuChevronLeft,
   LuChevronRight,
   LuChevronsLeft,
   LuChevronsRight
-} from 'react-icons/lu';
+} from '@repo/icons/lu';
+import classNames from 'classnames';
+import { useAdvanceTableContext } from 'context/AdvanceTableProvider';
 import PaginationButton from '../common/advance-table/PaginationButton';
 
 interface AdvanceTablePaginationProps {

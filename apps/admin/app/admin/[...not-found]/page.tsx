@@ -1,9 +1,6 @@
 import Link from 'next/link';
-import { LuLayoutDashboard, LuBan } from 'react-icons/lu';
+import { LuLayoutDashboard, LuBan } from '@repo/icons/lu';
 
-// Next.js will pass the pathname via headers in middleware if you want it here.
-// For a plain not-found.tsx there's no direct access to the URL, so this
-// example takes it as an optional prop you can wire up (see note below).
 export default function NotFound() {
   return (
     <div className="min-h-screen w-full bg-[#0a0c10] flex items-center justify-center p-6">

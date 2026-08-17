@@ -13,6 +13,7 @@ export * from './Card';
 export * from './Checkbox';
 export * from './Collapsible';
 export * from './ContextMenu';
+export * from './DateTimePicker';
 export * from './Dialog';
 export * from './Drawer';
 export * from './DropdownMenu';

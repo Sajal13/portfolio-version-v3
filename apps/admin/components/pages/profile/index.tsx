@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { LuLoader, LuFileText, LuDownload } from '@repo/icons/lu';
 import { Button, Card, CardContent } from '@repo/ui/components';
 import PageHeader from 'components/common/PageHeader';
 import { useProfileGet } from 'hooks/queries/useProfileQueries';
 import { useResumeGet } from 'hooks/queries/useResumeQueries';
-import { LuLoader, LuFileText, LuDownload } from 'react-icons/lu';
 import ProfileModal from './ProfileModal';
 import ResumeModal from './ResumeModal';
 

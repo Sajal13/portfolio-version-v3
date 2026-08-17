@@ -16,7 +16,8 @@ import {
   SearchableSelect,
   useToast,
   type SearchableSelectOption,
-  Label
+  Label,
+  DateTimePicker
 } from '@repo/ui/components';
 import { useExperienceMutations } from 'hooks/mutations/useExperienceMutations';
 import { useGetExperienceById } from 'hooks/queries/useExperienceQueries';
@@ -302,12 +303,14 @@ const ExperienceModal = ({ open, onClose, editId }: ExperienceModalProps) => {
                     name="startDate"
                     control={control}
                     render={({ field }) => (
-                      <Input
+                      <DateTimePicker
                         id="startDate"
-                        type="date"
+                        placeholder="Select Date"
+                        value={field.value}
+                        onChange={(formatted) => field.onChange(formatted)}
+                        mode="date"
                         aria-invalid={!!errors.startDate}
                         className="w-full"
-                        {...field}
                       />
                     )}
                   />

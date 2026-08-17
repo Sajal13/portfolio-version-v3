@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FiLogOut } from '@repo/icons/fi';
 import {
   Sidebar,
   SidebarHeader,
@@ -19,7 +20,6 @@ import {
 import { cn } from '@repo/ui/utils';
 import { SidebarTooltip } from 'components/layout/SidebarTooltip';
 import { adminRoutes } from 'data/navbar';
-import { FiLogOut } from 'react-icons/fi';
 
 const SidebarClient = () => {
   const pathname = usePathname();

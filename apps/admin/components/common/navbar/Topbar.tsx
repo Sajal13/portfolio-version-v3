@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { FaUser, FaKey, FaCog } from '@repo/icons/fa';
+import { FiLogOut } from '@repo/icons/fi';
 import { SidebarTrigger } from '@repo/ui/components';
 import {
   DropdownMenu,
@@ -11,8 +13,6 @@ import {
 } from '@repo/ui/components';
 import { Separator } from '@repo/ui/components';
 import { cn } from '@repo/ui/utils';
-import { FaUser, FaKey, FaCog } from 'react-icons/fa';
-import { FiLogOut } from 'react-icons/fi';
 
 const Topbar = () => {
   const [scrolled, setScrolled] = useState(false);

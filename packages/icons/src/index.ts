@@ -1,0 +1,1 @@
+export type { IconType, IconBaseProps, IconTree} from 'react-icons';

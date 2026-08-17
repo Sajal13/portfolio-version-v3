@@ -3,10 +3,10 @@
 import type { ReactNode } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { LuGripVertical } from '@repo/icons/lu';
 import { Button } from '@repo/ui/components';
 import { flexRender, type Row } from '@tanstack/react-table';
 import classNames from 'classnames';
-import { LuGripVertical } from 'react-icons/lu';
 
 export function SortableRow<TData extends { id: number }>({
   tableRow,

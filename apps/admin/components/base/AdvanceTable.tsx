@@ -13,13 +13,13 @@ import {
   arrayMove,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable';
+import { FaSortDown, FaSortUp, FaSort } from '@repo/icons/fa6';
+import { LuLoaderCircle } from '@repo/icons/lu';
 import { flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
 import { useAdvanceTableContext } from 'context/AdvanceTableProvider';
 import { useGetDndSensor } from 'hooks/useDndSensor';
 import { createPortal } from 'react-dom';
-import { FaSortDown, FaSortUp, FaSort } from 'react-icons/fa6';
-import { LuLoaderCircle } from 'react-icons/lu';
 import { OverlayRow } from '../common/advance-table/OverlayRow';
 import { SortableRow } from '../common/advance-table/SortableRow';
 

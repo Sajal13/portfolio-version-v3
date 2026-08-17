@@ -1,10 +1,10 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { LuGripVertical } from '@repo/icons/lu';
 import { Button } from '@repo/ui/components';
 import { flexRender, type Table } from '@tanstack/react-table';
 import classNames from 'classnames';
-import { LuGripVertical } from 'react-icons/lu';
 
 export function OverlayRow<TData extends { id: number }>({
   table,

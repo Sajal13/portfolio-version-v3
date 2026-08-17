@@ -1,4 +1,3 @@
-// lib/admin-routes.ts
 import {
   LuLayoutDashboard,
   LuNewspaper,
@@ -10,7 +9,7 @@ import {
   LuMessageSquareQuote,
   LuWrench,
   LuUsers
-} from 'react-icons/lu';
+} from '@repo/icons/lu';
 import { AdminRoute } from 'types/navbar';
 
 export const adminRoutes: AdminRoute[] = [

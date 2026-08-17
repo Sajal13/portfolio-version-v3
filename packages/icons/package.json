@@ -1,0 +1,153 @@
+{
+  "name": "@repo/icons",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "pnpm generate && tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "react-icons": "^5.7.0"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0",
+    "@repo/typescript-config": "workspace:*"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./ci": {
+      "types": "./dist/ci.d.ts",
+      "import": "./dist/ci.js"
+    },
+    "./fa": {
+      "types": "./dist/fa.d.ts",
+      "import": "./dist/fa.js"
+    },
+    "./fa6": {
+      "types": "./dist/fa6.d.ts",
+      "import": "./dist/fa6.js"
+    },
+    "./io": {
+      "types": "./dist/io.d.ts",
+      "import": "./dist/io.js"
+    },
+    "./io5": {
+      "types": "./dist/io5.d.ts",
+      "import": "./dist/io5.js"
+    },
+    "./md": {
+      "types": "./dist/md.d.ts",
+      "import": "./dist/md.js"
+    },
+    "./ti": {
+      "types": "./dist/ti.d.ts",
+      "import": "./dist/ti.js"
+    },
+    "./go": {
+      "types": "./dist/go.d.ts",
+      "import": "./dist/go.js"
+    },
+    "./fi": {
+      "types": "./dist/fi.d.ts",
+      "import": "./dist/fi.js"
+    },
+    "./lu": {
+      "types": "./dist/lu.d.ts",
+      "import": "./dist/lu.js"
+    },
+    "./gi": {
+      "types": "./dist/gi.d.ts",
+      "import": "./dist/gi.js"
+    },
+    "./wi": {
+      "types": "./dist/wi.d.ts",
+      "import": "./dist/wi.js"
+    },
+    "./di": {
+      "types": "./dist/di.d.ts",
+      "import": "./dist/di.js"
+    },
+    "./ai": {
+      "types": "./dist/ai.d.ts",
+      "import": "./dist/ai.js"
+    },
+    "./bs": {
+      "types": "./dist/bs.d.ts",
+      "import": "./dist/bs.js"
+    },
+    "./ri": {
+      "types": "./dist/ri.d.ts",
+      "import": "./dist/ri.js"
+    },
+    "./fc": {
+      "types": "./dist/fc.d.ts",
+      "import": "./dist/fc.js"
+    },
+    "./gr": {
+      "types": "./dist/gr.d.ts",
+      "import": "./dist/gr.js"
+    },
+    "./hi": {
+      "types": "./dist/hi.d.ts",
+      "import": "./dist/hi.js"
+    },
+    "./hi2": {
+      "types": "./dist/hi2.d.ts",
+      "import": "./dist/hi2.js"
+    },
+    "./si": {
+      "types": "./dist/si.d.ts",
+      "import": "./dist/si.js"
+    },
+    "./sl": {
+      "types": "./dist/sl.d.ts",
+      "import": "./dist/sl.js"
+    },
+    "./im": {
+      "types": "./dist/im.d.ts",
+      "import": "./dist/im.js"
+    },
+    "./bi": {
+      "types": "./dist/bi.d.ts",
+      "import": "./dist/bi.js"
+    },
+    "./cg": {
+      "types": "./dist/cg.d.ts",
+      "import": "./dist/cg.js"
+    },
+    "./vsc": {
+      "types": "./dist/vsc.d.ts",
+      "import": "./dist/vsc.js"
+    },
+    "./tb": {
+      "types": "./dist/tb.d.ts",
+      "import": "./dist/tb.js"
+    },
+    "./tfi": {
+      "types": "./dist/tfi.d.ts",
+      "import": "./dist/tfi.js"
+    },
+    "./rx": {
+      "types": "./dist/rx.d.ts",
+      "import": "./dist/rx.js"
+    },
+    "./pi": {
+      "types": "./dist/pi.d.ts",
+      "import": "./dist/pi.js"
+    },
+    "./lia": {
+      "types": "./dist/lia.d.ts",
+      "import": "./dist/lia.js"
+    }
+  }
+}
