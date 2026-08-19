@@ -106,11 +106,31 @@ const ToolsModal = ({ open, onClose, editId }: ToolsModalProps) => {
 
     try {
       if (isEditMode && editId) {
-        await updateTool.mutateAsync({ id: editId, payload });
-        toast({ variant: 'success', title: 'Tool updated successfully.' });
+        const res = await updateTool.mutateAsync({ id: editId, payload });
+        if (res.success) {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Tool updated successfully.'
+          });
+        } else {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Tool updated failed.'
+          });
+        }
       } else {
-        await createTool.mutateAsync(payload);
-        toast({ variant: 'success', title: 'Tool created successfully.' });
+        const res = await createTool.mutateAsync(payload);
+        if (res.success) {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Tool created successfully.'
+          });
+        } else {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Tool created failed.'
+          });
+        }
       }
       onClose();
     } catch (error) {

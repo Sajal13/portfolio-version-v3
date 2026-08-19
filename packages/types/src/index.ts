@@ -4,3 +4,6 @@ export * from './tools';
 export * from './profile';
 export * from './skills';
 export * from './experience';
+export * from './portfolio';
+export * from './testimonial';
+export * from './contact';

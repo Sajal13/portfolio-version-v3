@@ -30,7 +30,7 @@ export const adminRoutes: AdminRoute[] = [
     label: 'Portfolio',
     path: '/admin/portfolio',
     icon: LuFolderKanban,
-    active: false
+    active: true
   },
   { label: 'Profile', path: '/admin/profile', icon: LuCircle, active: true },
   { label: 'Skills', path: '/admin/skills', icon: LuSparkles, active: true },
@@ -38,9 +38,9 @@ export const adminRoutes: AdminRoute[] = [
     label: 'Testimonial',
     path: '/admin/testimonial',
     icon: LuMessageSquareQuote,
-    active: false
+    active: true
   },
   { label: 'Tools', path: '/admin/tools', icon: LuWrench, active: true },
-  { label: 'Contact', path: '/admin/contact', icon: LuMail, active: false },
+  { label: 'Contact', path: '/admin/contact', icon: LuMail, active: true },
   { label: 'Users', path: '/admin/users', icon: LuUsers, active: false }
 ];

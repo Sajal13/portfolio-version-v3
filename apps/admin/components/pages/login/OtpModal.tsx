@@ -51,8 +51,12 @@ export function OtpModal({ isOpen, preAuthToken, onClose }: OtpModalProps) {
   const handleComplete = async (otp: string) => {
     setVerifying(true);
     try {
-      await api.post('/api/auth/verify-otp', { preAuthToken, otp });
+      const res = await api.post('/api/auth/verify-otp', { preAuthToken, otp });
       onClose();
+      toast({
+        variant: 'success',
+        title: 'Login Successful.'
+      });
       router.push('/admin/dashboard');
     } catch (err) {
       toast({

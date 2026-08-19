@@ -12,7 +12,7 @@ export async function GET(
     });
   } catch (err) {
     return NextResponse.json(
-      { status: 500, message: `Failed to Get skill: ${err}` },
+      { status: 500, message: `Failed to Get portfolio: ${err}` },
       { status: 500 }
     );
   }

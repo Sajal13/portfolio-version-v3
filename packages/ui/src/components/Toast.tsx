@@ -91,10 +91,10 @@ function ToastProvider({ children }: { children: React.ReactNode }) {
 
 const variantClass: Record<ToastVariant, string> = {
   default: 'border-main bg-secondary-700 text-white',
-  success: 'border-success-500/40 bg-success-500/10 text-success-500',
-  error: 'border-error-500/40 bg-error-500/10 text-error-500',
-  warning: 'border-warning-500/40 bg-warning-500/10 text-warning-500',
-  info: 'border-info-500/40 bg-info-500/10 text-info-500'
+  success: 'border-success-500 bg-success-subtle text-success-500',
+  error: 'border-error-500 bg-error-subtle text-error-500',
+  warning: 'border-warning-500 bg-warning-subtle text-warning-500',
+  info: 'border-info-500 bg-info-subtle text-info-500'
 };
 
 function ToastCard({

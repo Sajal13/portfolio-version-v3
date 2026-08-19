@@ -125,11 +125,34 @@ const SkillsModal = ({ open, onClose, editId }: SkillsModalProps) => {
   const onSubmit = handleSubmit(async (values) => {
     try {
       if (isEditMode && editId) {
-        await updateSkill.mutateAsync({ id: editId, payload: values });
-        toast({ variant: 'success', title: 'Skill updated successfully.' });
+        const res = await updateSkill.mutateAsync({
+          id: editId,
+          payload: values
+        });
+        if (res.success) {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Skill updated successfully.'
+          });
+        } else {
+          toast({
+            variant: 'error',
+            title: res.message ?? 'Skill updated failed.'
+          });
+        }
       } else {
-        await createSkill.mutateAsync(values);
-        toast({ variant: 'success', title: 'Skill created successfully.' });
+        const res = await createSkill.mutateAsync(values);
+        if (res.success) {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Skill created successfully.'
+          });
+        } else {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Skill created failed.'
+          });
+        }
       }
       onClose();
     } catch (error) {

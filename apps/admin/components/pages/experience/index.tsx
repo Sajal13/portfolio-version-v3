@@ -36,8 +36,6 @@ const ExperienceContainer = () => {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [viewId, setViewId] = useState<number | null>(null);
 
-  // Local, reorderable copy of the list. Reset from server data whenever
-  // it changes (initial load, or after a successful position save).
   const [items, setItems] = useState<Experience[]>([]);
 
   useEffect(() => {
@@ -96,8 +94,18 @@ const ExperienceContainer = () => {
   const handleConfirmDelete = async () => {
     if (!deleteId) return;
     try {
-      await deleteExperience.mutateAsync(deleteId);
-      toast({ variant: 'success', title: 'Experience deleted successfully.' });
+      const res = await deleteExperience.mutateAsync(deleteId);
+      if (res.success) {
+        toast({
+          variant: 'success',
+          title: res.message ?? 'Experience deleted successfully.'
+        });
+      } else {
+        toast({
+          variant: 'error',
+          title: res.message ?? 'Failed to delete experience.'
+        });
+      }
       closeDeleteModal();
     } catch (error) {
       toast({
@@ -147,8 +155,8 @@ const ExperienceContainer = () => {
         <PageHeader title="Experience">
           <div className="flex items-center gap-3">
             <Button
-              variant="outline"
-              color="primary"
+              variant="filled"
+              color="secondary"
               onClick={handleUpdatePositions}
               disabled={!isReordered || updateExperiencePositions.isPending}
             >

@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import { Contact } from './entities/contact.entity';
@@ -21,6 +26,15 @@ export class ContactService {
     return await this.contactRepository.find({
       order: { createdAt: 'DESC' }
     });
+  }
+
+  async getContactById(id: number): Promise<Contact> {
+    const contact = await this.contactRepository.findOne({ where: { id } });
+
+    if (!contact) {
+      throw new NotFoundException(`Contact with ${id} not found.`);
+    }
+    return contact;
   }
 
   async submitContact(
@@ -67,5 +81,15 @@ export class ContactService {
     });
 
     return { success: true };
+  }
+
+  async deleteContact(id: number) {
+    const contact = await this.contactRepository.findOne({ where: { id } });
+
+    if (!contact) {
+      throw new NotFoundException(`Contact with ${id} is not found.`);
+    }
+    await this.contactRepository.remove(contact);
+    return null;
   }
 }

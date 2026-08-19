@@ -40,8 +40,18 @@ const BlogsContainer = () => {
   const handleConfirmDelete = async () => {
     if (!deleteId) return;
     try {
-      await deleteBlog.mutateAsync(deleteId);
-      toast({ variant: 'success', title: 'Blog deleted successfully.' });
+      const res = await deleteBlog.mutateAsync(deleteId);
+      if (res.success) {
+        toast({
+          variant: 'success',
+          title: res.message ?? 'Blog deleted successfully.'
+        });
+      } else {
+        toast({
+          variant: 'error',
+          title: res.message ?? 'Failed to delete blog.'
+        });
+      }
       closeDeleteModal();
     } catch (error) {
       toast({

@@ -3,6 +3,7 @@ import { MdDelete } from '@repo/icons/md';
 import { VscEdit } from '@repo/icons/vsc';
 import { Experience, ExperienceStatus } from '@repo/types';
 import { Badge, Button } from '@repo/ui/components';
+import { textTrimmer } from '@repo/ui/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import AdvanceTable from 'components/base/AdvanceTable';
 import { AdvanceTablePagination } from 'components/base/AdvanceTablePagination';
@@ -35,6 +36,9 @@ export const experienceTableColumn = (): ColumnDef<Experience>[] => [
   {
     accessorKey: 'title',
     header: 'Title',
+    cell: ({ row: { original } }) => (
+      <span>{textTrimmer(original.title, 15)}</span>
+    ),
     meta: {
       headerProps: { className: 'text-start' },
       cellProps: { className: 'whitespace-nowrap' }
@@ -43,6 +47,9 @@ export const experienceTableColumn = (): ColumnDef<Experience>[] => [
   {
     accessorKey: 'company',
     header: 'Company',
+    cell: ({ row: { original } }) => (
+      <span>{textTrimmer(original.company, 15)}</span>
+    ),
     meta: { cellProps: { className: 'whitespace-nowrap' } }
   },
   {

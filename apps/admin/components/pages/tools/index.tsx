@@ -41,8 +41,18 @@ const ToolsPageContainer = () => {
   const handleConfirmDelete = async () => {
     if (!deleteId) return;
     try {
-      await deleteTool.mutateAsync(deleteId);
-      toast({ variant: 'success', title: 'Blog deleted successfully.' });
+      const res = await deleteTool.mutateAsync(deleteId);
+      if (res.success) {
+        toast({
+          variant: 'success',
+          title: res.message ?? 'Blog deleted successfully.'
+        });
+      } else {
+        toast({
+          variant: 'error',
+          title: res.message ?? 'Blog delete failed.'
+        });
+      }
       closeDeleteModal();
     } catch (error) {
       toast({

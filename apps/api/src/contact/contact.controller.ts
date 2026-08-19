@@ -1,4 +1,13 @@
-import { Body, Controller, Ip, Post, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Ip,
+  Post,
+  Get,
+  Param,
+  ParseIntPipe,
+  Delete
+} from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import {
   ApiBearerAuth,
@@ -28,6 +37,16 @@ export class ContactController {
     return this.contactService.getAllContacts();
   }
 
+  @Get('/:id')
+  @Roles('admin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get contact message By Id' })
+  @ApiResponse({ status: 200, type: ContactResponseDto })
+  @ResponseMessage('Message fetched successfully.')
+  async getContactById(@Param('id', ParseIntPipe) id: number) {
+    return this.contactService.getContactById(id);
+  }
+
   @Post()
   @Public()
   @Throttle({ default: { limit: 3, ttl: 600_000 } })
@@ -37,5 +56,14 @@ export class ContactController {
   @ResponseMessage('Message sent successfully.')
   async submitContact(@Body() dto: CreateContactDto, @Ip() ip: string) {
     return await this.contactService.submitContact(dto, ip);
+  }
+  @Delete('/:id')
+  @Roles('admin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get all contact messages (newest first)' })
+  @ApiResponse({ status: 200, description: 'Contact Delete Successful.' })
+  @ResponseMessage('Contact Delete successfully.')
+  async deleteContact(@Param('id', ParseIntPipe) id: number) {
+    return this.contactService.deleteContact(id);
   }
 }

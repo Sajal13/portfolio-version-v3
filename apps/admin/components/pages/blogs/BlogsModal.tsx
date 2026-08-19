@@ -159,7 +159,6 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
         file,
         folder: 'blogs'
       });
-      console.log(uploadedMarkdown);
       setMarkdownId(uploadedMarkdown.id);
       setMarkdownFileName(file.name);
       toast({ variant: 'success', title: 'Markdown file uploaded.' });
@@ -194,11 +193,31 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
 
     try {
       if (isEditMode && editId) {
-        await updateBlog.mutateAsync({ id: editId, payload });
-        toast({ variant: 'success', title: 'Blog updated successfully.' });
+        const res = await updateBlog.mutateAsync({ id: editId, payload });
+        if (res.success) {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Blog update successfully.'
+          });
+        } else {
+          toast({
+            variant: 'error',
+            title: res.message ?? 'Failed to update.'
+          });
+        }
       } else {
-        await createBlog.mutateAsync(payload);
-        toast({ variant: 'success', title: 'Blog created successfully.' });
+        const res = await createBlog.mutateAsync(payload);
+        if (res.success) {
+          toast({
+            variant: 'success',
+            title: res.message ?? 'Blog created successfully.'
+          });
+        } else {
+          toast({
+            variant: 'error',
+            title: res.message ?? 'Failed to create.'
+          });
+        }
       }
       onClose();
     } catch (error) {

@@ -16,7 +16,6 @@ const ProfileContainer = () => {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
 
-  console.log(profileRes);
   const profile = profileRes?.data;
   const hasProfile = !!profile;
 

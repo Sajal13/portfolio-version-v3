@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { ExperienceStatus } from '@repo/types';
-import { Badge, Modal } from '@repo/ui/components';
+import { Badge, Modal, DetailRow } from '@repo/ui/components';
 import dayjs from 'dayjs';
 import { useGetExperienceById } from 'hooks/queries/useExperienceQueries';
+import { formatMonthYear } from 'utils/helpers/formatMonthYear';
 
 interface ExperienceViewModalProps {
   open: boolean;
@@ -17,24 +18,6 @@ const experienceTypeLabel: Record<string, string> = {
   FullTime: 'Full Time',
   PartTime: 'Part Time'
 };
-
-const formatMonthYear = (date?: string) =>
-  date && dayjs(date).isValid() ? dayjs(date).format('MMM YYYY') : undefined;
-
-const DetailRow = ({
-  label,
-  children
-}: {
-  label: string;
-  children: React.ReactNode;
-}) => (
-  <div>
-    <p className="text-xs uppercase tracking-wide text-secondary-300 mb-1">
-      {label}
-    </p>
-    <div className="text-sm text-secondary-100">{children}</div>
-  </div>
-);
 
 const ExperienceViewModal = ({
   open,

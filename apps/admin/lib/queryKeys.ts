@@ -25,5 +25,22 @@ export const queryKeys = {
     list: () => [...queryKeys.experiences.all, 'list'] as const,
     single: (id: number) =>
       [...queryKeys.experiences.all, 'single', id] as const
+  },
+  portfolio: {
+    all: ['portfolio'] as const,
+    list: () => [...queryKeys.experiences.all, 'list'] as const,
+    single: (id: number) =>
+      [...queryKeys.experiences.all, 'single', id] as const
+  },
+  testimonial: {
+    all: ['testimonial'] as const,
+    list: () => [...queryKeys.testimonial.all, 'list'] as const,
+    single: (id: number) =>
+      [...queryKeys.testimonial.all, 'single', id] as const
+  },
+  contact: {
+    all: ['contact'] as const,
+    list: () => [...queryKeys.contact.all, 'list'] as const,
+    single: (id: number) => [...queryKeys.contact.all, 'single', id] as const
   }
 };

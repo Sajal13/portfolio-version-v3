@@ -8,6 +8,6 @@ allowBuilds:
   "@parcel/watcher": false
   '@scarf/scarf': false
   bcrypt: true
-  esbuild: set this to true or false
+  esbuild: false
   sharp: false
   unrs-resolver: false
