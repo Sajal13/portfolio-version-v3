@@ -14,6 +14,7 @@ export const skillsTableColumn = (
   {
     accessorKey: 'title',
     header: 'Title',
+    cell: ({ row: { original } }) => original.title?.name ?? '—',
     meta: {
       headerProps: {
         className: 'text-start'

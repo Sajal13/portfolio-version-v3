@@ -6,12 +6,12 @@ import { Button, useToast } from '@repo/ui/components';
 import { useQueryClient } from '@tanstack/react-query';
 import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
+import ExperienceModal from 'components/modal/ExperienceModal';
+import ExperienceViewModal from 'components/modal/ExperienceViewModal';
 import { useExperienceMutations } from 'hooks/mutations/useExperienceMutations';
 import { useGetAllExperiences } from 'hooks/queries/useExperienceQueries';
 import { queryKeys } from 'lib/queryKeys';
-import ExperienceModal from './ExperienceModal';
 import ExperienceTableContainer from './ExperienceTableContainer';
-import ExperienceViewModal from './ExperienceViewModal';
 
 const sortByOrder = (list: Experience[]) =>
   [...list].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));

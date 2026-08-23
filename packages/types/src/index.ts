@@ -7,3 +7,5 @@ export * from './experience';
 export * from './portfolio';
 export * from './testimonial';
 export * from './contact';
+export * from './users';
+export * from './analytics';

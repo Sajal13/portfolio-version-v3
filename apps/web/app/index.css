@@ -1,3 +1,19 @@
 @import 'tailwindcss';
 @import '@repo/tailwind-config';
 @import '@repo/ui/globals.css';
+@import './css/skill-graph.css';
+
+@theme {
+  --font-sans: var(--font-gabarito-sans), sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+  --font-orbitron: var(--font-orbitron), sans-serif;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans) sans-serif;
+}

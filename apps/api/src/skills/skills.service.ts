@@ -25,7 +25,10 @@ export class SkillsService {
   }
 
   async createSkill(dto: CreateSkillDto): Promise<Skill> {
-    const skill = this.skillRepository.create(dto);
+    const skill = this.skillRepository.create({
+      ...dto,
+      title: { id: dto.title } as any
+    });
     return this.skillRepository.save(skill);
   }
 
@@ -35,7 +38,10 @@ export class SkillsService {
       throw new NotFoundException(`Skill with id ${id} not found`);
     }
 
-    const updated = this.skillRepository.merge(skill, dto);
+    const updated = this.skillRepository.merge(skill, {
+      ...dto,
+      ...(dto.title !== undefined ? { title: { id: dto.title } as any } : {})
+    });
     return this.skillRepository.save(updated);
   }
 

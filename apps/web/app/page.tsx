@@ -1,7 +1,11 @@
+import HeroSection from 'components/pages/home';
+import SkillsSection from 'components/pages/skills';
+
 export default function Home() {
   return (
-    <div className="text-2xl text-primary-200 h-screen flex-center">
-      Hello there
+    <div className="">
+      <HeroSection />
+      <SkillsSection />
     </div>
   );
 }

@@ -23,7 +23,7 @@ export const toolsTableColumns = (
               alt={original.name}
               width={36}
               height={36}
-              className="w-full h-auto"
+              className="w-full h-10 object-contain"
             />
           ) : (
             <span className="text-error-500">N/A</span>

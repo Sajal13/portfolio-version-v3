@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { SidebarProvider } from '@repo/ui/providers';
 import SidebarServer from 'components/common/navbar/Sidebar.server';
 import Topbar from 'components/common/navbar/Topbar';
+import BfcacheGuard from 'components/layout/BfcacheGuard';
 import { AuthProvider } from 'context/AuthContext';
 import { QueryProvider } from 'context/QueryProviders';
 import { verifySession, decodeSessionUnsafe } from 'lib/session';
@@ -57,6 +58,7 @@ export default async function AdminLayout({
     <AuthProvider initialSession={session}>
       <QueryProvider>
         <SidebarProvider>
+          <BfcacheGuard />
           <SidebarServer />
           <Suspense>
             <div className="flex min-h-svh flex-1 flex-col overflow-hidden">

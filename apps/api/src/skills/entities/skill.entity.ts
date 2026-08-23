@@ -2,17 +2,21 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
+import { Tool } from '../../tools/entities/tool.entity';
 
 @Entity('skills')
 export class Skill {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ type: 'text', unique: true })
-  title: string;
+  @ManyToOne(() => Tool, { eager: true })
+  @JoinColumn({ name: 'tool_id' })
+  title: Tool;
 
   @Column({ type: 'int' })
   progress: number;

@@ -1,0 +1,34 @@
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes node-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@utility flow-line {
+  stroke-dasharray: 3 5;
+  animation: dash-flow 1.6s linear infinite;
+}
+
+@utility node-enter {
+  animation: node-fade-in 0.4s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-line {
+    animation: none;
+  }
+  .node-enter {
+    animation: none;
+  }
+}

@@ -1,6 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 
+class ToolResponseDto {
+  @ApiProperty({ example: 1 })
+  @Expose()
+  id: number;
+
+  @ApiProperty({ example: 'React' })
+  @Expose()
+  name: string;
+}
+
 @Exclude()
 export class SkillResponseDto {
   @Expose()
@@ -9,7 +19,7 @@ export class SkillResponseDto {
 
   @Expose()
   @ApiProperty({ example: 'React' })
-  title: string;
+  title: ToolResponseDto;
 
   @Expose()
   @ApiProperty({ example: 20 })

@@ -55,7 +55,6 @@ function createSelectionColumn<T>(): ColumnDef<T> {
         onChange={row.getToggleSelectedHandler()}
       />
     ),
-    size: 40,
     meta: {
       headerProps: { className: 'text-start flex items-center' },
       cellProps: { className: 'text-start' }

@@ -1,14 +1,8 @@
 import React from 'react';
-import { Card, CardContent } from '@repo/ui/components';
+import DashboardContainer from 'components/pages/dashboard';
 
 const Dashboard = () => {
-  return (
-    <div className="min-h-[200vh]">
-      <Card>
-        <CardContent>hello there</CardContent>
-      </Card>
-    </div>
-  );
+  return <DashboardContainer />;
 };
 
 export default Dashboard;

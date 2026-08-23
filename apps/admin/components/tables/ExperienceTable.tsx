@@ -37,7 +37,7 @@ export const experienceTableColumn = (): ColumnDef<Experience>[] => [
     accessorKey: 'title',
     header: 'Title',
     cell: ({ row: { original } }) => (
-      <span>{textTrimmer(original.title, 15)}</span>
+      <span>{original.title ? textTrimmer(original.title, 15) : ''}</span>
     ),
     meta: {
       headerProps: { className: 'text-start' },
@@ -48,7 +48,7 @@ export const experienceTableColumn = (): ColumnDef<Experience>[] => [
     accessorKey: 'company',
     header: 'Company',
     cell: ({ row: { original } }) => (
-      <span>{textTrimmer(original.company, 15)}</span>
+      <span>{original.company ? textTrimmer(original.company, 15) : ''}</span>
     ),
     meta: { cellProps: { className: 'whitespace-nowrap' } }
   },

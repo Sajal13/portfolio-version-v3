@@ -42,5 +42,5 @@ export const adminRoutes: AdminRoute[] = [
   },
   { label: 'Tools', path: '/admin/tools', icon: LuWrench, active: true },
   { label: 'Contact', path: '/admin/contact', icon: LuMail, active: true },
-  { label: 'Users', path: '/admin/users', icon: LuUsers, active: false }
+  { label: 'Users', path: '/admin/users', icon: LuUsers, active: true }
 ];

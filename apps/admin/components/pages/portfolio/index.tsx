@@ -6,12 +6,12 @@ import { Button, useToast } from '@repo/ui/components';
 import { useQueryClient } from '@tanstack/react-query';
 import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
+import PortfolioModal from 'components/modal/PortfolioModal';
+import PortfolioViewModal from 'components/modal/PortfolioViewModal';
 import { usePortfolioMutations } from 'hooks/mutations/usePortfolioMutations';
 import { useGetAllPortfolios } from 'hooks/queries/usePortfolioQueries';
 import { queryKeys } from 'lib/queryKeys';
-import PortfolioModal from './PortfolioModal';
 import PortfolioTableContainer from './PortfolioTableContainer';
-import PortfolioViewModal from './PortfolioViewModal';
 
 const sortByOrder = (list: Portfolio[]) =>
   [...list].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));

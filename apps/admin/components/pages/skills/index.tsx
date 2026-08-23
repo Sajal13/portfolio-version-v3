@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { Button, useToast } from '@repo/ui/components';
 import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
+import SkillsModal from 'components/modal/SkillModal';
 import { useSkillMutations } from 'hooks/mutations/useSkillMutations';
-import SkillsModal from './SkillModal';
 import SkillsTableContainer from './SkillsTableContainer';
 
 const SkillsContainer = () => {

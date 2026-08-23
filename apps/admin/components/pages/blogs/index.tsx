@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { Button, useToast } from '@repo/ui/components';
 import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
+import BlogsModal from 'components/modal/BlogsModal';
 import { useBlogMutations } from 'hooks/mutations/useBlogMutations';
-import BlogsModal from './BlogsModal';
 import BlogsTableContainer from './BlogsTableContainer';
 
 const BlogsContainer = () => {

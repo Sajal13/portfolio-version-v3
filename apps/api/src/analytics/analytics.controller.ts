@@ -11,6 +11,7 @@ import { TrackEventDto } from './dto/track-event.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { ResponseMessage } from '../common/decorators/response-message.decorator';
+import { AnalyticsSummaryResponseDto } from './dto/summary-response.dto';
 
 @ApiTags('analytics')
 @Controller('analytics')
@@ -36,7 +37,7 @@ export class AnalyticsController {
   @Roles('admin')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get aggregated analytics for the admin dashboard' })
-  @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 200, type: AnalyticsSummaryResponseDto })
   @ResponseMessage('Analytics summary fetched successfully.')
   async getSummary() {
     return this.analyticsService.getSummary();

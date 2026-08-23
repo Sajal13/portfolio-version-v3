@@ -2,13 +2,13 @@
 
 import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 import {
   TERMINAL_LINES,
   TYPE_SPEED_MS,
   LINE_PAUSE_MS,
   HOLD_BEFORE_EXIT_MS
 } from 'data/gsap';
+import gsap from 'gsap';
 
 interface TerminalLoaderProps {
   onComplete: () => void;
@@ -101,7 +101,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
         }).to(
           containerRef.current,
           {
-            opacity: 0,
+            opacity: 1,
             duration: 0.4,
             ease: 'power2.inOut'
           },
@@ -126,7 +126,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
     >
       <div
         ref={cardRef}
-        className="w-[90%] max-w-2xl overflow-hidden rounded-lg border border-neutral-800 bg-[#0d1117] shadow-2xl"
+        className="w-[90%] max-w-2xl m-auto overflow-hidden rounded-lg border border-neutral-800 bg-[#0d1117] shadow-2xl"
       >
         {/* Title bar */}
         <div className="flex items-center gap-2 border-b border-neutral-800 bg-[#161b22] px-4 py-3">

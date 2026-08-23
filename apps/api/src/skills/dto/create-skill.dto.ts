@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsInt, IsString, Min } from 'class-validator';
 
 export class CreateSkillDto {
-  @ApiProperty({ example: 'React' })
-  @IsString()
-  title: string;
+  @ApiProperty({ example: 1, description: 'Id of the referenced Tool' })
+  @IsInt()
+  title: number;
 
   @ApiProperty({ example: 20 })
   @IsInt()

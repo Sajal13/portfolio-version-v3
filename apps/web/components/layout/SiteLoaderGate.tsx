@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import TerminalLoader from 'components/layout/TerminalLoader';
+import { LoaderProvider } from 'providers/LoaderContext';
 
 export default function SiteLoaderGate({
   children
@@ -11,11 +12,9 @@ export default function SiteLoaderGate({
   const [loading, setLoading] = useState(true);
 
   return (
-    <>
+    <LoaderProvider ready={!loading}>
       {loading && <TerminalLoader onComplete={() => setLoading(false)} />}
 
-      {/* Site content is mounted underneath the whole time (so images/data
-          can start fetching during the loader), just hidden until it's done. */}
       <div
         style={{
           visibility: loading ? 'hidden' : 'visible',
@@ -25,6 +24,6 @@ export default function SiteLoaderGate({
       >
         {children}
       </div>
-    </>
+    </LoaderProvider>
   );
 }

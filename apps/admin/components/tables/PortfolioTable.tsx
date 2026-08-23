@@ -33,7 +33,7 @@ export const portfolioTableColumn = (): ColumnDef<Portfolio>[] => [
     accessorKey: 'title',
     header: 'Title',
     cell: ({ row: { original } }) => (
-      <span>{textTrimmer(original.title, 20)}</span>
+      <span>{textTrimmer(original.title, 20) ?? ''}</span>
     ),
     meta: {
       headerProps: { className: 'text-start' },

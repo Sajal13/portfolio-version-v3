@@ -31,7 +31,7 @@ export const testimonialTableColumn = (): ColumnDef<Testimonial>[] => [
     accessorKey: 'name',
     header: 'Name',
     cell: ({ row: { original } }) => (
-      <span>{textTrimmer(original.name, 20)}</span>
+      <span>{textTrimmer(original.name, 20) ?? ''}</span>
     ),
     meta: {
       headerProps: { className: 'text-start' },
@@ -42,7 +42,7 @@ export const testimonialTableColumn = (): ColumnDef<Testimonial>[] => [
     accessorKey: 'designation',
     header: 'Designation',
     cell: ({ row: { original } }) => (
-      <span>{textTrimmer(original.designation, 20)}</span>
+      <span>{textTrimmer(original.designation, 20) ?? ''}</span>
     ),
     meta: { cellProps: { className: 'whitespace-nowrap' } }
   },
@@ -50,7 +50,7 @@ export const testimonialTableColumn = (): ColumnDef<Testimonial>[] => [
     accessorKey: 'company',
     header: 'Company',
     cell: ({ row: { original } }) => (
-      <span>{textTrimmer(original.company, 20)}</span>
+      <span>{textTrimmer(original.company, 20) ?? ''}</span>
     ),
     meta: { cellProps: { className: 'whitespace-nowrap' } }
   },
@@ -59,7 +59,7 @@ export const testimonialTableColumn = (): ColumnDef<Testimonial>[] => [
     header: 'Testimonial',
     cell: ({ row: { original } }) => (
       <span className="text-secondary-300">
-        {textTrimmer(original.description, 20)}
+        {textTrimmer(original.description, 20) ?? ''}
       </span>
     ),
     meta: {

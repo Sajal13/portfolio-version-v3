@@ -6,12 +6,12 @@ import { Button, useToast } from '@repo/ui/components';
 import { useQueryClient } from '@tanstack/react-query';
 import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
+import TestimonialModal from 'components/modal/TestimonialModal';
+import TestimonialViewModal from 'components/modal/TestimonialViewModal';
 import { useTestimonialMutations } from 'hooks/mutations/useTestimonialMutations';
 import { useGetAllTestimonials } from 'hooks/queries/useTestimonialQueries';
 import { queryKeys } from 'lib/queryKeys';
-import TestimonialModal from './TestimonialModal';
 import TestimonialTableContainer from './TestimonialTableContainer';
-import TestimonialViewModal from './TestimonialViewModal';
 
 const sortByOrder = (list: Testimonial[]) =>
   [...list].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));

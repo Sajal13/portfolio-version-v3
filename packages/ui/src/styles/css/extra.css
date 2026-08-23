@@ -1,9 +1,3 @@
-@utility flex-center {
-  @layer base {
-    @apply flex justify-center items-center;
-  }
-}
-
 @layer base {
   input[type='number']::-webkit-outer-spin-button,
   input[type='number']::-webkit-inner-spin-button {
@@ -14,5 +8,9 @@
   input[type='number'] {
     -moz-appearance: textfield;
     appearance: textfield;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
   }
 }

@@ -14,7 +14,11 @@ import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { Public } from './decorators/public.decorator';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh.guard';
-import { setAuthCookies, clearAuthCookies, setAccessTokenCookie } from './utils/cookie.util';
+import {
+  setAuthCookies,
+  clearAuthCookies,
+  setAccessTokenCookie
+} from './utils/cookie.util';
 import { Throttle } from '@nestjs/throttler/dist/throttler.decorator';
 import { SkipCsrf } from './decorators/skip-csrf.decorator';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -56,10 +60,6 @@ export class AuthController {
     @CurrentUser() user: { id: number; email: string; role: string },
     @Body('rememberMe') rememberMe: boolean = false
   ) {
-    // passport-local's LocalStrategy only reads email/password off the
-    // body to authenticate — rememberMe rides along in the same request
-    // body untouched and is read here directly.
-    // No cookies are set here — tokens aren't issued until the OTP step.
     return this.authService.login(user, !!rememberMe);
   }
 
@@ -92,7 +92,9 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response
   ) {
     const { accessToken } = await this.authService.refreshTokens(
-      user.sub, user.refreshToken, user.rememberMe
+      user.sub,
+      user.refreshToken,
+      user.rememberMe
     );
     setAccessTokenCookie(res, accessToken, this.config);
     return { success: true };
@@ -113,7 +115,7 @@ export class AuthController {
   @Patch('change-password')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Change the logged-in admin\'s password' })
+  @ApiOperation({ summary: "Change the logged-in admin's password" })
   @ApiResponse({ status: 200 })
   async changePassword(
     @CurrentUser() user: { userId: number },

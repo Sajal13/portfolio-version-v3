@@ -1,6 +1,8 @@
 export interface ToolSummary {
   id: number;
   name: string;
+  icon?: string;
+  docUrl: string;
 }
 
 export interface MarkdownSummary {

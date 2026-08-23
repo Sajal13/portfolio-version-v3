@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { Button, useToast } from '@repo/ui/components';
 import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
+import ToolsModal from 'components/modal/ToolsModal';
 import { useToolMutations } from 'hooks/mutations/useToolMutations';
-import ToolsModal from './ToolsModal';
 import ToolsTableContainer from './ToolsTableContainer';
 
 const ToolsPageContainer = () => {

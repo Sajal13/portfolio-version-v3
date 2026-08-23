@@ -1,4 +1,8 @@
 export const queryKeys = {
+  analytics: {
+    all: ['analytics'] as const,
+    summary: () => [...queryKeys.analytics.all, 'summary'] as const
+  },
   blogs: {
     all: ['blogs'] as const,
     list: () => [...queryKeys.blogs.all, 'list'] as const,
@@ -42,5 +46,9 @@ export const queryKeys = {
     all: ['contact'] as const,
     list: () => [...queryKeys.contact.all, 'list'] as const,
     single: (id: number) => [...queryKeys.contact.all, 'single', id] as const
+  },
+  user: {
+    all: ['users'] as const,
+    list: () => [...queryKeys.user.all, 'list'] as const
   }
 };

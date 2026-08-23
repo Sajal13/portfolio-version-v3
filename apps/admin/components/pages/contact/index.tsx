@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useToast } from '@repo/ui/components';
 import DeleteConfirmationModal from 'components/common/DeleteConfirmationModal';
 import PageHeader from 'components/common/PageHeader';
+import ContactViewModal from 'components/modal/ContactViewModal';
 import { useContactMutations } from 'hooks/mutations/useContactMutations';
 import ContactTableContainer from './ContactTableContainer';
-import ContactViewModal from './ContactViewModal';
 
 const ContactContainer = () => {
   const { toast } = useToast();

@@ -5,6 +5,13 @@ const PROTECTED_PREFIX = '/admin';
 const LOGIN_PATH = '/login';
 const DEFAULT_AUTHED_PATH = '/admin/dashboard';
 
+const withNoStore = (res: NextResponse, isProtected: boolean) => {
+  if (isProtected) {
+    res.headers.set('Cache-Control', 'no-store, must-revalidate');
+  }
+  return res;
+};
+
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const isRoot = pathname === '/';
@@ -22,9 +29,12 @@ export async function proxy(req: NextRequest) {
     try {
       await verifySession(accessToken);
       if (isLoginPage || isRoot) {
-        return NextResponse.redirect(new URL(DEFAULT_AUTHED_PATH, req.url));
+        return withNoStore(
+          NextResponse.redirect(new URL(DEFAULT_AUTHED_PATH, req.url)),
+          isProtected
+        );
       }
-      return NextResponse.next();
+      return withNoStore(NextResponse.next(), isProtected);
     } catch {
       // expired or invalid signature — fall through
     }
@@ -34,9 +44,12 @@ export async function proxy(req: NextRequest) {
   // still has a session", let the layout sort out the actual refresh.
   if (refreshToken) {
     if (isRoot || isLoginPage) {
-      return NextResponse.redirect(new URL(DEFAULT_AUTHED_PATH, req.url));
+      return withNoStore(
+        NextResponse.redirect(new URL(DEFAULT_AUTHED_PATH, req.url)),
+        isProtected
+      );
     }
-    return NextResponse.next();
+    return withNoStore(NextResponse.next(), isProtected);
   }
 
   // No tokens at all. If we're already on /login, this is exactly where

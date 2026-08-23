@@ -1,18 +1,20 @@
-export interface Skill {
-    id: number,
-    title: string,
-    progress: number,
-    category: string,
-    parent: string,
-    isActive: boolean,
-    createdAt: string,
-    updatedAt: string
-  }
+import { ToolSummary } from "./blog";
 
-  export interface SkillsPayload {
-    title: string,
-    progress: number,
-    category: string,
-    parent: string,
-    isActive: boolean,
-  }
+export interface Skill {
+  id: number;
+  title: ToolSummary | null;
+  progress: number;
+  category: string;
+  parent: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SkillsPayload {
+  title: number;
+  progress: number;
+  category: string;
+  parent: string;
+  isActive: boolean;
+}

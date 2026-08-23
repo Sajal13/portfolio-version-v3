@@ -76,11 +76,8 @@ function Slot({ children, ref, ...slotProps }: SlotProps) {
   }
 
   const childProps = children.props as Record<string, unknown>;
-  // React 19 exposes ref as a regular prop on function components;
-  // older elements/host elements still carry it as element.ref.
-  const childRef =
-    (children as unknown as { ref?: React.Ref<HTMLElement> }).ref ??
-    (childProps.ref as React.Ref<HTMLElement> | undefined);
+  // React 19: ref lives on props now, not on the element itself.
+  const childRef = childProps.ref as React.Ref<HTMLElement> | undefined;
 
   return React.cloneElement(children, {
     ...mergeProps(slotProps, childProps),

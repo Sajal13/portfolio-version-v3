@@ -1,15 +1,21 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import SiteLoaderGate from 'providers/SiteLoaderGate';
+import { DesktopNavbar } from 'components/common/navbar/DesktopNavbar';
+import { MobileNavbar } from 'components/common/navbar/MobileNavbar';
+import SiteLoaderGate from 'components/layout/SiteLoaderGate';
 import './index.css';
 
 const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans'
+  src: './fonts/Gabarito-VariableFont_wght.ttf',
+  variable: '--font-gabarito-sans'
 });
 const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
+  src: './fonts/GeistMono-VariableFont_wght.ttf',
   variable: '--font-geist-mono'
+});
+const orbitron = localFont({
+  src: './fonts/Orbitron-VariableFont_wght.ttf',
+  variable: '--font-orbitron'
 });
 
 export const metadata: Metadata = {
@@ -24,8 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <SiteLoaderGate>{children}</SiteLoaderGate>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable}`}
+      >
+        <SiteLoaderGate>
+          <DesktopNavbar />
+          <MobileNavbar />
+          {children}
+        </SiteLoaderGate>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Modal,
@@ -16,9 +16,10 @@ import {
   type SearchableSelectOption,
   Label
 } from '@repo/ui/components';
-import { categoryOptions, parentOptions, titleOptions } from 'data/skill';
+import { categoryOptions, parentOptions } from 'data/skill';
 import { useSkillMutations } from 'hooks/mutations/useSkillMutations';
 import { useGetSkillById } from 'hooks/queries/useSkillQueries';
+import { useGetAllTools } from 'hooks/queries/useToolsQueries';
 import { useForm, Controller, type Resolver } from 'react-hook-form';
 import {
   skillFormSchema,
@@ -32,19 +33,11 @@ interface SkillsModalProps {
 }
 
 const defaultValues: SkillFormSchemaType = {
-  title: '',
+  title: 0,
   progress: 0,
   category: '',
   parent: '',
   isActive: true
-};
-
-const loadTitleOptions = async (
-  query: string
-): Promise<SearchableSelectOption[]> => {
-  if (!query.trim()) return titleOptions;
-  const q = query.toLowerCase();
-  return titleOptions.filter((opt) => opt.label.toLowerCase().includes(q));
 };
 
 const loadCategoryOptions = async (
@@ -67,6 +60,7 @@ const SkillsModal = ({ open, onClose, editId }: SkillsModalProps) => {
   const isEditMode = typeof editId === 'number';
   const { toast } = useToast();
   const { createSkill, updateSkill } = useSkillMutations();
+  const { data: toolsOptions } = useGetAllTools();
 
   const { data: skill, isLoading: isSkillLoading } = useGetSkillById(
     editId ?? 0
@@ -87,7 +81,7 @@ const SkillsModal = ({ open, onClose, editId }: SkillsModalProps) => {
       reset(
         skill
           ? {
-              title: skill.title,
+              title: skill.title?.id ?? 0,
               progress: skill.progress,
               category: skill.category,
               parent: skill.parent,
@@ -98,13 +92,37 @@ const SkillsModal = ({ open, onClose, editId }: SkillsModalProps) => {
     }
   }, [open, skill, reset]);
 
+  // Tools list now drives the "Title" field's options, same pattern as
+  // the Portfolio modal's tools SearchableSelect.
+  const toolSelectOptions = useMemo<SearchableSelectOption[]>(
+    () =>
+      (toolsOptions ?? []).map((tool) => ({
+        label: tool.name,
+        value: String(tool.id)
+      })),
+    [toolsOptions]
+  );
+
+  const loadTitleOptions = useCallback(
+    async (query: string) => {
+      if (!query.trim()) return toolSelectOptions;
+      const q = query.toLowerCase();
+      return toolSelectOptions.filter((opt) =>
+        opt.label.toLowerCase().includes(q)
+      );
+    },
+    [toolSelectOptions]
+  );
+
   const initialTitleOptions = useMemo<
     SearchableSelectOption[] | undefined
   >(() => {
-    if (!isEditMode || !skill) return undefined;
-    const match = titleOptions.find((opt) => opt.value === skill.title);
+    if (!isEditMode || !skill?.title) return undefined;
+    const match = toolSelectOptions.find(
+      (opt) => opt.value === String(skill.title!.id)
+    );
     return match ? [match] : undefined;
-  }, [isEditMode, skill]);
+  }, [isEditMode, skill, toolSelectOptions]);
 
   const initialCategoryOptions = useMemo<
     SearchableSelectOption[] | undefined
@@ -195,13 +213,15 @@ const SkillsModal = ({ open, onClose, editId }: SkillsModalProps) => {
                     control={control}
                     render={({ field }) => (
                       <SearchableSelect
-                        placeholder="Select or search a skill"
-                        value={field.value || null}
+                        placeholder="Select a tool"
+                        value={field.value ? String(field.value) : null}
                         onValueChange={(val) =>
-                          field.onChange((val as string) ?? '')
+                          field.onChange(val ? Number(val) : 0)
                         }
                         loadOptions={loadTitleOptions}
-                        initialOptions={initialTitleOptions}
+                        initialOptions={
+                          initialTitleOptions ?? toolSelectOptions
+                        }
                       />
                     )}
                   />

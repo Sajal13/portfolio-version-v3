@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FaUser, FaKey, FaCog } from '@repo/icons/fa';
 import { FiLogOut } from '@repo/icons/fi';
-import { SidebarTrigger } from '@repo/ui/components';
+import { SidebarTrigger, useToast } from '@repo/ui/components';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -13,9 +13,13 @@ import {
 } from '@repo/ui/components';
 import { Separator } from '@repo/ui/components';
 import { cn } from '@repo/ui/utils';
+import ChangePasswordModal from 'components/modal/ChangePasswordModal';
 
 const Topbar = () => {
+  const { toast } = useToast();
+
   const [scrolled, setScrolled] = useState(false);
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -24,15 +28,38 @@ const Topbar = () => {
   }, []);
 
   const handleChangePassword = () => {
-    // navigate to change-password screen or open a modal
+    setIsChangePasswordOpen(true);
   };
 
-  const handleSettings = () => {
-    // navigate to settings page
-  };
+  // const handleSettings = () => {
+  //   // navigate to settings page
+  // };
 
-  const handleLogout = () => {
-    // clear session / call logout endpoint
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/auth/logout', {
+        method: 'POST'
+      });
+      if (res.ok) {
+        toast({
+          variant: 'success',
+          title: 'Logged out successfully.'
+        });
+
+        window.location.href = '/login';
+      } else {
+        toast({
+          variant: 'error',
+          title: 'Logged out failed.'
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: 'error',
+        title:
+          error instanceof Error ? error.message : 'Failed to update order.'
+      });
+    }
   };
 
   return (
@@ -66,10 +93,10 @@ const Topbar = () => {
               Change Password
             </DropdownMenuItem>
 
-            <DropdownMenuItem onSelect={handleSettings}>
+            {/* <DropdownMenuItem onSelect={handleSettings}>
               <FaCog className="size-4" />
               Settings
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
 
             <Separator className="my-1" />
 
@@ -83,6 +110,11 @@ const Topbar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+      <ChangePasswordModal
+        isOpen={isChangePasswordOpen}
+        onClose={() => setIsChangePasswordOpen(false)}
+      />
     </header>
   );
 };
