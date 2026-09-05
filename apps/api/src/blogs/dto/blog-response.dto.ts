@@ -17,6 +17,17 @@ class MarkdownSummaryDto {
   content: string;
 }
 
+class CategorySummaryDto {
+  @ApiProperty({ example: 1 })
+  id: number;
+
+  @ApiProperty({ example: 'Web Development' })
+  name: string;
+
+  @ApiProperty({ example: 'web-development' })
+  slug: string;
+}
+
 @Exclude()
 export class BlogResponseDto {
   @ApiProperty({ example: 1 })
@@ -26,6 +37,12 @@ export class BlogResponseDto {
   @ApiProperty({ example: 'How I built my portfolio with NestJS' })
   @Expose()
   title: string;
+
+  @ApiProperty({
+    example: 'How I built my portfolio with NestJS with the help of turbo repo'
+  })
+  @Expose()
+  description: string;
 
   @ApiProperty({ example: 'how-i-built-my-portfolio-with-nestjs' })
   @Expose()
@@ -42,6 +59,10 @@ export class BlogResponseDto {
   @ApiProperty({ type: [ToolSummaryDto] })
   @Expose()
   tools: ToolSummaryDto[];
+
+  @ApiProperty({ type: CategorySummaryDto })
+  @Expose()
+  category: CategorySummaryDto;
 
   @ApiProperty({ example: '2026-07-11T13:50:21.496Z' })
   @Expose()

@@ -1,11 +1,12 @@
 import { useCallback, useState } from 'react';
+import { round } from './round';
 import type { LeafNode } from './types';
 
 export type HoverPosition = { x: number; y: number; containerWidth: number };
 
-export function useNodeHover(
+export const useNodeHover = (
   containerRef: React.RefObject<HTMLDivElement | null>
-) {
+) => {
   const [hovered, setHovered] = useState<LeafNode | null>(null);
   const [hoverPos, setHoverPos] = useState<HoverPosition | null>(null);
 
@@ -16,8 +17,8 @@ export function useNodeHover(
       const targetRect = e.currentTarget.getBoundingClientRect();
       if (containerRect) {
         setHoverPos({
-          x: targetRect.left + targetRect.width / 2 - containerRect.left,
-          y: targetRect.bottom - containerRect.top,
+          x: round(targetRect.left + targetRect.width / 2 - containerRect.left),
+          y: round(targetRect.bottom - containerRect.top),
           containerWidth: containerRect.width
         });
       }
@@ -31,4 +32,4 @@ export function useNodeHover(
   }, []);
 
   return { hovered, hoverPos, handleEnter, handleLeave };
-}
+};

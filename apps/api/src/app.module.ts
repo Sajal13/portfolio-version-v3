@@ -23,6 +23,7 @@ import { ContactModule } from './contact/contact.module';
 import { MailModule } from './mail/mail.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { CsrfGuard } from './auth/guards/csrf.guard';
+import { BlogCategoryModule } from './blog-category/blog-category.module';
 
 @Module({
   providers: [
@@ -73,7 +74,8 @@ import { CsrfGuard } from './auth/guards/csrf.guard';
     TestimonialsModule,
     ContactModule,
     MailModule,
-    AnalyticsModule
+    AnalyticsModule,
+    BlogCategoryModule
   ]
 })
 export class AppModule {}

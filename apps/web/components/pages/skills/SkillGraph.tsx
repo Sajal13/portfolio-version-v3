@@ -19,7 +19,7 @@ import type { PaletteColor } from './skills-graph/constants';
 import { useNodeHover } from './skills-graph/use-node-hover';
 import { usePanZoom } from './skills-graph/use-pan-zoom';
 
-export default function SkillsGraph({ skills }: { skills: Skill[] }) {
+const SkillsGraph = ({ skills }: { skills: Skill[] }) => {
   const layout = useMemo(
     () => (skills?.length ? buildLayout(skills) : null),
     [skills]
@@ -43,7 +43,7 @@ export default function SkillsGraph({ skills }: { skills: Skill[] }) {
     Boolean(activeCategory) && color?.name !== activeCategory;
 
   const shellClass =
-    'relative w-full h-[640px] bg-[#0A0E12] rounded-lg overflow-hidden border border-white/10 select-none font-mono';
+    'relative w-full h-[640px] rounded-t-lg overflow-hidden border border-white/10 select-none font-mono';
 
   if (!layout) {
     return (
@@ -56,11 +56,7 @@ export default function SkillsGraph({ skills }: { skills: Skill[] }) {
   }
 
   return (
-    <div
-      id="capabilities"
-      ref={containerRef}
-      className={cn(shellClass, 'touch-none')}
-    >
+    <div ref={containerRef} className={cn(shellClass, 'touch-none')}>
       <GraphHeader
         categories={layout.categoryNodes}
         onHoverCategory={setActiveCategory}
@@ -102,4 +98,6 @@ export default function SkillsGraph({ skills }: { skills: Skill[] }) {
       )}
     </div>
   );
-}
+};
+
+export default SkillsGraph;

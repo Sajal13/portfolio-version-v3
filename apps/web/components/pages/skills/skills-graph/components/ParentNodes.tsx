@@ -3,13 +3,13 @@ import { PaletteColor } from '../constants';
 import { labelBelow } from '../label-utils';
 import type { ParentNode } from '../types';
 
-export function ParentNodes({
+export const ParentNodes = ({
   nodes,
   isDimmed
 }: {
   nodes: ParentNode[];
   isDimmed: (color: PaletteColor) => boolean;
-}) {
+}) => {
   return (
     <>
       {nodes.map((p) => {
@@ -30,4 +30,4 @@ export function ParentNodes({
       })}
     </>
   );
-}
+};

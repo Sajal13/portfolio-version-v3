@@ -5,10 +5,11 @@ import {
   NotFoundException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { ILike, In, Repository } from 'typeorm';
 import { Blogs } from './entities/blogs.entity';
 import { Tool } from '../tools/entities/tool.entity';
 import { MarkdownFile } from '../upload/entities/markdown-file.entity';
+import { BlogCategory } from '../blog-category/entities/blog-category.entity';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 
@@ -22,7 +23,10 @@ export class BlogsService {
     private readonly toolRepository: Repository<Tool>,
 
     @InjectRepository(MarkdownFile)
-    private readonly markdownFileRepository: Repository<MarkdownFile>
+    private readonly markdownFileRepository: Repository<MarkdownFile>,
+
+    @InjectRepository(BlogCategory)
+    private readonly categoryRepository: Repository<BlogCategory>
   ) {}
 
   private async resolveTools(toolIds: number[]): Promise<Tool[]> {
@@ -51,9 +55,48 @@ export class BlogsService {
     return markdown;
   }
 
-  async getAllBlogs(): Promise<Blogs[]> {
+  private async resolveCategory(categoryId: number): Promise<BlogCategory> {
+    const category = await this.categoryRepository.findOneBy({
+      id: categoryId
+    });
+
+    if (!category) {
+      throw new BadRequestException(
+        `Category with id ${categoryId} not found.`
+      );
+    }
+
+    return category;
+  }
+
+  /**
+   * @param categorySlug - category slug to filter by. Omit, or pass "all",
+   * to get every blog, newest first.
+   */
+  async getAllBlogs(categorySlug?: string): Promise<Blogs[]> {
+    const where =
+      categorySlug && categorySlug !== 'all'
+        ? { category: { slug: categorySlug } }
+        : {};
+
     return await this.blogsRepository.find({
-      relations: { tools: true },
+      where,
+      relations: { tools: true, category: true },
+      order: { createdAt: 'DESC' }
+    });
+  }
+
+  async searchBlogs(query: string): Promise<Blogs[]> {
+    if (!query?.trim()) {
+      return [];
+    }
+
+    return await this.blogsRepository.find({
+      where: [
+        { title: ILike(`%${query}%`) },
+        { description: ILike(`%${query}%`) }
+      ],
+      relations: { tools: true, category: true },
       order: { createdAt: 'DESC' }
     });
   }
@@ -61,7 +104,7 @@ export class BlogsService {
   async getBlogById(id: number): Promise<Blogs> {
     const blog = await this.blogsRepository.findOne({
       where: { id },
-      relations: { tools: true }
+      relations: { tools: true, category: true }
     });
 
     if (!blog) {
@@ -74,7 +117,7 @@ export class BlogsService {
   async getBlogBySlug(slug: string): Promise<Blogs> {
     const blog = await this.blogsRepository.findOne({
       where: { slug },
-      relations: { tools: true }
+      relations: { tools: true, category: true }
     });
 
     if (!blog) {
@@ -95,9 +138,10 @@ export class BlogsService {
       );
     }
 
-    const [tools, markdown] = await Promise.all([
+    const [tools, markdown, category] = await Promise.all([
       this.resolveTools(dto.tools),
-      this.resolveMarkdown(dto.markdownId)
+      this.resolveMarkdown(dto.markdownId),
+      this.resolveCategory(dto.categoryId)
     ]);
 
     const slug = this.generateSlug(dto.title);
@@ -114,10 +158,12 @@ export class BlogsService {
 
     const blog = this.blogsRepository.create({
       title: dto.title,
+      description: dto.description,
       slug,
       image: dto.image,
       tools,
-      markdown
+      markdown,
+      category
     });
 
     return await this.blogsRepository.save(blog);
@@ -126,7 +172,7 @@ export class BlogsService {
   async updateBlog(id: number, dto: UpdateBlogDto): Promise<Blogs> {
     const blog = await this.getBlogById(id);
 
-    const { tools: toolIds, markdownId, ...rest } = dto;
+    const { tools: toolIds, markdownId, categoryId, ...rest } = dto;
 
     Object.assign(blog, rest);
 
@@ -136,6 +182,10 @@ export class BlogsService {
 
     if (markdownId) {
       blog.markdown = await this.resolveMarkdown(markdownId);
+    }
+
+    if (categoryId) {
+      blog.category = await this.resolveCategory(categoryId);
     }
 
     return await this.blogsRepository.save(blog);
@@ -149,12 +199,12 @@ export class BlogsService {
 
   private generateSlug(title: string): string {
     return title
-      .normalize('NFKD') // split accented chars into base + diacritic
-      .replace(/[\u0300-\u036f]/g, '') // strip diacritics
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
       .trim()
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '') // strip anything not alphanumeric/space/hyphen
-      .replace(/\s+/g, '-') // collapse whitespace to single hyphen
-      .replace(/-+/g, '-'); // collapse multiple hyphens
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
   }
 }

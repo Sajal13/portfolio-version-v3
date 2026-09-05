@@ -5,8 +5,6 @@ import { TabsContextValue, TabsProps } from '../types/tabs';
 
 const TabsContext = React.createContext<TabsContextValue | null>(null);
 
-let tabsIdCounter = 0;
-
 export const TabsProvider = ({
   value: valueProp,
   defaultValue,
@@ -16,7 +14,9 @@ export const TabsProvider = ({
   const [uncontrolled, setUncontrolled] = React.useState(defaultValue ?? '');
   const isControlled = valueProp !== undefined;
   const value = isControlled ? (valueProp as string) : uncontrolled;
-  const idPrefix = React.useRef(`tabs-${++tabsIdCounter}`).current;
+
+  const reactId = React.useId();
+  const idPrefix = `tabs-${reactId.replace(/:/g, '')}`;
 
   const setValue = React.useCallback(
     (next: string) => {

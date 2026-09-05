@@ -1,6 +1,6 @@
 import { CX, CY } from '../constants';
 
-export function CenterHub({ total }: { total: number }) {
+export const CenterHub = ({ total }: { total: number }) => {
   return (
     <g>
       <circle
@@ -52,4 +52,4 @@ export function CenterHub({ total }: { total: number }) {
       </text>
     </g>
   );
-}
+};

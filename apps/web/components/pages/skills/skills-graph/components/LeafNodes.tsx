@@ -1,8 +1,49 @@
+import { useState } from 'react';
 import type { PaletteColor } from '../constants';
 import { labelBelow } from '../label-utils';
 import type { LeafNode } from '../types';
 
-export function LeafNodes({
+function LeafIcon({ node, r }: { node: LeafNode; r: number }) {
+  const [broken, setBroken] = useState(false);
+  const icon = node.title?.icon;
+  const size = (r - 3) * 2;
+
+  if (!icon || broken) {
+    const initial = node.title?.name?.[0]?.toUpperCase() ?? '?';
+    return (
+      <text
+        x={node.x}
+        y={node.y}
+        textAnchor="middle"
+        dominantBaseline="central"
+        className="text-[10px] fill-white/60 font-semibold pointer-events-none select-none"
+      >
+        {initial}
+      </text>
+    );
+  }
+
+  return (
+    <>
+      <clipPath id={`leaf-clip-${node.id}`}>
+        <circle cx={node.x} cy={node.y} r={r - 3} />
+      </clipPath>
+      <image
+        href={icon}
+        x={node.x - size / 2}
+        y={node.y - size / 2}
+        width={size}
+        height={size}
+        clipPath={`url(#leaf-clip-${node.id})`}
+        preserveAspectRatio="xMidYMid slice"
+        onError={() => setBroken(true)}
+        className="pointer-events-none"
+      />
+    </>
+  );
+}
+
+export const LeafNodes = ({
   nodes,
   hoveredId,
   isDimmed,
@@ -14,7 +55,7 @@ export function LeafNodes({
   isDimmed: (color: PaletteColor) => boolean;
   onEnter: (node: LeafNode, e: React.MouseEvent<SVGGElement>) => void;
   onLeave: () => void;
-}) {
+}) => {
   return (
     <>
       {nodes.map((s) => {
@@ -40,6 +81,7 @@ export function LeafNodes({
               stroke={s.color.dim}
               strokeWidth={3}
             />
+            <LeafIcon node={s} r={r} />
             <circle
               cx={s.x}
               cy={s.y}
@@ -78,4 +120,4 @@ export function LeafNodes({
       })}
     </>
   );
-}
+};

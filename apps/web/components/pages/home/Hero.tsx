@@ -122,15 +122,15 @@ const Hero = ({ profile }: { profile: Profile }) => {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[90dvh] w-full overflow-hidden bg-secondary-500/5"
+      className="relative pt-28 md:pt-8 min-h-[90dvh] w-full overflow-hidden bg-black/90 "
     >
       <div className="absolute inset-0 z-0">
         <HeroScene />
       </div>
 
-      <div className="pointer-events-none relative z-10 flex min-h-[90vh] w-full flex-col items-center justify-center bg-black/50 px-4">
+      <div className="pointer-events-none relative z-10 flex min-h-[90vh] w-full flex-col items-center justify-center bg-black/50 px-6">
         <div className="text-center">
-          <h6 className="font-semi font-orbitron text-lg md:text-xl text-success-500 mb-4 md:mb-6">
+          <h6 className="font-semi font-orbitron text-sm md:text-xl text-success-500 mb-4 md:mb-6">
             // SYSTEM_STATUS: ACTIVE
           </h6>
           <h1
@@ -152,8 +152,8 @@ const Hero = ({ profile }: { profile: Profile }) => {
           {/* Stats row — the glass card */}
           <div
             className={cn(
-              'pointer-events-auto mb-10 flex flex-wrap items-stretch justify-center',
-              'overflow-hidden rounded-xl border border-white/10',
+              'pointer-events-auto mb-10 flex flex-col md:flex-row! flex-wrap items-stretch justify-center',
+              'overflow-hidden rounded-xl md:border border-white/10',
               'bg-white/10 backdrop-blur-lg backdrop-saturate-150'
             )}
           >
@@ -227,7 +227,7 @@ const Hero = ({ profile }: { profile: Profile }) => {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
+        <div className="pointer-events-none flex flex-col items-center gap-2 py-4">
           <span className="font-orbitron text-[10px] uppercase tracking-[0.3em] text-white/40">
             scroll_to_discover
           </span>

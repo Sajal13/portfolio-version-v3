@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import Footer from 'components/common/footer/Footer';
 import { DesktopNavbar } from 'components/common/navbar/DesktopNavbar';
 import { MobileNavbar } from 'components/common/navbar/MobileNavbar';
 import SiteLoaderGate from 'components/layout/SiteLoaderGate';
@@ -37,6 +38,7 @@ export default function RootLayout({
           <DesktopNavbar />
           <MobileNavbar />
           {children}
+          <Footer />
         </SiteLoaderGate>
       </body>
     </html>

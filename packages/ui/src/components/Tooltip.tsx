@@ -1,10 +1,13 @@
 'use client';
 
 import React from 'react';
+import {
+  TooltipProvider,
+  useTooltipContext
+} from '../providers/TooltipContext';
+import { TooltipProps } from '../types/tooltip';
 import { Portal } from '../utils/Portal';
 import { cn } from '../utils/cn';
-import { TooltipProps } from '../types/tooltip';
-import  { TooltipProvider, useTooltipContext } from '../providers/TooltipContext';
 
 function Tooltip({
   delayDuration = 200,
@@ -54,8 +57,14 @@ function TooltipTrigger({
   );
 }
 
-function TooltipContent({ className, ...props }: React.ComponentProps<'div'>) {
-  const { open, floatingRef, coords } = useTooltipContext('TooltipContent');
+function TooltipContent({
+  className,
+  onMouseEnter,
+  onMouseLeave,
+  ...props
+}: React.ComponentProps<'div'>) {
+  const { open, floatingRef, coords, show, hide } =
+    useTooltipContext('TooltipContent');
 
   if (!open) return null;
 
@@ -69,6 +78,14 @@ function TooltipContent({ className, ...props }: React.ComponentProps<'div'>) {
           position: 'fixed',
           top: coords?.top ?? -9999,
           left: coords?.left ?? -9999
+        }}
+        onMouseEnter={(e) => {
+          onMouseEnter?.(e);
+          show(); // cancels the pending grace-period hide from leaving the trigger
+        }}
+        onMouseLeave={(e) => {
+          onMouseLeave?.(e);
+          hide();
         }}
         className={cn(
           'z-50 max-w-xs rounded-md bg-neutral-700 px-3 py-1.5 text-xs text-white shadow-md transition-opacity',

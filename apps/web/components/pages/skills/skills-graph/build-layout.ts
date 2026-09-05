@@ -1,10 +1,11 @@
 import type { Skill } from '@repo/types';
 import { CX, CY, R1, R2, R3, PALETTE } from './constants';
+import { round } from './round';
 import type { Layout } from './types';
 
 // Groups skills by category, then by parent, and assigns each node
 // an angle proportional to how many leaves it carries.
-export function buildLayout(skills: Skill[]): Layout {
+export const buildLayout = (skills: Skill[]): Layout => {
   const byCategory = new Map<string, Skill[]>();
   skills.forEach((s) => {
     if (!byCategory.has(s.category)) byCategory.set(s.category, []);
@@ -35,8 +36,8 @@ export function buildLayout(skills: Skill[]): Layout {
       id: `cat-${catName}`,
       title: catName,
       angle: catCenter,
-      x: CX + R1 * Math.cos(catCenter),
-      y: CY + R1 * Math.sin(catCenter),
+      x: round(CX + R1 * Math.cos(catCenter)),
+      y: round(CY + R1 * Math.sin(catCenter)),
       color,
       count: catSkills.length
     };
@@ -86,8 +87,8 @@ export function buildLayout(skills: Skill[]): Layout {
       branchCursor += branchSpan + branchGap;
 
       if (branch.type === 'parent') {
-        const px = CX + R2 * Math.cos(branchCenter);
-        const py = CY + R2 * Math.sin(branchCenter);
+        const px = round(CX + R2 * Math.cos(branchCenter));
+        const py = round(CY + R2 * Math.sin(branchCenter));
         layout.parentNodes.push({
           id: `parent-${catName}-${branch.key}`,
           title: branch.key,
@@ -111,8 +112,8 @@ export function buildLayout(skills: Skill[]): Layout {
             : 0;
         branch.arr.forEach((s, li) => {
           const leafAngle = branchStart + leafGap / 2 + leafStep * (li + 0.5);
-          const lx = CX + R3 * Math.cos(leafAngle);
-          const ly = CY + R3 * Math.sin(leafAngle);
+          const lx = round(CX + R3 * Math.cos(leafAngle));
+          const ly = round(CY + R3 * Math.sin(leafAngle));
           layout.leafNodes.push({
             ...s,
             angle: leafAngle,
@@ -134,8 +135,8 @@ export function buildLayout(skills: Skill[]): Layout {
         const s = branch.arr[0];
         if (!s) return;
 
-        const lx = CX + R2 * Math.cos(branchCenter);
-        const ly = CY + R2 * Math.sin(branchCenter);
+        const lx = round(CX + R2 * Math.cos(branchCenter));
+        const ly = round(CY + R2 * Math.sin(branchCenter));
         layout.leafNodes.push({
           ...s,
           angle: branchCenter,
@@ -159,4 +160,4 @@ export function buildLayout(skills: Skill[]): Layout {
   });
 
   return layout;
-}
+};

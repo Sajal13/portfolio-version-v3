@@ -2,7 +2,7 @@ import { GrPowerReset } from '@repo/icons/gr';
 import { LuMinus, LuPlus } from '@repo/icons/lu';
 import { Button } from '@repo/ui/components';
 
-export function GraphControls({
+export const GraphControls = ({
   onZoomIn,
   onZoomOut,
   onReset
@@ -10,7 +10,7 @@ export function GraphControls({
   onZoomIn: () => void;
   onZoomOut: () => void;
   onReset: () => void;
-}) {
+}) => {
   return (
     <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1">
       <Button onClick={onZoomIn} className="w-7 h-7 text-sm">
@@ -24,4 +24,4 @@ export function GraphControls({
       </Button>
     </div>
   );
-}
+};

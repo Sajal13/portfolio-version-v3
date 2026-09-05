@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
+import { round } from './round';
 
-export function usePanZoom() {
+export const usePanZoom = () => {
   const [view, setView] = useState({ scale: 1, tx: 0, ty: 0 });
   const dragState = useRef<{
     startX: number;
@@ -12,7 +13,7 @@ export function usePanZoom() {
   const zoomBy = useCallback((factor: number) => {
     setView((v) => ({
       ...v,
-      scale: Math.min(2.5, Math.max(0.5, v.scale * factor))
+      scale: round(Math.min(2.5, Math.max(0.5, v.scale * factor)))
     }));
   }, []);
 
@@ -56,4 +57,4 @@ export function usePanZoom() {
     onPointerUp,
     onWheel
   };
-}
+};

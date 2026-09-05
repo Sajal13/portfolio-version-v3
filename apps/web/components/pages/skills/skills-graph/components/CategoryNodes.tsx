@@ -2,13 +2,13 @@ import { PaletteColor } from '../constants';
 import { labelBelow } from '../label-utils';
 import type { CategoryNode } from '../types';
 
-export function CategoryNodes({
+export const CategoryNodes = ({
   nodes,
   isDimmed
 }: {
   nodes: CategoryNode[];
   isDimmed: (color: PaletteColor) => boolean;
-}) {
+}) => {
   return (
     <>
       {nodes.map((c) => {
@@ -45,4 +45,4 @@ export function CategoryNodes({
       })}
     </>
   );
-}
+};

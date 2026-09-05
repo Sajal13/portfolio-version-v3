@@ -161,11 +161,11 @@ export function DesktopNavbar() {
   return (
     <header
       ref={headerRef}
-      className="fixed inset-x-0 top-0 z-50 max-lg:hidden! block"
+      className="fixed inset-x-0 top-0 z-50 max-lg:hidden! block px-6"
     >
       <div
         ref={barRef}
-        className="mx-auto flex container items-center justify-between bg-transparent px-8 py-6"
+        className="flex items-center justify-between bg-transparent px-8 py-6"
       >
         <Link
           ref={logoRef}

@@ -136,7 +136,7 @@ const FileUploader = ({
         {...getRootProps()}
         className={classNames(
           'relative flex flex-col items-center justify-center gap-4',
-          'w-full h-full rounded-xl border-2 border-dashed bg-secondary-700',
+          'w-full md:h-full rounded-xl border-2 border-dashed bg-secondary-700',
           'transition-colors duration-200 cursor-pointer border-main px-5 md:px-7.5 py-6 md:py-8',
           {
             'border-success-500 bg-success-500/5': isDragActive,

@@ -9,10 +9,12 @@ import {
   SearchableSelect,
   useToast,
   type SearchableSelectOption,
-  Label
+  Label,
+  Textarea
 } from '@repo/ui/components';
 import FileUploader from 'components/base/FileUploader';
 import { useBlogMutations } from 'hooks/mutations/useBlogMutations';
+import { useGetAllBlogCategory } from 'hooks/queries/useBlogCategoryQueries';
 import { useGetBlogById } from 'hooks/queries/useBlogQueries';
 import { useGetAllTools } from 'hooks/queries/useToolsQueries';
 import { useFileUpload } from 'hooks/useFileUpload';
@@ -31,9 +33,11 @@ interface BlogsModalProps {
 
 const defaultValues: BlogFormValues = {
   title: '',
+  description: '',
   image: '',
   markdown: '',
-  tools: []
+  tools: [],
+  categoryId: 0
 };
 
 const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
@@ -42,6 +46,7 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
   const { createBlog, updateBlog } = useBlogMutations();
 
   const { data: toolsOptions } = useGetAllTools();
+  const { data: categoryOptions } = useGetAllBlogCategory();
   const { data: blog, isLoading: isBlogLoading } = useGetBlogById(editId);
 
   const uploadImage = useFileUpload();
@@ -57,6 +62,7 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitting }
   } = useForm<BlogFormValues>({
     resolver: zodResolver(blogFormSchema),
@@ -68,9 +74,11 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
     if (isEditMode && blog) {
       reset({
         title: blog.title,
+        description: blog.description,
         image: blog.image,
         markdown: blog.markdown.id,
-        tools: blog.tools.map((tool) => tool.id)
+        tools: blog.tools.map((tool) => tool.id),
+        categoryId: blog.category.id
       });
       setImageUrl(blog.image);
       setMarkdownId(blog.markdown.id);
@@ -121,6 +129,35 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
             label: tool.name,
             value: String(tool.id)
           }))
+        : undefined,
+    [isEditMode, blog]
+  );
+
+  // --- Category: same pattern as Tools, but single-select.
+  const categorySelectOptions = useMemo<SearchableSelectOption[]>(
+    () =>
+      (categoryOptions ?? []).map((category) => ({
+        label: category.name,
+        value: String(category.id)
+      })),
+    [categoryOptions]
+  );
+
+  const loadCategoryOptions = useCallback(
+    async (query: string) => {
+      if (!query.trim()) return categorySelectOptions;
+      const q = query.toLowerCase();
+      return categorySelectOptions.filter((opt) =>
+        opt.label.toLowerCase().includes(q)
+      );
+    },
+    [categorySelectOptions]
+  );
+
+  const initialCategoryOptions = useMemo<SearchableSelectOption[] | undefined>(
+    () =>
+      isEditMode && blog
+        ? [{ label: blog.category.name, value: String(blog.category.id) }]
         : undefined,
     [isEditMode, blog]
   );
@@ -186,9 +223,11 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
 
     const payload = {
       title: values.title,
+      description: values.description,
       image: imageUrl,
       markdownId,
-      tools: values.tools
+      tools: values.tools,
+      categoryId: values.categoryId
     };
 
     try {
@@ -230,6 +269,8 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
 
   const isBusy =
     isSubmitting || uploadImage.isPending || uploadMarkdown.isPending;
+
+  const description = watch('description');
 
   return (
     <Modal isOpen={open} onClose={onClose}>
@@ -277,6 +318,32 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
                 </div>
 
                 <div>
+                  <Label htmlFor="categoryId" className="mb-2" required>
+                    Category
+                  </Label>
+                  <Controller
+                    name="categoryId"
+                    control={control}
+                    render={({ field }) => (
+                      <SearchableSelect
+                        placeholder="Select category"
+                        value={field.value ? String(field.value) : ''}
+                        onValueChange={(val) =>
+                          field.onChange(val ? Number(val) : 0)
+                        }
+                        loadOptions={loadCategoryOptions}
+                        initialOptions={initialCategoryOptions}
+                      />
+                    )}
+                  />
+                  {errors.categoryId && (
+                    <p className="text-xs text-error-500">
+                      {errors.categoryId.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="md:col-span-2">
                   <Label htmlFor="tools" className="mb-2" required>
                     Tools
                   </Label>
@@ -301,6 +368,24 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
                       {errors.tools.message}
                     </p>
                   )}
+                </div>
+
+                <div className="md:col-span-2">
+                  <Label htmlFor="description" className="mb-2" required>
+                    Description
+                  </Label>
+                  <Controller
+                    control={control}
+                    name="description"
+                    render={({ field }) => (
+                      <>
+                        <Textarea rows={6} {...field} className="resize-none" />
+                        <p className="text-end mt-2 text-xs">
+                          {description.length} / 2000
+                        </p>
+                      </>
+                    )}
+                  />
                 </div>
 
                 <div>
@@ -383,7 +468,7 @@ const BlogsModal = ({ open, onClose, editId }: BlogsModalProps) => {
             )}
           </Modal.Body>
 
-          <Modal.Footer className="flex justify-end gap-3">
+          <Modal.Footer className=" sticky bottom-0 left-0 bg-secondary-700 flex justify-end gap-3">
             <Button
               type="button"
               variant="outline"

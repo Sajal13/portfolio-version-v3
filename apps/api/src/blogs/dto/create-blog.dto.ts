@@ -14,6 +14,11 @@ export class CreateBlogDto {
   @IsNotEmpty()
   title: string;
 
+  @ApiProperty({ example: 'How I built my portfolio with NestJS' })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
   @ApiProperty({ example: 'https://res.cloudinary.com/.../blog-cover.png' })
   @IsString()
   @IsNotEmpty()
@@ -36,4 +41,12 @@ export class CreateBlogDto {
   @ArrayNotEmpty()
   @IsNumber({}, { each: true })
   tools: number[];
+
+  @ApiProperty({
+    example: 1,
+    description: 'Id of the category this blog belongs to'
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  categoryId: number;
 }

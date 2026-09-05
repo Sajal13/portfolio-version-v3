@@ -8,6 +8,12 @@ export const queryKeys = {
     list: () => [...queryKeys.blogs.all, 'list'] as const,
     single: (id: number) => [...queryKeys.blogs.all, 'detail', id] as const
   },
+  blogCategory: {
+    all: ['blog-category'] as const,
+    list: () => [...queryKeys.blogCategory.all, 'list'] as const,
+    single: (id: number) =>
+      [...queryKeys.blogCategory.all, 'detail', id] as const
+  },
   tools: {
     all: ['tools'] as const,
     list: () => [...queryKeys.tools.all, 'list'] as const,

@@ -2,7 +2,12 @@ import Image from 'next/image';
 import { MdDelete } from '@repo/icons/md';
 import { VscEdit } from '@repo/icons/vsc';
 import { Blog } from '@repo/types';
-import { Button } from '@repo/ui/components';
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@repo/ui/components';
 import { ColumnDef } from '@tanstack/react-table';
 import AdvanceTable from 'components/base/AdvanceTable';
 import { AdvanceTablePagination } from 'components/base/AdvanceTablePagination';
@@ -31,15 +36,13 @@ export const blogsTableColumns = (
     accessorKey: 'image',
     header: 'Title Image',
     cell: ({ row: { original } }) => {
-      const image = original.image;
-
       return (
         <Image
           src={original.image}
           alt={original.title}
-          width={400}
-          height={250}
-          className="w-full h-auto object-cover"
+          width={100}
+          height={80}
+          className="w-25 h-auto object-cover"
         />
       );
     },
@@ -73,6 +76,29 @@ export const blogsTableColumns = (
       const tools = original.tools.map((tool) => tool.name).join(', ');
 
       return <span>{tools}</span>;
+    },
+    meta: {
+      cellProps: {
+        className: 'text-center whitespace-nowrap'
+      }
+    }
+  },
+  {
+    accessorKey: 'category_name',
+    header: 'Category',
+    cell: ({ row: { original } }) => {
+      const { name, slug } = original.category;
+
+      return (
+        <Tooltip side="top" align="end">
+          <TooltipTrigger className="block w-full text-left">
+            {name}
+          </TooltipTrigger>
+          <TooltipContent className="mx-2 text-sm leading-relaxed sm:max-w-md">
+            {slug}
+          </TooltipContent>
+        </Tooltip>
+      );
     },
     meta: {
       cellProps: {

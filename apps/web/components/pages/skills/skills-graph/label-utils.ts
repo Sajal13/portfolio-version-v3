@@ -1,7 +1,9 @@
-export function labelBelow(x: number, y: number, offset: number) {
+import { round } from './round';
+
+export const labelBelow = (x: number, y: number, offset: number) => {
   return {
-    x,
-    y: y + offset,
+    x: round(x),
+    y: round(y + offset),
     textAnchor: 'middle' as const
   };
-}
+};

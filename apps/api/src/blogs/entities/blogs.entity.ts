@@ -5,12 +5,14 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
 import { Tool } from '../../tools/entities/tool.entity';
 import { MarkdownFile } from '../../upload/entities/markdown-file.entity';
+import { BlogCategory } from '../../blog-category/entities/blog-category.entity';
 
 @Entity('blogs')
 export class Blogs {
@@ -19,6 +21,9 @@ export class Blogs {
 
   @Column({ type: 'text' })
   title: string;
+
+  @Column({ type: 'text' })
+  description: string;
 
   @Column({ type: 'text' })
   slug: string;
@@ -37,6 +42,13 @@ export class Blogs {
     inverseJoinColumn: { name: 'tool_id', referencedColumnName: 'id' }
   })
   tools: Tool[];
+
+  @ManyToOne(() => BlogCategory, (category) => category.blogs, {
+    nullable: false,
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({ name: 'category_id' })
+  category: BlogCategory;
 
   @CreateDateColumn()
   createdAt: Date;

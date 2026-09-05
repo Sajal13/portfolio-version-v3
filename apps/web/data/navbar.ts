@@ -27,8 +27,8 @@ export const navItems: NavItem[] = [
   },
   {
     id: 5,
-    label: 'Testimonial',
-    url: '#testimonial',
+    label: 'Testimonials',
+    url: '#testimonials',
     active: true
   },
   {

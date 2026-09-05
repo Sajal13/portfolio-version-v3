@@ -1,13 +1,13 @@
 import type { PaletteColor } from '../constants';
 import { Link } from '../types';
 
-export function GraphLinks({
+export const GraphLinks = ({
   links,
   isDimmed
 }: {
   links: Link[];
   isDimmed: (color: PaletteColor) => boolean;
-}) {
+}) => {
   return (
     <>
       {links.map((l) => (
@@ -25,4 +25,4 @@ export function GraphLinks({
       ))}
     </>
   );
-}
+};

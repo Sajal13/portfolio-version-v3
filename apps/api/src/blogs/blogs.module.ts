@@ -5,9 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Blogs } from './entities/blogs.entity';
 import { MarkdownFile } from '../upload/entities/markdown-file.entity';
 import { Tool } from '../tools/entities/tool.entity';
+import { BlogCategory } from '../blog-category/entities/blog-category.entity';
+import { BlogCategoryModule } from '../blog-category/blog-category.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Blogs, MarkdownFile, Tool])],
+  imports: [
+    TypeOrmModule.forFeature([Blogs, MarkdownFile, Tool, BlogCategory]),
+    BlogCategoryModule
+  ],
   controllers: [BlogsController],
   providers: [BlogsService]
 })
