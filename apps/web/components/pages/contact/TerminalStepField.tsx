@@ -116,7 +116,10 @@ export default function TerminalStepField({
             autoComplete="off"
             aria-invalid={Boolean(error)}
             aria-describedby={error ? `${name}-error` : undefined}
-            className={cn(FIELD_CLASSNAME, 'resize-none focus-visible:ring-0!')}
+            className={cn(
+              FIELD_CLASSNAME,
+              'resize-none focus-visible:ring-0! outline-0 focus-visible:ring-offset-0'
+            )}
           />
         ) : (
           <Input

@@ -16,6 +16,11 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const config = app.get(ConfigService);
 
+  // Trust the first proxy hop (nginx / load balancer / Vercel / Cloudflare)
+  // so Express parses X-Forwarded-For correctly and req.ip / @Ip() resolve
+  // to the real client IP instead of the proxy's own address.
+  app.set('trust proxy', 1);
+
   app.set('query parser', 'extended');
 
   app.setGlobalPrefix('api');

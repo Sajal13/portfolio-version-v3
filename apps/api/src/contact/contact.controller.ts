@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Ip,
   Post,
   Get,
   Param,
@@ -21,6 +20,8 @@ import { Public } from '../auth/decorators/public.decorator';
 import { ResponseMessage } from '../common/decorators/response-message.decorator';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { ContactResponseDto } from './dto/contact-reponse.dto';
+import { SkipCsrf } from '../auth/decorators/skip-csrf.decorator';
+import { ClientIp } from '../common/decorators/client-ip.decorator';
 
 @ApiTags('contact')
 @Controller('contact')
@@ -49,14 +50,16 @@ export class ContactController {
 
   @Post()
   @Public()
+  @SkipCsrf()
   @Throttle({ default: { limit: 3, ttl: 600_000 } })
   @ApiOperation({ summary: 'Submit a contact form message' })
   @ApiResponse({ status: 201, description: 'Message received.' })
   @ApiResponse({ status: 429, description: 'Too many requests.' })
   @ResponseMessage('Message sent successfully.')
-  async submitContact(@Body() dto: CreateContactDto, @Ip() ip: string) {
+  async submitContact(@Body() dto: CreateContactDto, @ClientIp() ip: string) {
     return await this.contactService.submitContact(dto, ip);
   }
+
   @Delete('/:id')
   @Roles('admin')
   @ApiBearerAuth()

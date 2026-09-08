@@ -180,7 +180,7 @@ const ExperienceTimeline = ({ entries }: ExperienceTimelineProps) => {
         />
         <div
           ref={progressRef}
-          className="from-info-400 to-violet-400 absolute left-1/2 w-px -translate-x-1/2 bg-gradient-to-b"
+          className="from-info-400 to-violet-400 absolute left-1/2 w-px -translate-x-1/2 bg-linear-to-b"
         />
 
         <div className="flex flex-col gap-16">

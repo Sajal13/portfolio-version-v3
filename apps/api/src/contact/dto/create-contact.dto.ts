@@ -13,7 +13,6 @@ export class CreateContactDto {
   @ApiProperty({ example: 'Jane Doe' })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(100)
   name: string;
 
   @ApiProperty({ example: 'jane@example.com' })
